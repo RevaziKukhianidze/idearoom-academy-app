@@ -174,7 +174,7 @@ function Page() {
         e.preventDefault();
         setIsSubmitting(true);
         try {
-            const response = await fetch("https://formspree.io/f/xjkyyeya", {
+            const response = await fetch("https://formspree.io/f/xblgeolw", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -157,7 +157,7 @@ export default function CourseClient({
         {/* Left Column: Course Details and Syllabus */}
         <div className="lg:col-span-7">
           <img
-            className="w-[100%] max-sm:h-auto rounded-[18px] h-[300px] md:h-[400px] mt-[20px] lg:h-[500px] object-cover"
+            className="w-[100%] max-sm:h-auto rounded-[18px] h-[300px] md:h-[400px] lg:h-[500px] object-cover"
             quality={100}
             width={804}
             height={500}
@@ -368,7 +368,7 @@ export default function CourseClient({
                 relatedCourses.map((relatedCourse, index) => (
                   <div
                     key={index}
-                    className="flex flex-col sm:flex-row mb-4 items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB]"
+                    className="flex flex-col sm:flex-row mb-[15px] items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB]"
                   >
                     <img
                       src={relatedCourse.image}

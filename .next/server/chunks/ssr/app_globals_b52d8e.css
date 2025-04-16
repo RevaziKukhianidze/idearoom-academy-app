@@ -829,6 +829,14 @@ body {
   margin-top: auto;
 }
 
+.mb-\[40px\] {
+  margin-bottom: 40px;
+}
+
+.mb-\[15px\] {
+  margin-bottom: 15px;
+}
+
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -2317,6 +2325,14 @@ body {
 
 .pt-\[85px\] {
   padding-top: 85px;
+}
+
+.pb-8 {
+  padding-bottom: 2rem;
+}
+
+.pt-\[72px\] {
+  padding-top: 72px;
 }
 
 .text-left {
@@ -4414,6 +4430,10 @@ option:hover {
 
   .md\:py-6 {
     padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .md\:pb-6 {
     padding-bottom: 1.5rem;
   }
 

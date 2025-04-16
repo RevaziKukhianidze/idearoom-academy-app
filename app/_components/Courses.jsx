@@ -28,7 +28,7 @@ export default function Courses() {
   }, []);
 
   return (
-    <section className="container relative max-sm:max-w-[85%] mx-auto py-8 max-md:py-9 md:py-6">
+    <section className="container pt-[72px] relative max-sm:max-w-[85%] mx-auto pb-8 max-md:py-9 md:pb-6">
       <Headline text="აირჩიე სასურველი კურსი და დარეგისტრირდი" />
 
       {isLoading ? (

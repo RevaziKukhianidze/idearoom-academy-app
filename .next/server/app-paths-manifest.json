@@ -1,11 +1,10 @@
 {
   "/page": "app/page.js",
-  "/courses/page": "app/courses/page.js",
-  "/courses/[courseId]/page": "app/courses/[courseId]/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/courses/[courseId]/page": "app/courses/[courseId]/page.js",
+  "/courses/page": "app/courses/page.js",
   "/offer/page": "app/offer/page.js",
-  "/offer/[offerId]/page": "app/offer/[offerId]/page.js",
-  "/api/offer/route": "app/api/offer/route.js",
-  "/api/offers/route": "app/api/offers/route.js",
+  "/blog/[blogId]/page": "app/blog/[blogId]/page.js",
+  "/blog/page": "app/blog/page.js",
   "/_not-found/page": "app/_not-found/page.js"
 }

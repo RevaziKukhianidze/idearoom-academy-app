@@ -73,9 +73,11 @@ export default function Page() {
               );
             })}
         </div>
-        <div className="mt-4 flex justify-center ">
-          <SeeAllButton buttonText="ყველას ნახვა" />
-        </div>
+        {/* <div className="mt-4 flex justify-center ">
+          <Link href={`blog`}>
+            <SeeAllButton buttonText="ყველას ნახვა" />
+          </Link>
+        </div> */}
       </section>
     </>
   );

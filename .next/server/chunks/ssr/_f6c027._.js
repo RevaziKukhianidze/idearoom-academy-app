@@ -569,7 +569,7 @@ function Courses() {
         return ()=>clearTimeout(timer);
     }, []);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
-        className: "container relative max-sm:max-w-[85%] mx-auto py-8 max-md:py-9 md:py-6",
+        className: "container pt-[72px] relative max-sm:max-w-[85%] mx-auto pb-8 max-md:py-9 md:pb-6",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$_components$2f$Headline$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 text: "აირჩიე სასურველი კურსი და დარეგისტრირდი"
@@ -669,8 +669,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2
 ;
 ;
 // Initialize Supabase client (you'll need to add your env variables)
-const supabaseUrl = ("TURBOPACK compile-time value", "https://pnvtegstxozyxvuqgckc.supabase.co");
-const supabaseKey = ("TURBOPACK compile-time value", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBudnRlZ3N0eG96eXh2dXFnY2tjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NzgxOTksImV4cCI6MjA1NzU1NDE5OX0.0_sUHEKjHlli9hX6vPc6GtbPFYcUNUbWb6IUxnSSXVQ");
+const supabaseUrl = ("TURBOPACK compile-time value", "https://ogxvbjvwbrllggcmfyke.supabase.co");
+const supabaseKey = ("TURBOPACK compile-time value", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9neHZianZ3YnJsbGdnY21meWtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4MjA0MjAsImV4cCI6MjA2MDM5NjQyMH0.1jqzrG77QundfqVg98tvWbM1YUFsJcG0IycwzphwLEM");
 const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$supabase$2d$js$2f$dist$2f$module$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createClient"])(supabaseUrl, supabaseKey);
 function Feedback() {
     const [testimonials, setTestimonials] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
@@ -1187,8 +1187,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2
 ;
 ;
 // Initialize Supabase client
-const supabaseUrl = ("TURBOPACK compile-time value", "https://pnvtegstxozyxvuqgckc.supabase.co");
-const supabaseKey = ("TURBOPACK compile-time value", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBudnRlZ3N0eG96eXh2dXFnY2tjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NzgxOTksImV4cCI6MjA1NzU1NDE5OX0.0_sUHEKjHlli9hX6vPc6GtbPFYcUNUbWb6IUxnSSXVQ");
+const supabaseUrl = ("TURBOPACK compile-time value", "https://ogxvbjvwbrllggcmfyke.supabase.co");
+const supabaseKey = ("TURBOPACK compile-time value", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9neHZianZ3YnJsbGdnY21meWtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4MjA0MjAsImV4cCI6MjA2MDM5NjQyMH0.1jqzrG77QundfqVg98tvWbM1YUFsJcG0IycwzphwLEM");
 const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$supabase$2d$js$2f$dist$2f$module$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["createClient"])(supabaseUrl, supabaseKey);
 function Hero() {
     const [currentSlide, setCurrentSlide] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
@@ -2105,8 +2105,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2
 "use client";
 ;
 // Initialize Supabase client with debugging
-const supabaseUrl = ("TURBOPACK compile-time value", "https://pnvtegstxozyxvuqgckc.supabase.co");
-const supabaseKey = ("TURBOPACK compile-time value", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBudnRlZ3N0eG96eXh2dXFnY2tjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NzgxOTksImV4cCI6MjA1NzU1NDE5OX0.0_sUHEKjHlli9hX6vPc6GtbPFYcUNUbWb6IUxnSSXVQ");
+const supabaseUrl = ("TURBOPACK compile-time value", "https://ogxvbjvwbrllggcmfyke.supabase.co");
+const supabaseKey = ("TURBOPACK compile-time value", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9neHZianZ3YnJsbGdnY21meWtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4MjA0MjAsImV4cCI6MjA2MDM5NjQyMH0.1jqzrG77QundfqVg98tvWbM1YUFsJcG0IycwzphwLEM");
 // Log environment variables (redacted for security)
 console.log("Supabase URL configured:", ("TURBOPACK compile-time truthy", 1) ? "Yes ✓" : ("TURBOPACK unreachable", undefined));
 console.log("Supabase Key configured:", ("TURBOPACK compile-time truthy", 1) ? "Yes ✓" : ("TURBOPACK unreachable", undefined));

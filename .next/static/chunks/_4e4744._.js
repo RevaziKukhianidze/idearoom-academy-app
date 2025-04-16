@@ -681,7 +681,7 @@ function CourseClient({ courseData, relatedCourses, syllabusItems, activeTab, co
                         className: "lg:col-span-7",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                className: "w-[100%] max-sm:h-auto rounded-[18px] h-[300px] md:h-[400px] mt-[20px] lg:h-[500px] object-cover",
+                                className: "w-[100%] max-sm:h-auto rounded-[18px] h-[300px] md:h-[400px] lg:h-[500px] object-cover",
                                 quality: 100,
                                 width: 804,
                                 height: 500,
@@ -1332,7 +1332,7 @@ function CourseClient({ courseData, relatedCourses, syllabusItems, activeTab, co
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "bg-white p-3 lg:p-4 w-full rounded-[20px]",
                                         children: relatedCourses.length > 0 ? relatedCourses.map((relatedCourse, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex flex-col sm:flex-row mb-4 items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB]",
+                                                className: "flex flex-col sm:flex-row mb-[15px] items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB]",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                                         src: relatedCourse.image,
