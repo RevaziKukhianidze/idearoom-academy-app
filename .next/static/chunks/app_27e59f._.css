@@ -649,6 +649,10 @@ body {
   margin-bottom: -6px;
 }
 
+.mb-\[15px\] {
+  margin-bottom: 15px;
+}
+
 .mb-\[20px\] {
   margin-bottom: 20px;
 }
@@ -777,10 +781,6 @@ body {
   margin-top: 200px;
 }
 
-.mt-\[20px\] {
-  margin-top: 20px;
-}
-
 .mt-\[2px\] {
   margin-top: 2px;
 }
@@ -827,14 +827,6 @@ body {
 
 .mt-auto {
   margin-top: auto;
-}
-
-.mb-\[40px\] {
-  margin-bottom: 40px;
-}
-
-.mb-\[15px\] {
-  margin-bottom: 15px;
 }
 
 .line-clamp-2 {
@@ -2219,6 +2211,10 @@ body {
   padding-bottom: 1rem;
 }
 
+.pb-8 {
+  padding-bottom: 2rem;
+}
+
 .pb-\[2px\] {
   padding-bottom: 2px;
 }
@@ -2323,16 +2319,32 @@ body {
   padding-top: 65%;
 }
 
+.pt-\[72px\] {
+  padding-top: 72px;
+}
+
 .pt-\[85px\] {
   padding-top: 85px;
 }
 
-.pb-8 {
-  padding-bottom: 2rem;
+.pr-4 {
+  padding-right: 1rem;
 }
 
-.pt-\[72px\] {
-  padding-top: 72px;
+.pr-7 {
+  padding-right: 1.75rem;
+}
+
+.pr-8 {
+  padding-right: 2rem;
+}
+
+.pr-9 {
+  padding-right: 2.25rem;
+}
+
+.pr-12 {
+  padding-right: 3rem;
 }
 
 .text-left {
@@ -2439,6 +2451,10 @@ body {
 }
 
 .font-semibold {
+  font-weight: 600;
+}
+
+.font-\[600\] {
   font-weight: 600;
 }
 
@@ -4426,11 +4442,6 @@ option:hover {
   .md\:py-16 {
     padding-top: 4rem;
     padding-bottom: 4rem;
-  }
-
-  .md\:py-6 {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
   }
 
   .md\:pb-6 {

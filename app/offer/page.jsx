@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { apiDoubleCourse } from "../services/apiDoubleCourse";
-import HeadTopCourse from "../courses/_components/HeadTopCourse";
+import HeadTopOffer from "../_components/HeadTopOffer";
 
 export default function Page() {
   const [courses, setCourses] = useState([]);
@@ -52,9 +52,9 @@ export default function Page() {
   return (
     <div className="container mx-auto max-sm:max-w-[90%] mt-[80px] py-8">
       <div className="mt-2">
-        <HeadTopCourse>
-          <p className="cursor-pointer">კურსები</p>
-        </HeadTopCourse>
+        <HeadTopOffer>
+          <p className="cursor-pointer">შეთავაზება</p>
+        </HeadTopOffer>
       </div>
       <div className="grid grid-cols-1 mt-5 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course) => (

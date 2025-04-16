@@ -433,10 +433,10 @@ export default function OfferPage({ params }) {
                       className="object-cover w-[200px] h-[190px] max-sm:w-full max-sm:max-w-[100%] max-sm:h-[350px] mx-auto rounded-lg md:rounded-none"
                     />
                     <div className="caps-text max-md:p-4 sm:max-md:p-8 mt-3 md:mt-0 max-lg:mb-5 md:ml-8 lg:ml-8 text-[#282525] w-full">
-                      <p className="font-[500] text-base">
+                      <p className="font-[500] mt-1 text-[#282525] text-[15px] pr-8">
                         {relatedOffer.title}
                       </p>
-                      <p className="text-sm my-2 font-[500] leading-[24px]">
+                      <p className="text-[13px] my-2 font-[500] leading-[24px]">
                         {Array.isArray(relatedOffer.lecturers) &&
                         relatedOffer.lecturers.length > 1
                           ? "ტრენერები: "

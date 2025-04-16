@@ -1202,7 +1202,7 @@ function OfferPage({ params }) {
                                                         className: "caps-text max-md:p-4 sm:max-md:p-8 mt-3 md:mt-0 max-lg:mb-5 md:ml-8 lg:ml-8 text-[#282525] w-full",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "font-[500] text-base",
+                                                                className: "font-[500] mt-1 text-[#282525] text-[15px] pr-8",
                                                                 children: relatedOffer.title
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/offer/[offerId]/page.jsx",
@@ -1210,7 +1210,7 @@ function OfferPage({ params }) {
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                className: "text-sm my-2 font-[500] leading-[24px]",
+                                                                className: "text-[13px] my-2 font-[500] leading-[24px]",
                                                                 children: [
                                                                     Array.isArray(relatedOffer.lecturers) && relatedOffer.lecturers.length > 1 ? "ტრენერები: " : "ტრენერი: ",
                                                                     Array.isArray(relatedOffer.lecturers) ? relatedOffer.lecturers.join(", ") : relatedOffer.lecturers
