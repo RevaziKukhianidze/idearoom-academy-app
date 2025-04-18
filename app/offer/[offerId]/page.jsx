@@ -436,7 +436,7 @@ export default function OfferPage({ params }) {
                       <p className="font-[500] mt-1 text-[#282525] text-[15px] pr-8">
                         {relatedOffer.title}
                       </p>
-                      <p className="text-[13px] my-2 font-[500] leading-[24px]">
+                      <p className="text-[13px  ] my-2 font-[500] leading-[24px]">
                         {Array.isArray(relatedOffer.lecturers) &&
                         relatedOffer.lecturers.length > 1
                           ? "ტრენერები: "
