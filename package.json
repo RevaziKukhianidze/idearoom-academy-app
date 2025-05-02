@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
-    "start": "set NODE_ENV=production && node server.cjs",
+    "start": "cross-env NODE_ENV=production && node server.cjs",
     "lint": "next lint"
   },
   "dependencies": {
