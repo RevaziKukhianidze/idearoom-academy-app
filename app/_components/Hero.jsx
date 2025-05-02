@@ -1,16 +1,66 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import arrowRight from "../../public/arrowRight.svg";
-import sliderBg from "../../public/sliderBg.png";
+import sliderBg from "../../public/sliderBg.webp";
 import rightSlider from "../../public/rightSlider.svg";
 import leftSlider from "../../public/leftSlider.svg";
 import { Button } from "../../components/ui/button";
 import { createClient } from "@supabase/supabase-js";
 
-// Initialize Supabase client
+// Supabase configuration
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Simple in-memory cache
+const cache = {
+  data: {},
+  timeouts: {},
+
+  // Cache duration in milliseconds (1 hour)
+  DEFAULT_TTL: 3600000,
+
+  set(key, value, ttl = this.DEFAULT_TTL) {
+    this.data[key] = value;
+
+    // Clear any existing timeout
+    if (this.timeouts[key]) {
+      clearTimeout(this.timeouts[key]);
+    }
+
+    // Set expiration timeout
+    this.timeouts[key] = setTimeout(() => {
+      delete this.data[key];
+      delete this.timeouts[key];
+    }, ttl);
+
+    return value;
+  },
+
+  get(key) {
+    return this.data[key];
+  },
+
+  has(key) {
+    return key in this.data;
+  },
+
+  invalidate(key) {
+    delete this.data[key];
+    if (this.timeouts[key]) {
+      clearTimeout(this.timeouts[key]);
+      delete this.timeouts[key];
+    }
+  },
+
+  invalidateAll() {
+    Object.keys(this.timeouts).forEach((key) => {
+      clearTimeout(this.timeouts[key]);
+    });
+    this.data = {};
+    this.timeouts = {};
+  },
+};
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -19,86 +69,121 @@ export default function Hero() {
   const [isMobile, setIsMobile] = useState(false);
   const [slides, setSlides] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Function to fetch slider data from Supabase
-  async function apiSlider() {
-    let { data, error } = await supabase
-      .from("slider")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error("Error fetching slider data:", error);
-      return [];
-    }
-
-    return data || [];
-  }
-
+  // Fetch data from Supabase with caching
   useEffect(() => {
-    const loadSlides = async () => {
-      setLoading(true);
-      const sliderData = await apiSlider();
+    let isMounted = true;
+    const cacheKey = "hero_slider_data";
 
-      if (sliderData && sliderData.length > 0) {
-        // Transform the Supabase data to match our slide format
-        const formattedSlides = sliderData.map((item) => ({
-          image: sliderBg, // This is static background image
-          imageRight: item.image, // The main image URL from Supabase
-          title: item.title,
-          description: item.text,
-          buttonLink: item.button_link || "#",
-        }));
+    const fetchSlides = async () => {
+      try {
+        // Check cache first
+        if (cache.has(cacheKey)) {
+          const cachedData = cache.get(cacheKey);
+          if (isMounted) {
+            setSlides(cachedData);
+            setLoading(false);
+            return;
+          }
+        }
 
-        setSlides(formattedSlides);
+        // If not in cache, fetch from Supabase
+        const { data, error } = await supabase
+          .from("slider")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (error) throw error;
+
+        if (isMounted && data) {
+          // Prepare data for rendering
+          const formattedSlides = data.map((item) => ({
+            image: sliderBg,
+            imageRight: item.image,
+            title: item.title,
+            description: item.text,
+            buttonLink: item.button_link || "#",
+          }));
+
+          // Store in cache and set state
+          cache.set(cacheKey, formattedSlides);
+          setSlides(formattedSlides);
+          setLoading(false);
+        }
+      } catch (err) {
+        if (isMounted) {
+          console.error("Error fetching slider data:", err);
+          setError(err);
+          setLoading(false);
+        }
       }
-      setLoading(false);
     };
 
-    loadSlides();
+    fetchSlides();
+
+    // Cleanup function to prevent memory leaks
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const nextSlide = () => {
-    if (slides.length > 0) {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }
-  };
-
-  const prevSlide = () => {
-    if (slides.length > 0) {
-      setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-    }
-  };
-
-  // Simplified function to handle dot navigation
-  const handleDotClick = (index) => {
-    setCurrentSlide(index);
-  };
-
-  const handleSwipe = () => {
-    const diff = startX - endX;
-    if (diff > 50) {
-      nextSlide();
-    } else if (diff < -50) {
-      prevSlide();
-    }
-    setStartX(0);
-    setEndX(0);
-  };
-
+  // Check for mobile screen - client-side only
   useEffect(() => {
-    // განსაზღვრავს არის თუ არა მობილური (ან touch მოწყობილობა) ეკრანული ზომა
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
+    // Avoid window reference during SSR
+    if (typeof window !== "undefined") {
+      const checkScreenSize = () => {
+        setIsMobile(window.innerWidth < 1024);
+      };
 
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
+      checkScreenSize();
+      window.addEventListener("resize", checkScreenSize);
 
-    return () => window.removeEventListener("resize", checkScreenSize);
+      return () => window.removeEventListener("resize", checkScreenSize);
+    }
   }, []);
 
-  // Re-add the automatic slider functionality
+  // Memoized slider navigation functions
+  const nextSlide = useMemo(
+    () => () => {
+      if (slides.length > 0) {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+      }
+    },
+    [slides.length]
+  );
+
+  const prevSlide = useMemo(
+    () => () => {
+      if (slides.length > 0) {
+        setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+      }
+    },
+    [slides.length]
+  );
+
+  const handleDotClick = useMemo(
+    () => (index) => {
+      setCurrentSlide(index);
+    },
+    []
+  );
+
+  const handleSwipe = useMemo(
+    () => () => {
+      const diff = startX - endX;
+      if (diff > 50) {
+        nextSlide();
+      } else if (diff < -50) {
+        prevSlide();
+      }
+      setStartX(0);
+      setEndX(0);
+    },
+    [startX, endX, nextSlide, prevSlide]
+  );
+
+  // Auto-slider
   useEffect(() => {
     if (slides.length === 0) return;
 
@@ -107,77 +192,104 @@ export default function Hero() {
     }, 9000);
 
     return () => clearInterval(interval);
-  }, [slides.length, currentSlide]);
+  }, [slides.length, nextSlide]);
 
-  // Show loading state if slides are being fetched
+  // Memoized touch events
+  const touchEvents = useMemo(() => {
+    if (!isMobile) return {};
+
+    return {
+      onTouchStart: (e) => setStartX(e.touches[0].clientX),
+      onTouchMove: (e) => setEndX(e.touches[0].clientX),
+      onTouchEnd: handleSwipe,
+      onMouseDown: (e) => setStartX(e.clientX),
+      onMouseMove: (e) => setEndX(e.clientX),
+      onMouseUp: handleSwipe,
+    };
+  }, [isMobile, handleSwipe]);
+
+  // Show loading state
   if (loading) {
     return (
       <main className="relative max-lg:bg-secondary-50 max-lg:rounded-[20px] max-lg:px-5 max-lg:py-10 max-sm:py-5 max-lg:max-w-[95%] container mt-[128px]">
         <div className="flex justify-center items-center h-[300px]">
-          <section className="relative z-50 w-full ">
-            <div className="absolute spinner top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"></div>
-          </section>
+          <div className="spinner"></div>
         </div>
       </main>
     );
   }
 
-  // Show message if no slides found
+  // Show error state
+  if (error) {
+    return (
+      <main className="relative max-lg:bg-secondary-50 max-lg:rounded-[20px] max-lg:px-5 max-lg:py-10 max-sm:py-5 max-lg:max-w-[95%] container mt-[128px]">
+        <div className="flex justify-center items-center h-[300px]">
+          <p className="caps-text text-red-500">დაფიქსირდა შეცდომა!</p>
+        </div>
+      </main>
+    );
+  }
+
+  // Show when no slides are available
   if (slides.length === 0) {
     return (
       <main className="relative max-lg:bg-secondary-50 max-lg:rounded-[20px] max-lg:px-5 max-lg:py-10 max-sm:py-5 max-lg:max-w-[95%] container mt-[128px]">
         <div className="flex justify-center items-center h-[300px]">
-          <p className="caps-text">არ არის კონტენტი !</p>
+          <p className="caps-text">არ არის კონტენტი!</p>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="relative max-lg:bg-secondary-50 max-lg:rounded-[20px] max-lg:px-5 max-lg:py-10 max-sm:py-5 max-lg:max-w-[95%] container mt-[128px] ">
-      <div className="absolute max-lg:hidden block inset-0 -z-10">
-        <img src={sliderBg.src} alt="Background" />
-      </div>
-
-      <div
-        className="relative w-full overflow-hidden "
-        {...(isMobile
-          ? {
-              onTouchStart: (e) => setStartX(e.touches[0].clientX),
-              onTouchMove: (e) => setEndX(e.touches[0].clientX),
-              onTouchEnd: handleSwipe,
-              onMouseDown: (e) => setStartX(e.clientX),
-              onMouseMove: (e) => setEndX(e.clientX),
-              onMouseUp: handleSwipe,
-            }
-          : {})}
-      >
-        {/* Left Arrow Button */}
-        <button
-          onClick={prevSlide}
-          className="absolute max-lg:hidden max-xl:left-4 left-7 top-[55%] -translate-y-1/2 z-10 bg-[#EFF2F580] hover:bg-white/80 rounded-full transition-all duration-300 max-sm:hidden"
-          aria-label="Previous slide"
-        >
+    <main className="relative max-lg:bg-secondary-50 max-lg:rounded-[20px] max-lg:px-5 max-lg:py-10 max-sm:py-5 max-lg:max-w-[95%] container mt-[128px]">
+      {/* Background image - desktop only */}
+      {!isMobile && (
+        <div className="absolute inset-0 -z-10">
           <Image
-            className="max-xl:w-[36px] max-xl:h-[36px]"
-            src={leftSlider}
-            alt="left-slider svg"
+            src={sliderBg}
+            alt="Background"
+            sizes="100vw"
+            style={{ objectFit: "cover" }}
           />
-        </button>
+        </div>
+      )}
 
-        {/* Right Arrow Button */}
-        <button
-          onClick={nextSlide}
-          className="absolute right-7 max-xl:right-4 max-lg:hidden top-[55%] -translate-y-1/2 z-10 bg-[#EFF2F580] hover:bg-white/80 rounded-full transition-all duration-300 max-sm:hidden"
-          aria-label="Next slide"
-        >
-          <Image
-            className="max-xl:w-[36px] max-xl:h-[36px]"
-            src={rightSlider}
-            alt="right-slider svg"
-          />
-        </button>
+      <div className="relative w-full overflow-hidden" {...touchEvents}>
+        {/* Navigation arrows - desktop only */}
+        {!isMobile && (
+          <>
+            <button
+              onClick={prevSlide}
+              className="absolute max-xl:left-4 left-7 top-[55%] -translate-y-1/2 z-10 bg-[#EFF2F580] hover:bg-white/80 rounded-full transition-all duration-300"
+              aria-label="Previous slide"
+            >
+              <Image
+                className="max-xl:w-[36px] max-xl:h-[36px]"
+                src={leftSlider}
+                alt="left-slider"
+                width={48}
+                height={48}
+              />
+            </button>
 
+            <button
+              onClick={nextSlide}
+              className="absolute right-7 max-xl:right-4 top-[55%] -translate-y-1/2 z-10 bg-[#EFF2F580] hover:bg-white/80 rounded-full transition-all duration-300"
+              aria-label="Next slide"
+            >
+              <Image
+                className="max-xl:w-[36px] max-xl:h-[36px]"
+                src={rightSlider}
+                alt="right-slider"
+                width={48}
+                height={48}
+              />
+            </button>
+          </>
+        )}
+
+        {/* Slider container */}
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -185,10 +297,11 @@ export default function Hero() {
           {slides.map((slide, index) => (
             <div key={index} className="w-full flex-shrink-0">
               <div className="grid max-xl:pt-[50px] pt-[85px] max-sm:pt-[50px] md:px-[70px] xl:px-[100px] grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-[32px] xl:gap-[64px] justify-between items-center">
+                {/* Text and button */}
                 <div className="left order-2 text-secondary-800 lg:text-white max-sm:ml-2 lg:order-1">
-                  <h1 className="text-2xl sm:text-[30px] md:text-[32px] lg:text-[30px] xl:text-[39px] max-sm:mt-6 max-lg:mt-9 max-sm:mb-[10px] max-sm:text-[22px] mb-[24px] caps-text font-bold">
+                  <p className="text-2xl sm:text-[30px] md:text-[32px] lg:text-[30px] xl:text-[39px] max-sm:mt-6 max-lg:mt-9 max-sm:mb-[10px] max-sm:text-[22px] mb-[24px] caps-text font-bold">
                     {slide.title}
-                  </h1>
+                  </p>
                   <p className="text-sm sm:text-base md:text-lg lg:text-[15px] xl:text-[18px] font-regular leading-[1.5] sm:leading-[1.6] md:leading-[1.7] max-w-full sm:max-w-[95%] md:max-w-[90%] mt-2">
                     {slide.description}
                   </p>
@@ -199,24 +312,26 @@ export default function Hero() {
                     }
                   >
                     გაიგე მეტი{" "}
-                    <img
-                      className="mt-[-2px] sm:mt-[-3px] max-sm:mt-[-4px] w-6 h-6 sm:w-[27px] sm:h-[27px]"
-                      src={arrowRight.src}
-                      alt="arrowRight-svg"
+                    <Image
+                      className="mt-[-2px] sm:mt-[-3px] max-sm:mt-[-4px]"
+                      src={arrowRight}
+                      alt="arrowRight"
                       width={24}
                       height={24}
                     />
                   </Button>
                 </div>
+
+                {/* Slide image */}
                 <div className="order-1 lg:order-2">
                   <div className="w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-none mx-auto lg:mx-0 overflow-hidden rounded-md">
                     <img
-                      quality={100}
-                      className="w-full mx-auto h-auto object-cover rounded-md max-sm:mt-4"
                       src={slide.imageRight}
                       alt="slider-image"
                       width={582}
                       height={425}
+                      className="w-full mx-auto h-auto object-cover rounded-md max-sm:mt-4"
+                      loading={index === 0 ? "eager" : "lazy"}
                       sizes="(max-width: 640px) 95vw, (max-width: 768px) 90vw, (max-width: 1024px) 85vw, 582px"
                     />
                   </div>
@@ -227,21 +342,23 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Dots navigation - improved with cursor pointer and cleaner click handling */}
-      <div className="absolute duration-300 transition-all max-lg:bottom-[-5%] max-sm:hidden bottom-[-20px] left-0 right-0 flex justify-center gap-4 z-10">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleDotClick(index)}
-            className={`w-[11px] h-[11px] rounded-full cursor-pointer ${
-              currentSlide === index
-                ? "bg-[#fdb927]"
-                : "border-2 border-[#fdb927]"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
+      {/* Navigation dots */}
+      {!isMobile && (
+        <div className="absolute duration-300 transition-all max-lg:bottom-[-5%] bottom-[-20px] left-0 right-0 flex justify-center gap-4 z-10">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handleDotClick(index)}
+              className={`w-[11px] h-[11px] rounded-full cursor-pointer ${
+                currentSlide === index
+                  ? "bg-[#fdb927]"
+                  : "border-2 border-[#fdb927]"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </main>
   );
 }

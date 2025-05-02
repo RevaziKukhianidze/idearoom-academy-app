@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../../../components/ui/button";
@@ -17,10 +17,6 @@ import downArrow from "../../../public/downArrow.svg";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 
 function AccordionItem({ title, content }) {
-  useEffect(() => {
-    document.title = "idearoom | შეთავაზება";
-  }, []);
-
   return (
     <div className="py-2">
       <details className="group">
@@ -158,8 +154,8 @@ function RelatedOffersLoader() {
 }
 
 export default function OfferPage({ params }) {
-  // Unwrap params to get offerId
-  const unwrappedParams = React.use(params);
+  // Unwrap params with React.use()
+  const unwrappedParams = use(params);
   const offerId = unwrappedParams.offerId;
 
   const [offer, setOffer] = useState(null);
@@ -170,6 +166,10 @@ export default function OfferPage({ params }) {
 
   // გაიხსნას რეგისტრაციის ფორმა
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
+
+  useEffect(() => {
+    document.title = "idearoom | შეთავაზება";
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -436,7 +436,7 @@ export default function OfferPage({ params }) {
                       <p className="font-[500] mt-1 text-[#282525] text-[15px] pr-8">
                         {relatedOffer.title}
                       </p>
-                      <p className="text-[13px  ] my-2 font-[500] leading-[24px]">
+                      <p className="text-[13px] my-2 font-[500] leading-[24px]">
                         {Array.isArray(relatedOffer.lecturers) &&
                         relatedOffer.lecturers.length > 1
                           ? "ტრენერები: "

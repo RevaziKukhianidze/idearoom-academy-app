@@ -8,7 +8,7 @@ import { ChevronDown, Calendar } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import cancel from "../../public/cancel.svg";
-import signUpPic from "../../public/sign-upPic.png";
+import signUpPic from "../../public/sign-upPic.webp";
 import { createUser } from "../services/apiUsers";
 
 const RegistrationForm = ({

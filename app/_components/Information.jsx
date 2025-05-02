@@ -1,5 +1,5 @@
 import Image from "next/image";
-import information from "../../public/information.png";
+import information from "../../public/information.webp";
 import certificate from "../../public/certificate.svg";
 import lessonsIcon from "../../public/lessonsIcon.svg";
 import intern from "../../public/intern.svg";

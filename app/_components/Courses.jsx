@@ -29,7 +29,9 @@ export default function Courses() {
 
   return (
     <section className="container pt-[72px] relative max-sm:max-w-[85%] mx-auto pb-8 max-md:py-9 md:pb-6">
-      <Headline text="აირჩიე სასურველი კურსი და დარეგისტრირდი" />
+      <h1 className="text-[20px] max-sm:text-[19px] text-center leading-[24px] mt-[72px] caps-text font-bold text-secondary-500">
+        აირჩიე სასურველი კურსი და დარეგისტრირდი
+      </h1>
 
       {isLoading ? (
         <CoursesLoader />

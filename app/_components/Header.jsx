@@ -4,29 +4,15 @@ import { Button } from "../../components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown, Calendar } from "lucide-react";
 import Logo from "../_components/Logo";
-import cancel from "../../public/cancel.svg";
 import { usePathname } from "next/navigation";
-import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
-import { Checkbox } from "../../components/ui/checkbox";
-import signUpPic from "../../public/sign-upPic.png";
 import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../../components/ui/alert-dialog";
-import Image from "next/image";
-import { createUser } from "../services/apiUsers";
 import { getCourses } from "../services/apiCourses";
 import RegistrationForm from "./RegistrationForm";
-
-// VisuallyHidden component for accessibility
-const VisuallyHidden = ({ children }) => (
-  <span className="absolute w-[1px] h-[1px] p-0 -m-[1px] overflow-hidden clip-[rect(0,0,0,0)] border-0">
-    {children}
-  </span>
-);
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

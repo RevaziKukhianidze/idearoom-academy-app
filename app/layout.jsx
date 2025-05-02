@@ -22,6 +22,7 @@ export default function RootLayout({ children }) {
       className={`${contractica.variable} ${contractica_caps.variable}`}
     >
       <head>
+        <link rel="canonical" href="https://academy.idearoom.ge" />
         <Script
           strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-1ZSWQHEFFP"

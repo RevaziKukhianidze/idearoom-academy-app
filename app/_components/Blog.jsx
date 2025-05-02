@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import Headline from "./Headline";
-import blogPicture from "../../public/blogPicture.png";
 import { Button } from "../../components/ui/button";
 import SeeAllButton from "./SeeAllButton";
 import { useEffect, useState } from "react";

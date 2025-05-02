@@ -1,20 +1,14 @@
 {
-  "/api/offers/route": "app/api/offers/route.js",
-  "/api/offer/route": "app/api/offer/route.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/robots.txt/route": "app/robots.txt/route.js",
-  "/sitemap.xml/route": "app/sitemap.xml/route.js",
-  "/opengraph-image.png/route": "app/opengraph-image.png/route.js",
-  "/contact/page": "app/contact/page.js",
-  "/blog/page": "app/blog/page.js",
-  "/error/page": "app/error/page.js",
-  "/courses/page": "app/courses/page.js",
-  "/offer/[offerId]/page": "app/offer/[offerId]/page.js",
-  "/offer/page": "app/offer/page.js",
   "/page": "app/page.js",
+  "/courses/page": "app/courses/page.js",
   "/courses/[courseId]/page": "app/courses/[courseId]/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
+  "/offer/page": "app/offer/page.js",
+  "/offer/[offerId]/page": "app/offer/[offerId]/page.js",
+  "/api/offer/route": "app/api/offer/route.js",
+  "/api/offers/route": "app/api/offers/route.js",
   "/about/page": "app/about/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/contact/page": "app/contact/page.js",
   "/blog/[blogId]/page": "app/blog/[blogId]/page.js",
-  "/privacy/page": "app/privacy/page.js"
+  "/blog/page": "app/blog/page.js"
 }

@@ -12,12 +12,12 @@ export default function Footer() {
         <Logo />
         <div>
           <div className="mb-4">
-            <h4 className="uppercase text-sm font-medium text-secondary-500 mb-[5px] mt-12">
+            <p className="uppercase text-sm font-medium text-secondary-500 mb-[5px] mt-12">
               ACADEMY OF IDEAROOM
-            </h4>
-            <h4 className="uppercase caps-text text-sm mb-4 font-medium text-secondary-500">
+            </p>
+            <p className="uppercase caps-text text-sm mb-4 font-medium text-secondary-500">
               იდეარუმის აკადემია
-            </h4>
+            </p>
           </div>
           <p className="text-secondary-500 text-sm mb-5">
             © 2024. საქართველო, ქუთაისი | ყველა უფლება დაცულია

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import homeIcon from "../../public/homeIcon.svg";
 import rightArrow from "../../public/rightArrow.svg";
-import aboutUsPicture from "../../public/team.jpg";
+import aboutUsPicture from "../../public/team.webp";
 
 export const metadata = {
   title: "ჩვენს შესახებ",

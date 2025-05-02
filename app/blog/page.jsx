@@ -12,7 +12,7 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "idearoom | ბლოგი";
+    document.title = "ბლოგი - Idearoom.ge";
 
     async function fetchBlogs() {
       try {

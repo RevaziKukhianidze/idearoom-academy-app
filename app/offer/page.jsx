@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { apiDoubleCourse } from "../services/apiDoubleCourse";
 import HeadTopOffer from "../_components/HeadTopOffer";
@@ -9,31 +9,36 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchCourses = useCallback(async () => {
+    try {
+      const data = await apiDoubleCourse();
+
+      // ასლის შექმნა და დალაგება (არ შეცვალოთ ორიგინალი მასივი)
+      const sortedCourses = [...data].sort((a, b) => b.id - a.id);
+      setCourses(sortedCourses);
+    } catch (err) {
+      console.error("Error fetching courses:", err);
+      // Store a more user-friendly error message
+      setError(
+        err.message || "Failed to load courses. Please try again later."
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     document.title = "idearoom | შეთავაზება";
-    async function fetchCourses() {
-      try {
-        const data = await apiDoubleCourse();
-        // Sort courses by date (assuming there's a created_at or date field)
-        // If your API doesn't return a date field, you'll need to modify this
-        const sortedCourses = data.sort((a, b) => {
-          // If you have a date field, use that for sorting
-          // For example: return new Date(b.created_at) - new Date(a.created_at);
 
-          // If you're using an ID that increments with newer courses
-          return b.id - a.id;
-        });
-        setCourses(sortedCourses);
-      } catch (err) {
-        console.error("Error fetching courses:", err);
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    }
+    // გამოვიყენოთ AbortController მოთხოვნის გასაუქმებლად საჭიროების შემთხვევაში
+    const abortController = new AbortController();
 
     fetchCourses();
-  }, []);
+
+    return () => {
+      abortController.abort();
+    };
+  }, [fetchCourses]);
 
   if (loading) {
     return (
@@ -46,7 +51,26 @@ export default function Page() {
   }
 
   if (error) {
-    return <div>Error loading courses</div>;
+    return (
+      <div className="container mx-auto max-sm:max-w-[90%] mt-[120px] py-8 text-center">
+        <div className="bg-red-50 p-6 rounded-lg shadow">
+          <h2 className="text-lg font-bold text-red-700 mb-2">
+            Error loading courses
+          </h2>
+          <p className="text-red-600">{error}</p>
+          <button
+            onClick={() => {
+              setLoading(true);
+              setError(null);
+              fetchCourses();
+            }}
+            className="mt-4 bg-primary-500 text-white py-2 px-6 rounded-lg hover:bg-primary-600 transition"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -67,6 +91,7 @@ export default function Page() {
                 className="mb-5 w-full relative"
                 src={course.image}
                 alt={`course-image-${course.id}`}
+                loading="lazy" // დავამატოთ lazy loading ზედმეტი რექვესტების თავიდან ასაცილებლად
               />
               <p className="absolute max-sm:py-[5px] max-sm:px-4 max-sm:text-sm bg-[#FDB927] top-[10px] right-[10px] px-5 py-[5px] shadow-lg pt-[10px] rounded-full text-secondary-900 font-bold caps-text">
                 -{course.discount_percentage}%
@@ -97,7 +122,7 @@ export default function Page() {
                   ₾ {course.old_price}
                 </span>
               </div>
-              <Link href={`/offer/${course.id}`}>
+              <Link href={`/offer/${course.id}`} prefetch={false}>
                 <button className="w-full hover:translate-y-[-3px] duration-300 transition-all rounded-[12px] bg-primary-500 text-[#fff] hover:text-secondary-900 hover:bg-[#FDB927] py-2 pt-3 text-sm caps-text font-bold px-5">
                   დეტალურად
                 </button>
