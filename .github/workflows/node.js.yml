@@ -4,16 +4,19 @@ name: idearoom-academy-app
 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+      - main
 
 jobs:
   build:
-
     runs-on: self-hosted
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: 
+          - 18.x
+          - 20.x
+          - 22.x
 
     env:
       NEXT_PUBLIC_SUPABASE_URL: ${{secrets.NEXT_PUBLIC_SUPABASE_URL}}
