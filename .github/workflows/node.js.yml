@@ -30,3 +30,6 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build 
+    - name: Change directory
+      run: cd /home/rezo/actions-runner/_work/idearoom-academy-app/idearoom-academy-app
+    - run: pm2 restart 0
