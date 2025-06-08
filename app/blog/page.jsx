@@ -17,7 +17,7 @@ export default function Page() {
     async function fetchBlogs() {
       try {
         const data = await getBlogs();
-        setBlogs(data);
+      
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching blogs:", error);
