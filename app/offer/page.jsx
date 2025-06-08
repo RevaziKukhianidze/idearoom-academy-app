@@ -93,7 +93,7 @@ export default function Page() {
                 alt={`course-image-${course.id}`}
                 loading="lazy" // დავამატოთ lazy loading ზედმეტი რექვესტების თავიდან ასაცილებლად
               />
-              <p className="absolute max-sm:py-[5px] max-sm:px-4 max-sm:text-sm bg-[#FDB927] top-[10px] right-[10px] px-5 py-[5px] shadow-lg pt-[10px] rounded-full text-[#383838] font-bold caps-text">
+              <p className="absolute max-sm:py-[5px] max-sm:px-4 max-sm:text-sm bg-[#FDB927] top-[10px] right-[10px] px-5 py-[5px] shadow-lg pt-[10px] rounded-full text-secondary-900 font-bold caps-text">
                 -{course.discount_percentage}%
               </p>
             </div>
@@ -101,31 +101,29 @@ export default function Page() {
               {course.course_category.map((category, id) => {
                 return (
                   <div key={id}>
-                    <p className="text-sm max-lg:text-xs caps-text font-[500] text-[#383838] bg-[#f4f6f7] py-[6px] px-4 rounded-full">
+                    <p className="text-sm max-lg:text-xs caps-text font-bold text-secondary-800 bg-[#EBF0F3] py-[6px] px-4 rounded-full">
                       {category}
                     </p>
                   </div>
                 );
               })}
             </div>
-            <h2 className="text-lg mt-6 text-secondary-800 font-[600] mb-2 caps-text">
+            <h2 className="text-lg mt-4 text-[#282525] font-bold mb-2 caps-text">
               {course.title}
             </h2>
-            <p className="text-[#434a53] text-sm caps-text mb-6 line-clamp-2">
-              {course.text}
-            </p>
+            <p className="text-[#383838] mb-6 line-clamp-2">{course.text}</p>
             <div className="w-full h-[1px] bg-[#EFF2F5] mb-6"></div>
-            <div className="flex items-center justify-between ">
+            <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
-                <span className="text-[#383838] text-xl lg:mr-2 font-bold">
+                <span className="text-primary-500 text-xl lg:mr-2 font-bold">
                   ₾ {course.price}
                 </span>
-                <span className="text-[#d95a5a] font-[500] text-xl line-through">
+                <span className="text-gray-400 line-through">
                   ₾ {course.old_price}
                 </span>
               </div>
               <Link href={`/offer/${course.id}`} prefetch={false}>
-                <button className="w-full rounded-[10px] bg-primary-500 text-[#fff] hover:bg-primary-600 duration-300  py-[12px] pt-[14px] text-sm caps-text font-bold px-5">
+                <button className="w-full hover:translate-y-[-3px] duration-300 transition-all rounded-[12px] bg-primary-500 text-[#fff] hover:text-secondary-900 hover:bg-[#FDB927] py-2 pt-3 text-sm caps-text font-bold px-5">
                   დეტალურად
                 </button>
               </Link>

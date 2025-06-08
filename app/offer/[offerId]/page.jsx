@@ -354,7 +354,7 @@ export default function OfferPage({ params }) {
                 <Image src={lightCalendar} alt="calendar icon" />
                 <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-[15px]">
                   დაწყების თარიღი:{" "}
-                  <span className="text-[#88919C] regular-text font-[400] ml-1">
+                  <span className="text-[#88919C] ml-1">
                     {offer.start_course || "მალე დაიწყება"}
                   </span>
                 </p>
@@ -363,7 +363,7 @@ export default function OfferPage({ params }) {
                 <Image src={tv} alt="tv icon" />
                 <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
                   კურსის ხანგრძლივობა:{" "}
-                  <span className="text-[#88919C] regular-text font-[400] ml-1">
+                  <span className="text-[#88919C] ml-1">
                     {offer.qunatity_of_lessons || offer.quantity_of_lessons}{" "}
                     შეხვედრა
                   </span>
@@ -373,7 +373,7 @@ export default function OfferPage({ params }) {
                 <Image src={timer} alt="timer icon" />
                 <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
                   შეხვედრის ხანგრძლივობა:{" "}
-                  <span className="text-[#88919C] regular-text font-[400] ml-1">
+                  <span className="text-[#88919C] ml-1">
                     {offer.lesson_time} საათი
                   </span>
                 </p>
@@ -382,7 +382,7 @@ export default function OfferPage({ params }) {
                 <Image src={user} alt="user icon" />
                 <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
                   სტუდენტები ჯგუფში:{" "}
-                  <span className="text-[#88919C] regular-text font-[400] ml-1">
+                  <span className="text-[#88919C] ml-1">
                     {offer.qunatity_of_students || offer.quantity_of_students}
                   </span>
                 </p>
@@ -398,7 +398,7 @@ export default function OfferPage({ params }) {
               <p className="text-base lg:text-lg text-secondary-500 caps-text mt-6 lg:mt-8">
                 ფასი: <span className="font-bold">₾ {offer.price}</span>
               </p>
-              <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6 lg:mt-8">
+              <p className="text-[14px] line-through font-[300] ml-4 caps-text text-red-500 mt-6 lg:mt-8">
                 <span className="font-bold leading-[24px]">
                   ₾ {offer.old_price}
                 </span>
@@ -446,7 +446,7 @@ export default function OfferPage({ params }) {
                           : relatedOffer.lecturers}
                       </p>
                       <Link href={`/offer/${relatedOffer.id}`}>
-                        <Button className="w-full max-lg:text-[13px] lg:w-[140px] pt-3 rounded-[10px] xl:w-[180px] h-[44px] md:w-[140px] mt-1 lg:mt-2 text-sm">
+                        <Button className="w-full max-lg:text-[13px] lg:w-[140px] xl:w-[180px] h-[44px] md:w-[140px] mt-1 lg:mt-2 text-sm">
                           დეტალურად
                         </Button>
                       </Link>
@@ -474,13 +474,8 @@ export default function OfferPage({ params }) {
             max-lg:top-0 max-lg:left-0 max-lg:h-full max-lg:w-full max-lg:max-w-none max-lg:translate-x-0 max-lg:translate-y-0 max-lg:rounded-none
           "
         >
-          <AlertDialog.Title className="sr-only">
-            კურსზე რეგისტრაცია
-          </AlertDialog.Title>
-          <RegistrationForm
-            onCancel={() => setShowRegistrationForm(false)}
-            courses={[offer, ...relatedOffers]}
-          />
+          <AlertDialog.Title className=""></AlertDialog.Title>
+          <RegistrationForm onCancel={() => setShowRegistrationForm(false)} />
           <AlertDialog.Cancel asChild></AlertDialog.Cancel>
         </AlertDialog.Content>
       </AlertDialog.Root>

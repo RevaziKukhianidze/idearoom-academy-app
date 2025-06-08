@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "../../../components/ui/button";
 import Image from "next/image";
-import ShareIcons from "./ShareIcons";
+import Icons from "../../_components/Icons";
 import calendar from "../../../public/calendar.svg";
 import { getBlogs } from "../../services/apiBlogs";
 import HeadTop from "../_components/HeadTop";
@@ -82,11 +82,6 @@ export default async function BlogPage({ params }) {
     );
   }
 
-  // Create the absolute URL for sharing
-  const blogUrl = `${
-    process.env.NEXT_PUBLIC_SITE_URL || "https://idearoom.ge"
-  }/blog/${params.blogId}`;
-
   return (
     <section className="container max-sm:max-w-[90%] mt-[128px] mx-auto">
       <div className="max-sm:mb-12">
@@ -97,12 +92,12 @@ export default async function BlogPage({ params }) {
           <h1 className="text-lg sm:text-xl text-secondary-500 font-bold caps-text max-w-[500px] mb-3 sm:mb-5">
             {blog.title}
           </h1>
-          <div className="text-secondary-500 flex items-center gap-2 mb-4 text-[14px] max-sm:mb-8">
+          <div className="text-secondary-500 flex items-center gap-2 mb-4 text-[12px] max-sm:mb-8">
             <Image src={calendar} alt="calendar-icon" />{" "}
             {formatDateGeorgian(blog.created_at)}
           </div>
           <div className="flex md:absolute md:bottom-[30px] gap-4 items-center mt-4 md:mt-0">
-            <ShareIcons url={blogUrl} quote={blog.title} />
+            <Icons />
           </div>
         </div>
         <div className="w-full md:w-auto mt-4 md:mt-0">

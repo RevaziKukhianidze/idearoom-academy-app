@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function HeadTopCourse({ children, isCoursesPage = true }) {
   return (
-    <div className="flex flex-wrap max-sm:mb-7 gap-3 items-center sm:my-7">
+    <div className="flex flex-wrap gap-3 items-center sm:my-7">
       <Link href="/">
         <Image
           className="w-[14px] h-[12px] sm:w-[16px] sm:h-[14px]"

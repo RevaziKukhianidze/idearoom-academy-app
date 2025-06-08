@@ -306,12 +306,19 @@ export default function Hero() {
                     {slide.description}
                   </p>
                   <Button
-                    className="caps-text max-sm:mb-5 md:h-[48px] max-xl:h-[45px] px-7 max-sm:mt-8 flex items-center gap-3 sm:gap-2 pt-3 h-[48px] mt-4 sm:mt-6 md:mt-8 lg:mt-9 text-sm sm:text-[15px]"
+                    className="caps-text max-sm:mb-5 md:h-[48px] max-xl:h-[45px] max-sm:mt-8 flex items-center gap-3 sm:gap-2 pt-3 h-[48px] mt-4 sm:mt-6 md:mt-8 lg:mt-9 text-sm sm:text-[15px]"
                     onClick={() =>
                       (window.location.href = slide.buttonLink || "#")
                     }
                   >
                     გაიგე მეტი{" "}
+                    <Image
+                      className="mt-[-2px] sm:mt-[-3px] max-sm:mt-[-4px]"
+                      src={arrowRight}
+                      alt="arrowRight"
+                      width={24}
+                      height={24}
+                    />
                   </Button>
                 </div>
 
