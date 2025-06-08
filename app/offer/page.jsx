@@ -17,7 +17,6 @@ export default function Page() {
       const sortedCourses = [...data].sort((a, b) => b.id - a.id);
       setCourses(sortedCourses);
     } catch (err) {
-      console.error("Error fetching courses:", err);
       // Store a more user-friendly error message
       setError(
         err.message || "Failed to load courses. Please try again later."
