@@ -139,7 +139,7 @@ export default function Page() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full bg-white outline-none border-none shadow-none h-[65px] pl-[18px] rounded-[14px] p-3 text-sm text-[#282525] caps-text focus:ring-primary-500 placeholder:text-[#282525]"
+                  className="w-full  bg-white outline-none border-none shadow-none h-[65px] pl-[20px] pt-[8px] rounded-[14px]  text-sm text-[#282525] caps-text focus:ring-primary-500 placeholder:text-[#282525]"
                   required
                   placeholder="სახელი და გვარი *"
                 />
@@ -150,7 +150,7 @@ export default function Page() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full bg-white outline-none border-none shadow-none h-[65px] pl-[18px] rounded-[14px] p-3 text-sm text-[#282525] caps-text focus:ring-primary-500 placeholder:text-[#282525]"
+                  className="w-full bg-white outline-none border-none shadow-none h-[65px] rounded-[14px] pt-[8px] pl-[20px] text-sm text-[#282525] caps-text focus:ring-primary-500 placeholder:text-[#282525]"
                   required
                   placeholder="ელ-ფოსტა *"
                 />
@@ -160,7 +160,7 @@ export default function Page() {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full bg-white outline-none border-none shadow-none h-[350px] pl-[18px] pt-3 rounded-[14px] text-sm text-[#282525] caps-text focus:ring-1 focus:ring-primary-500 placeholder:text-[#282525] input-with-top-placeholder"
+              className="w-full bg-white outline-none border-none shadow-none h-[350px] pl-[20px] pt-[20px] rounded-[14px] text-sm text-[#282525] caps-text focus:ring-1 focus:ring-primary-500 placeholder:text-[#282525] input-with-top-placeholder"
               required
               placeholder="წერილი *"
             ></textarea>
@@ -185,11 +185,15 @@ export default function Page() {
           <div className="space-y-6">
             <div className="flex ml-[6px] md:ml-[-4px] items-center gap-4">
               <Image src={location} alt="location svg" />
-              <p className="text-sm text-[#282525]">კოსტავა N38, ქუთაისი</p>
+              <p className="text-base max-md:text-sm text-[#282525]">
+                კოსტავა N38, ქუთაისი
+              </p>
             </div>
             <div className="flex items-center gap-4">
               <Image className="max-md:ml-[8px]" src={phone} alt="phone svg" />
-              <p className="text-sm text-[#282525]">+995 551 25 13 14</p>
+              <p className="text-base max-md:text-sm text-[#282525]">
+                +995 551 25 13 14
+              </p>
             </div>
             <div className="flex items-center gap-4">
               <Image
@@ -197,7 +201,9 @@ export default function Page() {
                 src={message}
                 alt="message svg"
               />
-              <p className="text-sm text-[#282525]">idearoom@info.ge</p>
+              <p className="text-base max-md:text-sm text-[#282525]">
+                idearoom@info.ge
+              </p>
             </div>
           </div>
         </div>

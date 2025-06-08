@@ -34,12 +34,9 @@ const AccordionItem = memo(({ title, content }) => {
           <span className="mt-2 max-md:text-sm">{title}</span>
           <span>
             <Image
-              className="group-open:rotate-180 transition-transform"
+              className="group-open:rotate-180 w-[16px] h-[16px] transition-transform"
               src={downArrow}
               alt="dropdown-arrow"
-              width={24}
-              height={24}
-              priority={false}
             />
           </span>
         </summary>
@@ -185,7 +182,7 @@ function CourseClient({
       <HeadTopCourse isCoursesPage={false}>
         <p className="cursor-pointer">{courseData.title}</p>
       </HeadTopCourse>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12">
+      <div className="grid  grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12">
         {/* Left Column: Course Details and Syllabus */}
         <div className="lg:col-span-7">
           <img
@@ -227,18 +224,18 @@ function CourseClient({
                 </div>
                 <div className="flex my-1 items-center gap-3 caps-text">
                   <Image src={tv} alt="tv icon" width={24} height={24} />
-                  <p className="mt-2 text-secondary-500 font-[500] text-sm">
+                  <p className="mt-2  text-secondary-500 font-[400] text-sm">
                     კურსის ხანგრძლივობა:{" "}
-                    <span className="text-[#88919C] ml-1">
+                    <span className="text-[#88919C] regular-text ml-1">
                       {courseData.quantity_lessons} შეხვედრა
                     </span>
                   </p>
                 </div>
                 <div className="flex my-1 items-center gap-3 caps-text">
                   <Image src={timer} alt="timer icon" width={24} height={24} />
-                  <p className="mt-2 text-secondary-500 font-[500] text-sm">
+                  <p className="mt-2 regular-text text-secondary-500 font-[100] text-sm">
                     შეხვედრის ხანგრძლივობა:{" "}
-                    <span className="text-[#88919C] ml-1">
+                    <span className="text-[#88919C] font-[100] regular-text ml-1">
                       {courseData.lesson_time} საათი
                     </span>
                   </p>
@@ -247,7 +244,7 @@ function CourseClient({
                   <Image src={user} alt="user icon" width={24} height={24} />
                   <p className="mt-2 text-secondary-500 font-[500] text-sm">
                     სტუდენტი ჯგუფში:{" "}
-                    <span className="text-[#88919C] ml-1">
+                    <span className="text-[#88919C] regular-text ml-1">
                       {courseData.quantity_of_students}
                     </span>
                   </p>
@@ -264,7 +261,7 @@ function CourseClient({
                   ფასი:{" "}
                   <span className="font-bold">{courseData.price} ლარი</span>
                 </p>
-                <p className="text-[14px] line-through font-[300] ml-4 caps-text text-red-500 mt-6">
+                <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6">
                   <span className="font-bold leading-[24px]">
                     {courseData.oldprice} ლარი
                   </span>
@@ -355,7 +352,7 @@ function CourseClient({
                 />
                 <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-[15px]">
                   დაწყების თარიღი:{" "}
-                  <span className="text-[#88919C] ml-1">
+                  <span className="text-[#88919C] font-[400] regular-text ml-1">
                     {courseData.start_course}
                   </span>
                 </p>
@@ -364,7 +361,7 @@ function CourseClient({
                 <Image src={tv} alt="tv icon" width={24} height={24} />
                 <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
                   კურსის ხანგრძლივობა:{" "}
-                  <span className="text-[#88919C] ml-1">
+                  <span className="text-[#88919C] font-[400] regular-text ml-1">
                     {courseData.quantity_lessons} შეხვედრა
                   </span>
                 </p>
@@ -373,7 +370,7 @@ function CourseClient({
                 <Image src={timer} alt="timer icon" width={24} height={24} />
                 <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
                   შეხვედრის ხანგრძლივობა:{" "}
-                  <span className="text-[#88919C] ml-1">
+                  <span className="text-[#88919C] font-[400] regular-text ml-1">
                     {courseData.lesson_time} საათი
                   </span>
                 </p>
@@ -398,7 +395,7 @@ function CourseClient({
               <p className="text-base lg:text-lg text-secondary-500 caps-text mt-6 lg:mt-8">
                 ფასი: <span className="font-bold">{courseData.price} ლარი</span>
               </p>
-              <p className="text-[14px] line-through font-[300] ml-4 caps-text text-red-500 mt-6 lg:mt-8">
+              <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6 lg:mt-8">
                 <span className="font-bold leading-[24px]">
                   {courseData.oldprice} ლარი
                 </span>
@@ -435,8 +432,11 @@ function CourseClient({
                       <p className="font-[500] text-base lg:text-base">
                         {relatedCourse.title}
                       </p>
-                      <p className="text-xs lg:text-sm mt-3 xl:mt-1 mb-3 lg:mb-4 font-[500]">
-                        ტრენერი: {relatedCourse.lecturer || "ლაზარე კალმხალიძე"}
+                      <p className="text-xs lg:text-sm mt-3 xl:mt-1 mb-3 lg:mb-4 font-[400] text-[#50565e]">
+                        ტრენერი:{" "}
+                        <span>
+                          {relatedCourse.lecturer || "ლაზარე კალმხალიძე"}
+                        </span>
                       </p>
                       <Button
                         className="w-full max-lg:text-[13px] lg:w-[140px] xl:w-[180px] h-[44px] md:w-[140px] mt-1 lg:mt-2 text-sm"
@@ -472,7 +472,13 @@ function CourseClient({
               max-lg:top-0 max-lg:left-0 max-lg:h-full max-lg:w-full max-lg:max-w-none max-lg:translate-x-0 max-lg:translate-y-0 max-lg:rounded-none
             "
           >
-            <RegistrationForm onCancel={handleCancelRegistration} />
+            <AlertDialog.Title className="sr-only">
+              კურსზე რეგისტრაცია
+            </AlertDialog.Title>
+            <RegistrationForm
+              onCancel={handleCancelRegistration}
+              courses={[courseData, ...relatedCourses]}
+            />
           </AlertDialog.Content>
         </AlertDialog.Root>
       )}

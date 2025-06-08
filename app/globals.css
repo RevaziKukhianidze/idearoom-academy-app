@@ -23,6 +23,9 @@
 .blog-shadow:hover {
   box-shadow: #9aa5b526 0px 4px 12px 0px;
 }
+.card-shadow-inner:hover {
+  box-shadow: #bdc5d226 0px 12px 12px 0px;
+}
 .input-with-top-placeholder::placeholder {
   vertical-align: top;
 }

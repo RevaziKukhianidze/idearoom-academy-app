@@ -7,7 +7,7 @@ import Logo from "./Logo";
 export default function Footer() {
   return (
     <footer>
-      <div className="container max-sm:max-w-[90%] mx-auto px-4 pt-10 flex flex-col justify-center items-center text-center mt-24 bg-white rounded-[16px] min-h-[300px] md:min-h-[441px] mb-12">
+      <div className="container max-sm:max-w-[90%]  mx-auto px-4 pt-[60px] flex flex-col justify-center mt-[50px] items-center text-center bg-white rounded-[16px] min-h-[300px] md:min-h-[441px] mb-12">
         {/* ეს ჩავამატოთ? */}
         <Logo />
         <div>

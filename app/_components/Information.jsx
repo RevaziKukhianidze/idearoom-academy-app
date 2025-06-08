@@ -25,7 +25,7 @@ export default function Information() {
         </div>
         <div className="mt-8 lg:mt-0">
           <h2 className="text-xl sm:text-[20px] md:text-[22px] lg:text-[24px] xl:text-[28px] mb-8 md:mb-10 lg:mb-[40px] font-bold text-secondary-500 max-w-full sm:max-w-[90%] 2xl:max-w-[100%] 2xl:mb-[60px] text-center  caps-text leading-[1.4] sm:leading-[1.5] md:leading-[1.6] lg:leading-[1.6] my-4 sm:my-6 md:my-8 lg:my-6">
-            რატომ უნდა ისწავლოთ იდეა რუმის აკადემიაში
+            რატომ უნდა ისწავლოთ იდეარუმის აკადემიაში
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6 md:gap-5">
             <div className="flex gap-4 items-start bg-secondary-50 p-5 rounded-lg shadow-sm md:bg-transparent md:p-0 md:rounded-none md:shadow-none">

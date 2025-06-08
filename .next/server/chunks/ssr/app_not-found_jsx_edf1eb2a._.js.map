@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/Lenovo/Desktop/idearoom-academy-app-main/idearoom-academy-app-main/app/not-found.jsx"],"sourcesContent":["import React from \"react\";\n\nexport const metadata = {\n  title: \"404 გვერდი ვერ მოიძებნა\",\n};\n\nexport default function notFound() {\n  return (\n    <section className=\"container mb-[80px] max-md:max-w-[80%] text-center items-center justify-center mt-[200px]\">\n      <h2 className=\"text-[36px] lg:text-[48px] xl:text-[64px]  text-primary-500 font-bold\">\n        404\n      </h2>\n      <p className=\"max-sm:text-base max-lg:text-lg caps-text font-bold text-secondary-500 text-xl mt-4\">\n        უპს! გვერდი რომელსაც ეძებ, არ არსებობს!\n      </p>\n    </section>\n  );\n}\n"],"names":[],"mappings":";;;;;AAAA;;;AAEO,MAAM,WAAW;IACtB,OAAO;AACT;AAEe,SAAS;IACtB,qBACE,8OAAC;QAAQ,WAAU;;0BACjB,8OAAC;gBAAG,WAAU;0BAAwE;;;;;;0BAGtF,8OAAC;gBAAE,WAAU;0BAAsF;;;;;;;;;;;;AAKzG","debugId":null}}]
+}

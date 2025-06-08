@@ -8,6 +8,7 @@ import { ChevronDown, Calendar } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import cancel from "../../public/cancel.svg";
+import calendar from "../../public/calendarLight.svg";
 import signUpPic from "../../public/sign-upPic.webp";
 import { createUser } from "../services/apiUsers";
 
@@ -261,17 +262,21 @@ const RegistrationForm = ({
 
               <div className="relative w-full">
                 <div
-                  className="flex justify-between items-center relative w-full rounded-[4px] border border-[#E7ECF2] h-[45px] lg:h-[50px] px-3 lg:px-4 cursor-pointer"
+                  className="flex bg-white justify-between items-center relative w-full rounded-[6px] mt-1 border border-[#E7ECF2] h-[45px] lg:h-[50px] px-3 lg:px-4 cursor-pointer"
                   onClick={openDatePicker}
                 >
-                  <div className="flex items-center w-full">
-                    <span className="text-[#8F949A] text-[13px] lg:text-sm">
+                  <div className="flex flex-shrink-0 flex-nowrap items-center w-full">
+                    <span className="text-[#707378] flex-nowrap max-sm:text-[11px] max-sm:mt-1 font-[500] text-[13px] lg:text-sm">
                       {dateValue
                         ? `${day}/${month}/${year}`
-                        : "დღე / თვე / წელი"}
+                        : "დაბადების თარიღი"}
                     </span>
                   </div>
-                  <Calendar size={20} className="text-[#8F949A]" />
+                  <Image
+                    className="relative right-[20px] z-40"
+                    src={calendar}
+                    alt="calendar icon"
+                  />
                 </div>
 
                 {/* Real date input - hidden, but used for form submission */}
@@ -306,7 +311,7 @@ const RegistrationForm = ({
                   name="socialId"
                   value={formValues.socialId}
                   onChange={handleInputChange}
-                  className="w-full font-[500] mt-1 text-[#8F949A] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px]"
+                  className="w-full font-[500] mt-1 text-[#707378] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px]"
                   placeholder="პირადი ნომერი"
                   required
                 />
@@ -320,7 +325,7 @@ const RegistrationForm = ({
                   name="choosedCourse"
                   value={formValues.choosedCourse}
                   onChange={handleInputChange}
-                  className="w-full mt-1 font-[500] text-[#8F949A] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px] rounded-[4px] cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-primary-500"
+                  className="w-full mt-1 font-[500] text-[#707478] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px] rounded-[6px] cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-primary-500"
                   required
                 >
                   <option value="" disabled>
@@ -329,7 +334,11 @@ const RegistrationForm = ({
                       : "აირჩიეთ კურსი"}
                   </option>
                   {courses.map((course) => (
-                    <option key={course.id} value={course.id.toString()}>
+                    <option
+                      className="py-4"
+                      key={course.id}
+                      value={course.id.toString()}
+                    >
                       {course.title}
                     </option>
                   ))}
@@ -356,16 +365,20 @@ const RegistrationForm = ({
                   name="choosedMedia"
                   value={formValues.choosedMedia}
                   onChange={handleInputChange}
-                  className="w-full mt-1 font-[500] text-[#8F949A] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-1 pl-3 lg:pl-4 h-[45px] lg:h-[50px] rounded-[4px] cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-primary-500"
+                  className="w-full mt-1 font-[500] text-[#707378] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-1 pl-3 lg:pl-4 h-[45px] lg:h-[50px] rounded-[6px] cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-primary-500"
                   required
                 >
                   <option value="" disabled>
-                    აირჩიეთ წყარო
+                    საიდან გაიგეთ ჩვენი კურსის შესახებ?
                   </option>
-                  <option value="facebook">Facebook</option>
-                  <option value="instagram">Instagram</option>
-                  <option value="friend">მეგობრისგან</option>
-                  <option value="other">სხვა</option>
+                  <option className="relative h-[30px]" value="facebook">
+                    მეგობარი
+                  </option>
+                  <option value="instagram">Google</option>
+                  <option value="friend">Instagram</option>
+                  <option value="other">Linkedin</option>
+                  <option value="other">Facebook</option>
+                  <option value="other">სხვა.</option>
                 </select>
                 <ChevronDown
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
