@@ -5,6 +5,7 @@ import Feedback from "./_components/Feedback";
 import Hero from "./_components/Hero";
 import Information from "./_components/Information";
 import InfiniteMovingCardsDemo from "./_components/InfiniteMovingCardsDemo";
+import Brand from "./_components/Brand";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Blog />
       <Feedback />
       <InfiniteMovingCardsDemo />
+      <Brand />
     </section>
   );
 }

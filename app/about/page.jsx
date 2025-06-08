@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function page() {
   return (
-    <section className="mt-[128px] container mx-auto max-sm:max-w-[90%]">
+    <section className="mt-[128px] mb-24 container mx-auto max-sm:max-w-[90%]">
       <div className="flex  items-center gap-3 my-3">
         <Link href="/">
           <Image

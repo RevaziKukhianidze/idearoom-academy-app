@@ -31,6 +31,7 @@ export async function createUser(userData) {
     );
   }
 
+  console.log("Creating user with data:", userData);
   const { data, error } = await supabase.from("users_form").insert(
     [
       {

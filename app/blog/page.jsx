@@ -17,6 +17,7 @@ export default function Page() {
     async function fetchBlogs() {
       try {
         const data = await getBlogs();
+        console.log(data);
         setBlogs(data);
         setIsLoading(false);
       } catch (error) {

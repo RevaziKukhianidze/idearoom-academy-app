@@ -69,12 +69,15 @@ export default function Page() {
                     <p className="font-bold text-secondary-500 text-base md:text-lg bg-primary-50 pb-[2px] pt-[0px] px-4 rounded-[20px]">
                       ₾ {course.price}
                     </p>
-                    <p className="font-400 text-secondary-400 text-sm line-through ml-4">
+                    <p className="font-[500] text-[#d95a5a] text-lg line-through ml-4">
                       ₾ {course.oldprice}
                     </p>
                   </div>
                   <div>
-                    <Button className="pt-[13px]" type="button">
+                    <Button
+                      className="pt-[23px] rounded-[10px] pb-[20px]"
+                      type="button"
+                    >
                       დეტალურად
                     </Button>
                   </div>
