@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "app": {
     "[project]/app/blog/[blogId]/page": [
       "static/media/TBCContractica_Bold-s.p.65270d05.ttf",
@@ -72,6 +73,10 @@
     ]
   },
   "appUsingSizeAdjust": true,
+=======
+  "app": {},
+  "appUsingSizeAdjust": false,
+>>>>>>> a307c3d194626efd1310cc2b3d8334afc0c7a13b
   "pages": {},
   "pagesUsingSizeAdjust": false
 }
