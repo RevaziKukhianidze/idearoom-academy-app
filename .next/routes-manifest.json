@@ -95,12 +95,6 @@
       "namedRegex": "^/offer(?:/)?$"
     },
     {
-      "page": "/opengraph-image.png",
-      "regex": "^/opengraph\\-image\\.png(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/opengraph\\-image\\.png(?:/)?$"
-    },
-    {
       "page": "/privacy",
       "regex": "^/privacy(?:/)?$",
       "routeKeys": {},

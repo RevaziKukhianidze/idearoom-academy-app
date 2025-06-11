@@ -1,4 +1,19 @@
 {
+  "/api/offer/route": "app/api/offer/route.js",
+  "/api/offers/route": "app/api/offers/route.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js"
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
+  "/contact/page": "app/contact/page.js",
+  "/error/page": "app/error/page.js",
+  "/page": "app/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/about/page": "app/about/page.js",
+  "/blog/page": "app/blog/page.js",
+  "/blog/[blogId]/page": "app/blog/[blogId]/page.js",
+  "/courses/page": "app/courses/page.js",
+  "/courses/[courseId]/page": "app/courses/[courseId]/page.js",
+  "/offer/[offerId]/page": "app/offer/[offerId]/page.js",
+  "/offer/page": "app/offer/page.js",
+  "/privacy/page": "app/privacy/page.js"
 }
