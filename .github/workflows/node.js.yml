@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: self-hosted
 
     strategy:
@@ -22,7 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
@@ -30,11 +30,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        working-directory: /home/rezo/actions-runner/_work/idearoom-academy-app/idearoom-academy-app
 
-      - name: Build Next.js app
+      - name: Build project
         run: npm run build
+        working-directory: /home/rezo/actions-runner/_work/idearoom-academy-app/idearoom-academy-app
 
       - name: Restart PM2 process
-        run: |
-          cd /home/rezo/actions-runner/_work/idearoom-academy-app/idearoom-academy-app
-          pm2 restart 0 || pm2 start npm --name "academy-app" -- start
+        run: pm2 restart 0 || pm2 start npm --name "idearoom-app" -- start
+        working-directory: /home/rezo/actions-runner/_work/idearoom-academy-app/idearoom-academy-app
