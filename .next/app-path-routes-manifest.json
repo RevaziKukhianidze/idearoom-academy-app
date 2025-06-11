@@ -1,10 +1,20 @@
 {
-  "/blog/[blogId]/page": "/blog/[blogId]",
-  "/blog/page": "/blog",
-  "/courses/[courseId]/page": "/courses/[courseId]",
-  "/courses/page": "/courses",
+  "/api/offers/route": "/api/offers",
   "/favicon.ico/route": "/favicon.ico",
-  "/offer/[offerId]/page": "/offer/[offerId]",
+  "/sitemap.xml/route": "/sitemap.xml",
+  "/robots.txt/route": "/robots.txt",
+  "/api/offer/route": "/api/offer",
+  "/opengraph-image.png/route": "/opengraph-image.png",
+  "/contact/page": "/contact",
+  "/error/page": "/error",
+  "/_not-found/page": "/_not-found",
+  "/page": "/",
+  "/about/page": "/about",
+  "/blog/page": "/blog",
+  "/courses/page": "/courses",
+  "/blog/[blogId]/page": "/blog/[blogId]",
+  "/courses/[courseId]/page": "/courses/[courseId]",
   "/offer/page": "/offer",
-  "/page": "/"
+  "/offer/[offerId]/page": "/offer/[offerId]",
+  "/privacy/page": "/privacy"
 }
