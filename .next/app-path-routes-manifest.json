@@ -1,0 +1,20 @@
+{
+  "/api/offers/route": "/api/offers",
+  "/api/offer/route": "/api/offer",
+  "/favicon.ico/route": "/favicon.ico",
+  "/robots.txt/route": "/robots.txt",
+  "/sitemap.xml/route": "/sitemap.xml",
+  "/opengraph-image.png/route": "/opengraph-image.png",
+  "/error/page": "/error",
+  "/page": "/",
+  "/contact/page": "/contact",
+  "/_not-found/page": "/_not-found",
+  "/about/page": "/about",
+  "/blog/page": "/blog",
+  "/courses/[courseId]/page": "/courses/[courseId]",
+  "/blog/[blogId]/page": "/blog/[blogId]",
+  "/courses/page": "/courses",
+  "/offer/page": "/offer",
+  "/offer/[offerId]/page": "/offer/[offerId]",
+  "/privacy/page": "/privacy"
+}
