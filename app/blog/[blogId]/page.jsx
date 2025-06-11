@@ -67,7 +67,6 @@ export async function generateMetadata({ params }) {
       },
     };
   } catch (error) {
-    console.error("Error generating blog metadata:", error);
     return {
       title: "ბლოგი",
       description: "იდეარუმის აკადემიის ბლოგი",
@@ -97,9 +96,8 @@ function formatDateGeorgian(dateString) {
   return `${month} ${day}, ${year}`;
 }
 
-// Force static rendering
-export const dynamic = "force-static";
-export const revalidate = false;
+// Force dynamic rendering for better performance
+export const dynamic = "force-dynamic";
 
 export default async function BlogPage({ params }) {
   const blogs = await getBlogs();
@@ -184,10 +182,9 @@ export default async function BlogPage({ params }) {
   );
 }
 
+// Simplified generateStaticParams to prevent build hanging
 export async function generateStaticParams() {
-  const blogs = await getBlogs();
-
-  return blogs.map((blog) => ({
-    blogId: blog.id.toString(),
-  }));
+  // Return empty array to force dynamic rendering during build
+  // This prevents build hanging issues with external API calls
+  return [];
 }

@@ -22,6 +22,16 @@ function getCache(key) {
   return null; // კეშის ვადა ამოწურულია ან არ არსებობს
 }
 
+// Timeout wrapper for API calls
+async function withTimeout(promise, timeoutMs = 10000) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Request timeout")), timeoutMs)
+    ),
+  ]);
+}
+
 export async function getBlogs(id, ttl = 1800000) {
   const cacheKey = id ? `blog_${id}` : "all_blogs";
 
@@ -36,23 +46,22 @@ export async function getBlogs(id, ttl = 1800000) {
 
     if (id) {
       query = query.eq("id", id);
-      const { data, error } = await query.single();
+      const { data, error } = await withTimeout(query.single());
 
       if (error) throw error;
       setCache(cacheKey, data, ttl); // შევინახოთ კეშში
       return data;
     } else {
       // დავალაგოთ შექმნის თარიღის მიხედვით კლებადობით
-      const { data, error } = await query.order("created_at", {
-        ascending: false,
-      });
+      const { data, error } = await withTimeout(
+        query.order("created_at", { ascending: false })
+      );
 
       if (error) throw error;
       setCache(cacheKey, data, ttl); // შევინახოთ კეშში
       return data;
     }
   } catch (error) {
-    console.error("Error fetching blogs:", error);
     return null;
   }
 }
@@ -68,17 +77,14 @@ export async function getBlog(id, ttl = 300000) {
   }
 
   try {
-    const { data, error } = await supabase
-      .from("blogs")
-      .select("*")
-      .eq("id", id)
-      .single();
+    const { data, error } = await withTimeout(
+      supabase.from("blogs").select("*").eq("id", id).single()
+    );
 
     if (error) throw error;
     setCache(cacheKey, data, ttl); // შევინახოთ კეშში
     return data;
   } catch (error) {
-    console.error("Error fetching blog:", error);
     throw new Error(`Blog with ID ${id} Could Not Be Loaded`);
   }
 }
@@ -98,23 +104,22 @@ export async function getBlogsLimited(id, ttl = 120000) {
 
     if (id) {
       query = query.eq("id", id);
-      const { data, error } = await query.single();
+      const { data, error } = await withTimeout(query.single());
 
       if (error) throw error;
       setCache(cacheKey, data, ttl); // შევინახოთ კეშში
       return data;
     } else {
       // დავალაგოთ შექმნის თარიღის მიხედვით კლებადობით და შევზღუდოთ 3 ბლოგით
-      const { data, error } = await query
-        .order("created_at", { ascending: false })
-        .limit(3);
+      const { data, error } = await withTimeout(
+        query.order("created_at", { ascending: false }).limit(3)
+      );
 
       if (error) throw error;
       setCache(cacheKey, data, ttl); // შევინახოთ კეშში
       return data;
     }
   } catch (error) {
-    console.error("Error fetching blogs:", error);
     return null;
   }
 }
