@@ -9,32 +9,70 @@ import HeadTop from "../_components/HeadTop";
 
 // Fixed signature and ensuring static generation
 export async function generateMetadata({ params }) {
-  const blogId = params.blogId;
-  const blogs = await getBlogs();
-  const blog = blogs.find((item) => item.id === parseInt(blogId));
+  try {
+    const blogId = params.blogId;
+    const blogs = await getBlogs();
+    const blog = blogs.find((item) => item.id === parseInt(blogId));
 
-  if (!blog) {
+    if (!blog) {
+      return {
+        title: "ბლოგი ვერ მოიძებნა",
+        description: "მოთხოვნილი ბლოგი არ არსებობს ან წაშლილია",
+      };
+    }
+
+    // Extract clean description from blog text
+    const description = blog.text
+      ? blog.text.replace(/<[^>]*>/g, "").substring(0, 160) + "..."
+      : "იდეარუმის აკადემიის ბლოგი - ისწავლე ახალი ინფორმაცია ციფრული მარკეტინგისა და განვითარების შესახებ";
+
+    // Ensure image URL is absolute
+    const imageUrl = blog.image?.startsWith("http")
+      ? blog.image
+      : blog.image?.startsWith("/")
+      ? `https://academy.idearoom.ge${blog.image}`
+      : blog.image
+      ? `https://academy.idearoom.ge/${blog.image}`
+      : "https://academy.idearoom.ge/coverweb.webp"; // fallback image
+
     return {
-      title: "ბლოგი ვერ მოიძებნა",
-      description: "მოთხოვნილი ბლოგი არ არსებობს ან წაშლილია",
+      title: blog.title,
+      description: description,
+      openGraph: {
+        title: blog.title,
+        description: description,
+        images: [
+          {
+            url: imageUrl,
+            width: 1200,
+            height: 630,
+            alt: blog.title,
+          },
+        ],
+        type: "article",
+        locale: "ka_GE",
+        url: `https://academy.idearoom.ge/blog/${blogId}`,
+        siteName: "იდეარუმის აკადემია",
+        publishedTime: blog.created_at,
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: blog.title,
+        description: description,
+        images: [imageUrl],
+      },
+      robots: {
+        follow: true,
+        index: true,
+      },
+    };
+  } catch (error) {
+    console.error("Error generating blog metadata:", error);
+    return {
+      title: "ბლოგი",
+      description: "იდეარუმის აკადემიის ბლოგი",
     };
   }
-
-  return {
-    title: `${blog.title}`,
-    description: blog.text,
-    openGraph: {
-      images: [
-        {
-          url: blog.image,
-        },
-      ],
-    },
-    robots: {
-      follow: false,
-      index: true,
-    },
-  };
 }
 
 function formatDateGeorgian(dateString) {
@@ -84,7 +122,7 @@ export default async function BlogPage({ params }) {
 
   // Create the absolute URL for sharing
   const blogUrl = `${
-    process.env.NEXT_PUBLIC_SITE_URL || "https://idearoom.ge"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://academy.idearoom.ge"
   }/blog/${params.blogId}`;
 
   return (

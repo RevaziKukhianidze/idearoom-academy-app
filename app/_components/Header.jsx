@@ -147,7 +147,7 @@ export default function Header() {
                 pathname === "/about" ? "text-primary-500" : ""
               }`}
             >
-              ჩვენს შესახებ
+              ჩვენ შესახებ
             </Link>
           </li>
           <li className="mt-[4px]">
@@ -243,7 +243,7 @@ export default function Header() {
                 }`}
                 onClick={handleLinkClick}
               >
-                ჩვენს შესახებ
+                ჩვენ შესახებ
               </Link>
             </li>
             <li>

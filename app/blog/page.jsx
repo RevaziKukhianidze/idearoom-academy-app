@@ -1,40 +1,29 @@
-"use client";
 import Link from "next/link";
 import { Button } from "../../components/ui/button";
-import SeeAllButton from "../_components/SeeAllButton";
 import HeadTop from "./_components/HeadTop";
-import React, { useState, useEffect } from "react";
 import { getBlogs } from "../services/apiBlogs";
-import Loading from "../loading";
 
-export default function Page() {
-  const [blogs, setBlogs] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+export const metadata = {
+  title: "ბლოგი",
+  description:
+    "იდეარუმის აკადემიის ბლოგი - სასარგებლო ინფორმაცია ციფრულ სფეროში, ახალი ტექნოლოგიები და განვითარების რჩევები",
+  openGraph: {
+    title: "ბლოგი - იდეარუმის აკადემია",
+    description:
+      "იდეარუმის აკადემიის ბლოგი - სასარგებლო ინფორმაცია ციფრულ სფეროში",
+    type: "website",
+  },
+  robots: {
+    follow: true,
+    index: true,
+  },
+};
 
-  useEffect(() => {
-    document.title = "ბლოგი - Idearoom.ge";
+export default async function BlogPage() {
+  try {
+    const blogs = await getBlogs();
 
-    async function fetchBlogs() {
-      try {
-        const data = await getBlogs();
-        console.log(data);
-        setBlogs(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-        setIsLoading(false);
-      }
-    }
-
-    fetchBlogs();
-  }, []);
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  return (
-    <>
+    return (
       <section className="container max-sm:max-w-[95%] mt-[128px] mx-auto">
         <HeadTop headText="ბლოგი" />
         <div className="grid gap-4 sm:gap-5 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
@@ -48,12 +37,9 @@ export default function Page() {
                   <img
                     className="rounded-[12px] object-cover h-[284px] w-full"
                     src={blog.image}
-                    alt="image"
+                    alt={blog.title}
                   />
-                  <h4
-                    className="font-bold caps-text mt-4 max-sm:pr-6 max-sm:mt-6 sm:mt-5 mb-3 sm:mb-4 text-[15px] sm:text-base"
-                    href={`/blog/${blog.id}`}
-                  >
+                  <h4 className="font-bold caps-text mt-4 max-sm:pr-6 max-sm:mt-6 sm:mt-5 mb-3 sm:mb-4 text-[15px] sm:text-base">
                     {blog.title}
                   </h4>
                   <p className="text-[13px] sm:text-sm text-secondary-500">
@@ -73,12 +59,19 @@ export default function Page() {
               );
             })}
         </div>
-        {/* <div className="mt-4 flex justify-center ">
-          <Link href={`blog`}>
-            <SeeAllButton buttonText="ყველას ნახვა" />
-          </Link>
-        </div> */}
       </section>
-    </>
-  );
+    );
+  } catch (error) {
+    console.error("Error loading blogs:", error);
+    return (
+      <section className="container max-sm:max-w-[95%] mt-[128px] mx-auto">
+        <HeadTop headText="ბლოგი" />
+        <div className="bg-white h-[300px] rounded-[20px] p-8 flex items-center justify-center">
+          <h1 className="text-xl font-bold">
+            ბლოგების ჩატვირთვაში მოხდა შეცდომა
+          </h1>
+        </div>
+      </section>
+    );
+  }
 }

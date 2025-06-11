@@ -2,16 +2,9 @@
 
 import { cn } from "../../lib/utils";
 import React, { useEffect, useState, useRef } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "../../components/ui/dialog";
-import cancel from "../../public/whiteCancel.svg";
+
 import Headline from "./Headline";
 import { getAllLecturers } from "../services/apiLecturer";
-import Image from "next/image";
 
 export const InfiniteMovingCards = ({
   direction = "left",
@@ -20,8 +13,6 @@ export const InfiniteMovingCards = ({
   className,
 }) => {
   const containerRef = useRef(null);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [lecturers, setLecturers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -75,11 +66,10 @@ export const InfiniteMovingCards = ({
     fetchLecturers();
   }, []);
 
-  // Function to handle card click
+  // Function to handle card click - disabled popup
   const handleCardClick = (item, e) => {
     e.stopPropagation();
-    setSelectedItem(item);
-    setIsDialogOpen(true);
+    // Popup functionality removed - only cursor pointer remains
   };
 
   // Handle carousel navigation
@@ -319,38 +309,6 @@ export const InfiniteMovingCards = ({
           ))}
         </div>
       </div>
-
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="text-secondary-500 max-h-[90vh] overflow-y-auto max-md:max-w-[95%] min-w-[800px] max-md:min-w-[300px] outline-none border-none bg-transparent shadow-none rounded-[30px] mx-auto max-md:mr-2">
-          <DialogHeader className="max-sm:items-start">
-            <DialogTitle className="flex max-sm:text-left mb-5 sm:mb-7 items-center gap-2 max-sm:justify-start w-full"></DialogTitle>
-            <div className="relative flex justify-center items-center w-full">
-              <Image
-                onClick={() => setIsDialogOpen(!isDialogOpen)}
-                className="absolute cursor-pointer w-[36px] h-[36px] max-md:w-[28px] max-md:h-[28px] max-md:right-[3%] z-50 right-[2%] top-[4%]"
-                src={cancel}
-                alt="cancel-svg"
-              />
-              {selectedItem && (
-                <video
-                  controls
-                  muted={false}
-                  autoPlay={true}
-                  playsInline
-                  className="w-full border-none outline-none rounded-[20px] relative h-full max-sm:h-auto"
-                  onError={(e) => {
-                    console.error("Video failed to load", e);
-                    setIsDialogOpen(false);
-                  }}
-                >
-                  <source src={selectedItem.lecturer_video} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              )}
-            </div>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
     </>
   );
 };

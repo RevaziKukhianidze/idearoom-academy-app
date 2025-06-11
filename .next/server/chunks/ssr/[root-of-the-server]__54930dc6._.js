@@ -518,30 +518,60 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$blog$2f$_components$2
 ;
 ;
 async function generateMetadata({ params }) {
-    const blogId = params.blogId;
-    const blogs = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$services$2f$apiBlogs$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getBlogs"])();
-    const blog = blogs.find((item)=>item.id === parseInt(blogId));
-    if (!blog) {
+    try {
+        const blogId = params.blogId;
+        const blogs = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$services$2f$apiBlogs$2e$jsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getBlogs"])();
+        const blog = blogs.find((item)=>item.id === parseInt(blogId));
+        if (!blog) {
+            return {
+                title: "ბლოგი ვერ მოიძებნა",
+                description: "მოთხოვნილი ბლოგი არ არსებობს ან წაშლილია"
+            };
+        }
+        // Extract clean description from blog text
+        const description = blog.text ? blog.text.replace(/<[^>]*>/g, "").substring(0, 160) + "..." : "იდეარუმის აკადემიის ბლოგი - ისწავლე ახალი ინფორმაცია ციფრული მარკეტინგისა და განვითარების შესახებ";
+        // Ensure image URL is absolute
+        const imageUrl = blog.image?.startsWith("http") ? blog.image : blog.image?.startsWith("/") ? `https://academy.idearoom.ge${blog.image}` : blog.image ? `https://academy.idearoom.ge/${blog.image}` : "https://academy.idearoom.ge/coverweb.webp"; // fallback image
         return {
-            title: "ბლოგი ვერ მოიძებნა",
-            description: "მოთხოვნილი ბლოგი არ არსებობს ან წაშლილია"
+            title: blog.title,
+            description: description,
+            openGraph: {
+                title: blog.title,
+                description: description,
+                images: [
+                    {
+                        url: imageUrl,
+                        width: 1200,
+                        height: 630,
+                        alt: blog.title
+                    }
+                ],
+                type: "article",
+                locale: "ka_GE",
+                url: `https://academy.idearoom.ge/blog/${blogId}`,
+                siteName: "იდეარუმის აკადემია",
+                publishedTime: blog.created_at
+            },
+            twitter: {
+                card: "summary_large_image",
+                title: blog.title,
+                description: description,
+                images: [
+                    imageUrl
+                ]
+            },
+            robots: {
+                follow: true,
+                index: true
+            }
+        };
+    } catch (error) {
+        console.error("Error generating blog metadata:", error);
+        return {
+            title: "ბლოგი",
+            description: "იდეარუმის აკადემიის ბლოგი"
         };
     }
-    return {
-        title: `${blog.title}`,
-        description: blog.text,
-        openGraph: {
-            images: [
-                {
-                    url: blog.image
-                }
-            ]
-        },
-        robots: {
-            follow: false,
-            index: true
-        }
-    };
 }
 function formatDateGeorgian(dateString) {
     const date = new Date(dateString);
@@ -578,7 +608,7 @@ async function BlogPage({ params }) {
                     headText: "ბლოგი"
                 }, void 0, false, {
                     fileName: "[project]/app/blog/[blogId]/page.jsx",
-                    lineNumber: 74,
+                    lineNumber: 112,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -589,7 +619,7 @@ async function BlogPage({ params }) {
                             children: "ბლოგი ვერ მოიძებნა"
                         }, void 0, false, {
                             fileName: "[project]/app/blog/[blogId]/page.jsx",
-                            lineNumber: 76,
+                            lineNumber: 114,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
@@ -599,29 +629,29 @@ async function BlogPage({ params }) {
                                 children: "უკან დაბრუნება"
                             }, void 0, false, {
                                 fileName: "[project]/app/blog/[blogId]/page.jsx",
-                                lineNumber: 78,
+                                lineNumber: 116,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/blog/[blogId]/page.jsx",
-                            lineNumber: 77,
+                            lineNumber: 115,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/blog/[blogId]/page.jsx",
-                    lineNumber: 75,
+                    lineNumber: 113,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/blog/[blogId]/page.jsx",
-            lineNumber: 73,
+            lineNumber: 111,
             columnNumber: 7
         }, this);
     }
     // Create the absolute URL for sharing
-    const blogUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://idearoom.ge"}/blog/${params.blogId}`;
+    const blogUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://academy.idearoom.ge"}/blog/${params.blogId}`;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         className: "container max-sm:max-w-[90%] mt-[128px] mx-auto",
         children: [
@@ -632,12 +662,12 @@ async function BlogPage({ params }) {
                     blogTitle: blog.title
                 }, void 0, false, {
                     fileName: "[project]/app/blog/[blogId]/page.jsx",
-                    lineNumber: 93,
+                    lineNumber: 131,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/blog/[blogId]/page.jsx",
-                lineNumber: 92,
+                lineNumber: 130,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -651,7 +681,7 @@ async function BlogPage({ params }) {
                                 children: blog.title
                             }, void 0, false, {
                                 fileName: "[project]/app/blog/[blogId]/page.jsx",
-                                lineNumber: 97,
+                                lineNumber: 135,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -662,7 +692,7 @@ async function BlogPage({ params }) {
                                         alt: "calendar-icon"
                                     }, void 0, false, {
                                         fileName: "[project]/app/blog/[blogId]/page.jsx",
-                                        lineNumber: 101,
+                                        lineNumber: 139,
                                         columnNumber: 13
                                     }, this),
                                     " ",
@@ -670,7 +700,7 @@ async function BlogPage({ params }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/blog/[blogId]/page.jsx",
-                                lineNumber: 100,
+                                lineNumber: 138,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -680,18 +710,18 @@ async function BlogPage({ params }) {
                                     quote: blog.title
                                 }, void 0, false, {
                                     fileName: "[project]/app/blog/[blogId]/page.jsx",
-                                    lineNumber: 105,
+                                    lineNumber: 143,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/blog/[blogId]/page.jsx",
-                                lineNumber: 104,
+                                lineNumber: 142,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/blog/[blogId]/page.jsx",
-                        lineNumber: 96,
+                        lineNumber: 134,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -705,18 +735,18 @@ async function BlogPage({ params }) {
                             alt: blog.title
                         }, void 0, false, {
                             fileName: "[project]/app/blog/[blogId]/page.jsx",
-                            lineNumber: 109,
+                            lineNumber: 147,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/blog/[blogId]/page.jsx",
-                        lineNumber: 108,
+                        lineNumber: 146,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/blog/[blogId]/page.jsx",
-                lineNumber: 95,
+                lineNumber: 133,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -730,28 +760,28 @@ async function BlogPage({ params }) {
                                     line,
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                         fileName: "[project]/app/blog/[blogId]/page.jsx",
-                                        lineNumber: 125,
+                                        lineNumber: 163,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, index, true, {
                                 fileName: "[project]/app/blog/[blogId]/page.jsx",
-                                lineNumber: 123,
+                                lineNumber: 161,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/app/blog/[blogId]/page.jsx",
-                        lineNumber: 121,
+                        lineNumber: 159,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/blog/[blogId]/page.jsx",
-                    lineNumber: 120,
+                    lineNumber: 158,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/blog/[blogId]/page.jsx",
-                lineNumber: 119,
+                lineNumber: 157,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -760,7 +790,7 @@ async function BlogPage({ params }) {
                         className: "border-t border-[#EBF0F6] my-6 sm:my-10"
                     }, void 0, false, {
                         fileName: "[project]/app/blog/[blogId]/page.jsx",
-                        lineNumber: 132,
+                        lineNumber: 170,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -771,7 +801,7 @@ async function BlogPage({ params }) {
                                 children: "ტეგები: "
                             }, void 0, false, {
                                 fileName: "[project]/app/blog/[blogId]/page.jsx",
-                                lineNumber: 134,
+                                lineNumber: 172,
                                 columnNumber: 11
                             }, this),
                             blog.tags && blog.tags.map((tag, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -781,30 +811,30 @@ async function BlogPage({ params }) {
                                         children: tag
                                     }, void 0, false, {
                                         fileName: "[project]/app/blog/[blogId]/page.jsx",
-                                        lineNumber: 138,
+                                        lineNumber: 176,
                                         columnNumber: 17
                                     }, this)
                                 }, i, false, {
                                     fileName: "[project]/app/blog/[blogId]/page.jsx",
-                                    lineNumber: 137,
+                                    lineNumber: 175,
                                     columnNumber: 15
                                 }, this))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/blog/[blogId]/page.jsx",
-                        lineNumber: 133,
+                        lineNumber: 171,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/blog/[blogId]/page.jsx",
-                lineNumber: 131,
+                lineNumber: 169,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/blog/[blogId]/page.jsx",
-        lineNumber: 91,
+        lineNumber: 129,
         columnNumber: 5
     }, this);
 }

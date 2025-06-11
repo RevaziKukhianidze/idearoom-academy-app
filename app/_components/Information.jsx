@@ -1,11 +1,27 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
-import information from "../../public/information.webp";
+import information from "../../public/thumbnail1.webp";
 import certificate from "../../public/certificate.svg";
 import lessonsIcon from "../../public/lessonsIcon.svg";
 import intern from "../../public/intern.svg";
 import users from "../../public/users.svg";
 import playButton from "../../public/playButton.svg";
+import cancel from "../../public/whiteCancel.svg";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "../../components/ui/dialog";
+
 export default function Information() {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
+  const handlePlayButtonClick = () => {
+    setIsVideoOpen(true);
+  };
+
   return (
     <section className="bg-white mt-8 sm:mt-12 md:mt-16 lg:mt-[64px] py-8 sm:py-12 md:py-16 lg:py-[64px] mb-12 sm:mb-16 md:mb-24">
       <div className="container px-4 sm:px-6 md:px-8 lg:px-0 gap-6 sm:gap-8 md:gap-12 grid grid-cols-1 lg:grid-cols-2">
@@ -14,12 +30,13 @@ export default function Information() {
             <Image
               src={information}
               alt="information-image"
-              className="w-full relative h-auto"
+              className="w-full relative rounded-[16px] h-auto"
             />
             <Image
-              className="absolute cursor-pointer top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              className="absolute cursor-pointer top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-transform duration-300"
               src={playButton}
               alt="play-button"
+              onClick={handlePlayButtonClick}
             />
           </div>
         </div>
@@ -76,6 +93,37 @@ export default function Information() {
           </div>
         </div>
       </div>
+
+      {/* Video Popup Modal - ზუსტად იგივე ვიზუალი როგორც ლექტორების popup */}
+      <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
+        <DialogContent className="text-secondary-500 max-h-[90vh] overflow-hidden mt-[-10px] max-sm:mt-[-20px] max-md:max-w-[95%] max-w-[500px] max-md:min-w-[300px] outline-none border-none bg-transparent shadow-none rounded-[30px] mx-auto max-md:mr-2 [&>button]:hidden">
+          <DialogHeader className="max-sm:items-start">
+            <DialogTitle className="flex max-sm:text-left mb-5 sm:mb-7 items-center gap-2 max-sm:justify-start w-full"></DialogTitle>
+            <div className="relative flex justify-center items-center w-full">
+              <Image
+                onClick={() => setIsVideoOpen(false)}
+                className="absolute cursor-pointer w-[36px] h-[36px] max-sm:right-[5%] max-md:w-[28px] max-md:h-[28px] max-md:right-[3%] z-50 right-[6%] top-[2%]"
+                src={cancel}
+                alt="cancel-svg"
+              />
+              <video
+                controls
+                muted={false}
+                autoPlay={true}
+                playsInline
+                className="w-full max-md:h-[700px] max-sm:h-[550px] max-md:w-auto max-w-[420px] border-none outline-none rounded-[20px] relative aspect-[9/16] object-contain fullscreen:h-screen fullscreen:max-w-none fullscreen:w-auto fullscreen:object-contain fullscreen:bg-black"
+                onError={(e) => {
+                  console.error("Video failed to load", e);
+                  setIsVideoOpen(false);
+                }}
+              >
+                <source src="/niniVideo.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

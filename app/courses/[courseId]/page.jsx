@@ -1,6 +1,6 @@
 import React from "react";
 import { getCourses, getCourseById } from "../../services/apiCourses";
-import CourseClient from "./_components/CourseClient";
+import CourseClientWrapper from "./_components/CourseClientWrapper";
 
 // Generate metadata for the page
 export async function generateMetadata({ params }) {
@@ -14,12 +14,47 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  // Extract description from course details
+  const description =
+    Array.isArray(course.course_details) && course.course_details.length > 0
+      ? course.course_details[0]
+      : course.text ||
+        "ისწავლე ახალი უნარები იდეარუმის აკადემიაში - გამოცდილ მენტორებთან ერთად";
+
+  // Ensure image URL is absolute
+  const imageUrl = course.image?.startsWith("http")
+    ? course.image
+    : course.image?.startsWith("/")
+    ? `https://academy.idearoom.ge${course.image}`
+    : course.image
+    ? `https://academy.idearoom.ge/${course.image}`
+    : "https://academy.idearoom.ge/coverweb.webp"; // fallback image
+
   return {
     title: course.title,
-    description:
-      Array.isArray(course.course_details) && course.course_details.length > 0
-        ? course.course_details[0]
-        : "Course details",
+    description: description,
+    openGraph: {
+      title: course.title,
+      description: description,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: course.title,
+        },
+      ],
+      type: "website",
+      locale: "ka_GE",
+      url: `https://academy.idearoom.ge/courses/${courseId}`,
+      siteName: "იდეარუმის აკადემია",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: course.title,
+      description: description,
+      images: [imageUrl],
+    },
     robots: {
       follow: true,
       index: true,
@@ -102,7 +137,7 @@ export default async function CoursePage({ params, searchParams }) {
   }
 
   return (
-    <CourseClient
+    <CourseClientWrapper
       courseData={courseData}
       relatedCourses={relatedCourses}
       syllabusItems={syllabusItems}

@@ -1,12 +1,12 @@
-<<<<<<< HEAD
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/about/page": "app/about/page.js",
   "/blog/[blogId]/page": "app/blog/[blogId]/page.js",
   "/blog/page": "app/blog/page.js",
   "/courses/[courseId]/page": "app/courses/[courseId]/page.js",
   "/courses/page": "app/courses/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/offer/[offerId]/page": "app/offer/[offerId]/page.js",
+  "/offer/page": "app/offer/page.js",
   "/page": "app/page.js"
 }
-=======
-{}
->>>>>>> a307c3d194626efd1310cc2b3d8334afc0c7a13b

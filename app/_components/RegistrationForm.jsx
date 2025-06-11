@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import cancel from "../../public/cancel.svg";
 import calendar from "../../public/calendarLight.svg";
-import signUpPic from "../../public/sign-upPic.webp";
+import signUpPic from "../../public/registration.webp";
 import { createUser } from "../services/apiUsers";
 
 const RegistrationForm = ({
@@ -17,6 +17,7 @@ const RegistrationForm = ({
   isFullscreen = false,
   courses = [],
   isCoursesLoading = false,
+  preselectedCourse = null,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [dateValue, setDateValue] = useState("");
@@ -33,7 +34,7 @@ const RegistrationForm = ({
     phoneNumber: "",
     email: "",
     socialId: "",
-    choosedCourse: "",
+    choosedCourse: preselectedCourse ? preselectedCourse.id.toString() : "",
     choosedMedia: "",
     terms: false,
   });
@@ -52,16 +53,6 @@ const RegistrationForm = ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-  };
-
-  // Function to open the date picker
-  const openDatePicker = () => {
-    const dateInput = document.getElementById("actual-dob-input");
-    if (dateInput && dateInput.showPicker) {
-      dateInput.showPicker();
-    } else if (dateInput) {
-      dateInput.focus();
-    }
   };
 
   // Function to handle native date picker's value
@@ -120,12 +111,19 @@ const RegistrationForm = ({
 
     try {
       // Find the corresponding course object to get the title
-      const selectedCourse = courses.find(
-        (course) => course.id.toString() === formValues.choosedCourse
-      );
+      let selectedCourse, courseTitle;
 
-      // Get the course title (or use a fallback if not found)
-      const courseTitle = selectedCourse ? selectedCourse.title : "";
+      if (preselectedCourse) {
+        // თუ წინასწარ არჩეული კურსია
+        selectedCourse = preselectedCourse;
+        courseTitle = preselectedCourse.title;
+      } else {
+        // სტანდარტული შემთხვევა - select-იდან არჩეული კურსი
+        selectedCourse = courses.find(
+          (course) => course.id.toString() === formValues.choosedCourse
+        );
+        courseTitle = selectedCourse ? selectedCourse.title : "";
+      }
 
       const userData = {
         firstName: formValues.firstName,
@@ -229,7 +227,7 @@ const RegistrationForm = ({
                   name="firstName"
                   value={formValues.firstName}
                   onChange={handleInputChange}
-                  className="w-full font-[500] mt-1 text-[#8F949A] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px]"
+                  className="w-full font-[500] mt-1 text-[#707378] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px]"
                   placeholder="სახელი"
                   required
                 />
@@ -240,7 +238,7 @@ const RegistrationForm = ({
                   name="lastName"
                   value={formValues.lastName}
                   onChange={handleInputChange}
-                  className="w-full font-[500] mt-1 text-[#8F949A] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px]"
+                  className="w-full font-[500] mt-1 text-[#707378] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px]"
                   placeholder="გვარი"
                   required
                 />
@@ -254,41 +252,49 @@ const RegistrationForm = ({
                   name="phoneNumber"
                   value={formValues.phoneNumber}
                   onChange={handleInputChange}
-                  className="w-full font-[500] mt-1 text-[#8F949A] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px]"
+                  className="w-full font-[500] mt-1 text-[#707378] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px]"
                   placeholder="ტელეფონი"
                   required
                 />
               </div>
 
-              <div className="relative w-full">
-                <div
-                  className="flex bg-white justify-between items-center relative w-full rounded-[6px] mt-1 border border-[#E7ECF2] h-[45px] lg:h-[50px] px-3 lg:px-4 cursor-pointer"
-                  onClick={openDatePicker}
-                >
-                  <div className="flex flex-shrink-0 flex-nowrap items-center w-full">
-                    <span className="text-[#707378] flex-nowrap max-sm:text-[11px] max-sm:mt-1 font-[500] text-[13px] lg:text-sm">
-                      {dateValue
-                        ? `${day}/${month}/${year}`
-                        : "დაბადების თარიღი"}
-                    </span>
-                  </div>
-                  <Image
-                    className="relative right-[20px] z-40"
-                    src={calendar}
-                    alt="calendar icon"
-                  />
-                </div>
-
-                {/* Real date input - hidden, but used for form submission */}
+              <div className="relative overflow-hidden w-full">
+                {/* Mobile-friendly date input that shows native calendar picker */}
                 <Input
                   id="actual-dob-input"
                   name="birth_date"
                   type="date"
                   value={dateValue}
                   onChange={handleDateChange}
-                  className="sr-only"
+                  className="w-full font-[500] mt-1 text-transparent bg-white overflow-hidden shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px] relative z-10 cursor-pointer
+                    [&::-webkit-datetime-edit]:opacity-0
+                    [&::-webkit-datetime-edit-fields-wrapper]:opacity-0
+                    [&::-webkit-datetime-edit-text]:opacity-0
+                    [&::-webkit-inner-spin-button]:opacity-0
+                    [&::-webkit-calendar-picker-indicator]:opacity-0 
+                    [&::-webkit-calendar-picker-indicator]:absolute 
+                    [&::-webkit-calendar-picker-indicator]:right-0 
+                    [&::-webkit-calendar-picker-indicator]:w-full
+                    [&::-webkit-calendar-picker-indicator]:h-full 
+                    [&::-webkit-calendar-picker-indicator]:cursor-pointer
+                    [&::-webkit-calendar-picker-indicator]:z-20"
+                  style={{
+                    colorScheme: "light",
+                  }}
                   required
                 />
+
+                {/* Custom calendar icon */}
+                <Image
+                  className="absolute overflow-hidden right-[20px] top-1/2 transform -translate-y-1/2 pointer-events-none z-30 max-sm:bg-white max-sm:w-[30px] max-sm:px-1 max-sm:right-[1px]"
+                  src={calendar}
+                  alt="calendar icon"
+                />
+
+                {/* Custom text display - shows selected date or placeholder */}
+                <div className="absolute left-3 lg:left-4 top-1/2 transform -translate-y-1/2 text-[#707378] text-[13px] pt-2 lg:text-sm font-[500] pointer-events-none z-20 whitespace-nowrap">
+                  {dateValue ? `${day}/${month}/${year}` : "დაბადების თარიღი"}
+                </div>
               </div>
             </div>
 
@@ -300,7 +306,7 @@ const RegistrationForm = ({
                   name="email"
                   value={formValues.email}
                   onChange={handleInputChange}
-                  className="w-full font-[500] mt-1 text-[#8F949A] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px]"
+                  className="w-full font-[500] mt-1 text-[#707378] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px]"
                   placeholder="ელ.ფოსტა"
                   required
                 />
@@ -320,41 +326,55 @@ const RegistrationForm = ({
 
             <div>
               <div className="relative">
-                <select
-                  id="course"
-                  name="choosedCourse"
-                  value={formValues.choosedCourse}
-                  onChange={handleInputChange}
-                  className="w-full mt-1 font-[500] text-[#707478] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px] rounded-[6px] cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-primary-500"
-                  required
-                >
-                  <option value="" disabled>
-                    {isCoursesLoading
-                      ? "მიმდინარეობს ჩატვირთვა..."
-                      : "აირჩიეთ კურსი"}
-                  </option>
-                  {courses.map((course) => (
-                    <option
-                      className="py-4"
-                      key={course.id}
-                      value={course.id.toString()}
+                {preselectedCourse ? (
+                  // თუ კონკრეტული კურსი/შეთავაზებაა წინასწარ არჩეული - ვაჩვენებთ input ველს disabled მდგომარეობაში
+                  <Input
+                    id="course"
+                    name="choosedCourse"
+                    value={preselectedCourse.title}
+                    className="w-full mt-1 font-[500] text-[#707378] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px] cursor-not-allowed"
+                    readOnly
+                  />
+                ) : (
+                  // სტანდარტული select ველი როცა ზოგადი რეგისტრაცია ხდება
+                  <>
+                    <select
+                      id="course"
+                      name="choosedCourse"
+                      value={formValues.choosedCourse}
+                      onChange={handleInputChange}
+                      className="w-full mt-1 font-[500] text-[#707378] bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px] rounded-[6px] cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-primary-500"
+                      required
                     >
-                      {course.title}
-                    </option>
-                  ))}
-                  {/* Fallback options if courses don't load */}
-                  {courses.length === 0 && !isCoursesLoading && (
-                    <>
-                      <option value="web">ვებ დეველოპმენტი</option>
-                      <option value="mobile">მობაილ დეველოპმენტი</option>
-                      <option value="design">გრაფიკული დიზაინი</option>
-                    </>
-                  )}
-                </select>
-                <ChevronDown
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
-                  size={16}
-                />
+                      <option value="" disabled>
+                        {isCoursesLoading
+                          ? "მიმდინარეობს ჩატვირთვა..."
+                          : "აირჩიეთ კურსი"}
+                      </option>
+                      {courses.map((course) => (
+                        <option
+                          className="py-4"
+                          key={course.id}
+                          value={course.id.toString()}
+                        >
+                          {course.title}
+                        </option>
+                      ))}
+                      {/* Fallback options if courses don't load */}
+                      {courses.length === 0 && !isCoursesLoading && (
+                        <>
+                          <option value="web">ვებ დეველოპმენტი</option>
+                          <option value="mobile">მობაილ დეველოპმენტი</option>
+                          <option value="design">გრაფიკული დიზაინი</option>
+                        </>
+                      )}
+                    </select>
+                    <ChevronDown
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
+                      size={16}
+                    />
+                  </>
+                )}
               </div>
             </div>
 

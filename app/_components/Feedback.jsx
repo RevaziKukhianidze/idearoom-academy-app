@@ -110,7 +110,7 @@ export default function Feedback() {
   const renderTestimonialCard = (testimonial) => (
     <div
       key={testimonial.id}
-      className="bg-white relative rounded-[14px] p-8 feeback-shadow duration-300"
+      className="bg-white min-h-[308px] relative rounded-[14px] p-8 feeback-shadow duration-300"
     >
       <div className="mb-8 pt-4 relative">
         <div className="absolute top-[-44px] left-0">

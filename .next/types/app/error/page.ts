@@ -1,4 +1,4 @@
-// File: C:\Users\Lenovo\Desktop\idearoom-academy-app-main\idearoom-academy-app-main\app\error\page.tsx
+// File: C:\Users\Lenovo\Documents\academy-idearoom\idearoom-academy-app\app\error\page.tsx
 import * as entry from '../../../../app/error/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

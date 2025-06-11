@@ -152,7 +152,7 @@ function Logo() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
         href: "/",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-            className: "w-[93px] h-[36px] object-cover",
+            className: "w-[93px] h-[auto]",
             src: __TURBOPACK__imported__module__$5b$project$5d2f$public$2f$logo$2e$svg$2e$mjs__$7b$__IMAGE__$3d3e$__$225b$project$5d2f$public$2f$logo$2e$svg__$28$static__in__ecmascript$2922$__$7d$__$5b$app$2d$ssr$5d$__$28$structured__image__object$2c$__ecmascript$29$__["default"],
             alt: "ideaRoom-logo"
         }, void 0, false, {
@@ -664,7 +664,6 @@ async function createUser(userData) {
     if (exists) {
         throw new Error("მოცემული პირადი ნომრით მომხმარებელი უკვე დარეგისტრირებულია");
     }
-    console.log("Creating user with data:", userData);
     const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$services$2f$supabase$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].from("users_form").insert([
         {
             firstName: userData.firstName,
@@ -756,15 +755,6 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                 ...prev,
                 [name]: type === "checkbox" ? checked : value
             }));
-    };
-    // Function to open the date picker
-    const openDatePicker = ()=>{
-        const dateInput = document.getElementById("actual-dob-input");
-        if (dateInput && dateInput.showPicker) {
-            dateInput.showPicker();
-        } else if (dateInput) {
-            dateInput.focus();
-        }
     };
     // Function to handle native date picker's value
     const handleDateChange = (e)=>{
@@ -879,12 +869,12 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                     className: "w-[544px] object-cover"
                 }, void 0, false, {
                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                    lineNumber: 189,
+                    lineNumber: 179,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                lineNumber: 188,
+                lineNumber: 178,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -900,20 +890,20 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                         children: "კურსზე რეგისტრაცია"
                                     }, void 0, false, {
                                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                        lineNumber: 205,
+                                        lineNumber: 195,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "mt-2 h-1 w-20 lg:w-24 rounded-[4px] bg-primary-500"
                                     }, void 0, false, {
                                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                        lineNumber: 209,
+                                        lineNumber: 199,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                lineNumber: 204,
+                                lineNumber: 194,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -923,13 +913,13 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                 alt: "cancel svg"
                             }, void 0, false, {
                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                lineNumber: 211,
+                                lineNumber: 201,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                        lineNumber: 203,
+                        lineNumber: 193,
                         columnNumber: 9
                     }, this),
                     formSuccess ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -937,7 +927,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                         children: "რეგისტრაცია წარმატებით დასრულდა! მადლობა."
                     }, void 0, false, {
                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                        lineNumber: 220,
+                        lineNumber: 210,
                         columnNumber: 11
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                         onSubmit: handleSubmit,
@@ -957,12 +947,12 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                            lineNumber: 227,
+                                            lineNumber: 217,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                        lineNumber: 226,
+                                        lineNumber: 216,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -976,18 +966,18 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                            lineNumber: 238,
+                                            lineNumber: 228,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                        lineNumber: 237,
+                                        lineNumber: 227,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                lineNumber: 225,
+                                lineNumber: 215,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1004,74 +994,60 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                            lineNumber: 252,
+                                            lineNumber: 242,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                        lineNumber: 251,
+                                        lineNumber: 241,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "relative w-full",
                                         children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                onClick: openDatePicker,
-                                                className: "flex bg-white justify-between items-center relative w-full rounded-[6px] mt-1 border border-[#E7ECF2] h-[45px] lg:h-[50px] px-3 lg:px-4 cursor-pointer",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "flex flex-shrink-0 flex-nowrap items-center w-full",
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "text-[#707378] flex-nowrap max-sm:text-[11px] max-sm:mt-1 font-[500] text-[13px] lg:text-sm",
-                                                            children: dateValue ? `${day}/${month}/${year}` : "დაბადების თარიღი"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                            lineNumber: 269,
-                                                            columnNumber: 21
-                                                        }, this)
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                        lineNumber: 268,
-                                                        columnNumber: 19
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                                        className: "relative right-[20px] z-40",
-                                                        src: __TURBOPACK__imported__module__$5b$project$5d2f$public$2f$calendarLight$2e$svg$2e$mjs__$7b$__IMAGE__$3d3e$__$225b$project$5d2f$public$2f$calendarLight$2e$svg__$28$static__in__ecmascript$2922$__$7d$__$5b$app$2d$ssr$5d$__$28$structured__image__object$2c$__ecmascript$29$__["default"],
-                                                        alt: "calendar icon"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                        lineNumber: 275,
-                                                        columnNumber: 19
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                lineNumber: 264,
-                                                columnNumber: 17
-                                            }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
                                                 id: "actual-dob-input",
                                                 name: "birth_date",
                                                 type: "date",
                                                 value: dateValue,
                                                 onChange: handleDateChange,
-                                                className: "sr-only",
+                                                className: "w-full font-[500] mt-1 text-transparent bg-white shadow-none border border-[#E7ECF2] text-[13px] lg:text-sm pt-2 pl-3 lg:pl-4 h-[45px] lg:h-[50px] relative z-10 cursor-pointer [&::-webkit-datetime-edit]:opacity-0 [&::-webkit-datetime-edit-fields-wrapper]:opacity-0 [&::-webkit-datetime-edit-text]:opacity-0 [&::-webkit-inner-spin-button]:opacity-0 [&::-webkit-calendar-picker-indicator]:opacity-0  [&::-webkit-calendar-picker-indicator]:absolute  [&::-webkit-calendar-picker-indicator]:right-0  [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full  [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:z-20",
+                                                style: {
+                                                    colorScheme: "light"
+                                                },
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                lineNumber: 283,
+                                                lineNumber: 255,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                                className: "absolute right-[20px] top-1/2 transform -translate-y-1/2 pointer-events-none z-30",
+                                                src: __TURBOPACK__imported__module__$5b$project$5d2f$public$2f$calendarLight$2e$svg$2e$mjs__$7b$__IMAGE__$3d3e$__$225b$project$5d2f$public$2f$calendarLight$2e$svg__$28$static__in__ecmascript$2922$__$7d$__$5b$app$2d$ssr$5d$__$28$structured__image__object$2c$__ecmascript$29$__["default"],
+                                                alt: "calendar icon"
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/_components/RegistrationForm.jsx",
+                                                lineNumber: 280,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "absolute left-3 lg:left-4 top-1/2 transform -translate-y-1/2 text-[#707378] text-[13px] lg:text-sm font-[500] pointer-events-none z-20",
+                                                children: dateValue ? `${day}/${month}/${year}` : "დაბადების თარიღი"
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/_components/RegistrationForm.jsx",
+                                                lineNumber: 287,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                        lineNumber: 263,
+                                        lineNumber: 253,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                lineNumber: 250,
+                                lineNumber: 240,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1089,12 +1065,12 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                            lineNumber: 297,
+                                            lineNumber: 295,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                        lineNumber: 296,
+                                        lineNumber: 294,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1108,18 +1084,18 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                             required: true
                                         }, void 0, false, {
                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                            lineNumber: 309,
+                                            lineNumber: 307,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                        lineNumber: 308,
+                                        lineNumber: 306,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                lineNumber: 295,
+                                lineNumber: 293,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1140,7 +1116,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                     children: isCoursesLoading ? "მიმდინარეობს ჩატვირთვა..." : "აირჩიეთ კურსი"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                    lineNumber: 331,
+                                                    lineNumber: 329,
                                                     columnNumber: 19
                                                 }, this),
                                                 courses.map((course)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1149,7 +1125,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                         children: course.title
                                                     }, course.id, false, {
                                                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                        lineNumber: 337,
+                                                        lineNumber: 335,
                                                         columnNumber: 21
                                                     }, this)),
                                                 courses.length === 0 && !isCoursesLoading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -1159,7 +1135,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                             children: "ვებ დეველოპმენტი"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                            lineNumber: 348,
+                                                            lineNumber: 346,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1167,7 +1143,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                             children: "მობაილ დეველოპმენტი"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                            lineNumber: 349,
+                                                            lineNumber: 347,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1175,7 +1151,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                             children: "გრაფიკული დიზაინი"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                            lineNumber: 350,
+                                                            lineNumber: 348,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
@@ -1183,7 +1159,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                            lineNumber: 323,
+                                            lineNumber: 321,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDown$3e$__["ChevronDown"], {
@@ -1191,18 +1167,18 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                             size: 16
                                         }, void 0, false, {
                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                            lineNumber: 354,
+                                            lineNumber: 352,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                    lineNumber: 322,
+                                    lineNumber: 320,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                lineNumber: 321,
+                                lineNumber: 319,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1224,7 +1200,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                     children: "საიდან გაიგეთ ჩვენი კურსის შესახებ?"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                    lineNumber: 371,
+                                                    lineNumber: 369,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1233,7 +1209,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                     children: "მეგობარი"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                    lineNumber: 374,
+                                                    lineNumber: 372,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1241,7 +1217,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                     children: "Google"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                    lineNumber: 377,
+                                                    lineNumber: 375,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1249,7 +1225,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                     children: "Instagram"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                    lineNumber: 378,
+                                                    lineNumber: 376,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1257,7 +1233,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                     children: "Linkedin"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                    lineNumber: 379,
+                                                    lineNumber: 377,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1265,7 +1241,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                     children: "Facebook"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                    lineNumber: 380,
+                                                    lineNumber: 378,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1273,13 +1249,13 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                     children: "სხვა."
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                    lineNumber: 381,
+                                                    lineNumber: 379,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                            lineNumber: 363,
+                                            lineNumber: 361,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDown$3e$__["ChevronDown"], {
@@ -1287,18 +1263,18 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                             size: 16
                                         }, void 0, false, {
                                             fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                            lineNumber: 383,
+                                            lineNumber: 381,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                    lineNumber: 362,
+                                    lineNumber: 360,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                lineNumber: 361,
+                                lineNumber: 359,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1315,7 +1291,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                        lineNumber: 391,
+                                        lineNumber: 389,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
@@ -1332,24 +1308,24 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                                     children: "წესებს და პირობებს"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                    lineNumber: 406,
+                                                    lineNumber: 404,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                                lineNumber: 405,
+                                                lineNumber: 403,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                        lineNumber: 400,
+                                        lineNumber: 398,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                lineNumber: 390,
+                                lineNumber: 388,
                                 columnNumber: 13
                             }, this),
                             formError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1357,7 +1333,7 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                 children: formError
                             }, void 0, false, {
                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                lineNumber: 414,
+                                lineNumber: 412,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1369,30 +1345,30 @@ const RegistrationForm = ({ onCancel, isFullscreen = false, courses = [], isCour
                                     children: isLoading ? "მიმდინარეობს..." : "გაგზავნა"
                                 }, void 0, false, {
                                     fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                    lineNumber: 420,
+                                    lineNumber: 418,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                                lineNumber: 419,
+                                lineNumber: 417,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/_components/RegistrationForm.jsx",
-                        lineNumber: 224,
+                        lineNumber: 214,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/_components/RegistrationForm.jsx",
-                lineNumber: 196,
+                lineNumber: 186,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/_components/RegistrationForm.jsx",
-        lineNumber: 184,
+        lineNumber: 174,
         columnNumber: 5
     }, this);
 };
@@ -1580,7 +1556,7 @@ function Header() {
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/about",
                                     className: `leading-[24px] hover:text-primary-500 duration-300 transition-all ${pathname === "/about" ? "text-primary-500" : ""}`,
-                                    children: "ჩვენს შესახებ"
+                                    children: "ჩვენ შესახებ"
                                 }, void 0, false, {
                                     fileName: "[project]/app/_components/Header.jsx",
                                     lineNumber: 144,
@@ -1764,7 +1740,7 @@ function Header() {
                                 href: "/about",
                                 className: `block py-2 text-[14px] leading-[20px] ${pathname === "/about" ? "text-primary-500" : ""}`,
                                 onClick: handleLinkClick,
-                                children: "ჩვენს შესახებ"
+                                children: "ჩვენ შესახებ"
                             }, void 0, false, {
                                 fileName: "[project]/app/_components/Header.jsx",
                                 lineNumber: 239,

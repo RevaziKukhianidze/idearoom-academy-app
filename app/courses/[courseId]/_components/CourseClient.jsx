@@ -233,7 +233,7 @@ function CourseClient({
                 </div>
                 <div className="flex my-1 items-center gap-3 caps-text">
                   <Image src={timer} alt="timer icon" width={24} height={24} />
-                  <p className="mt-2 regular-text text-secondary-500 font-[100] text-sm">
+                  <p className="mt-2 text-secondary-500 font-[100] text-sm">
                     შეხვედრის ხანგრძლივობა:{" "}
                     <span className="text-[#88919C] font-[100] regular-text ml-1">
                       {courseData.lesson_time} საათი
@@ -413,18 +413,18 @@ function CourseClient({
             <h4 className="caps-text mt-8 lg:mt-[64px] text-secondary-500 text-base font-bold mb-4">
               სხვა კურსები
             </h4>
-            <div className="bg-white p-3 lg:p-4 w-full rounded-[20px]">
+            <div className="bg-white flex flex-col gap-4 p-3 lg:p-4 w-full rounded-[20px]">
               {relatedCourses.length > 0 ? (
                 relatedCourses.map((relatedCourse, index) => (
                   <div
                     key={index}
-                    className="flex flex-col sm:flex-row mb-[15px] items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB] cursor-pointer"
+                    className="flex flex-col sm:flex-row  items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB] cursor-pointer"
                     onClick={() => handleRelatedCourseClick(relatedCourse.id)}
                   >
                     <img
-                      src={relatedCourse.image}
+                      src={relatedCourse.section_image}
                       alt="similar-course"
-                      className="object-cover w-[200px] h-[190px] max-sm:w-full max-sm:max-w-[100%] max-sm:h-[350px] mx-auto rounded-lg md:rounded-none"
+                      className="object-cover w-[190px] h-[190px] max-sm:w-full max-sm:max-w-[100%] max-sm:h-[350px] mx-auto rounded-lg md:rounded-none"
                       loading="lazy"
                     />
 
@@ -478,6 +478,7 @@ function CourseClient({
             <RegistrationForm
               onCancel={handleCancelRegistration}
               courses={[courseData, ...relatedCourses]}
+              preselectedCourse={courseData}
             />
           </AlertDialog.Content>
         </AlertDialog.Root>

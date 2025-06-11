@@ -32,7 +32,7 @@ export default function Blog() {
   return (
     <section className="relative mt-12 sm:mt-16 md:mt-20 lg:mt-[72px]">
       <Headline text="ბლოგი" />
-      <div className="relative container mx-auto max-sm:max-w-[85%] mt-8 sm:mt-10 md:mt-[36px] grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="relative container mx-auto max-sm:max-w-[95%] mt-8 sm:mt-10 md:mt-[36px] grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {isLoading && <BlogLoader />}
         {!isLoading &&
           blog.map((singleBlog, blogIndex) => (

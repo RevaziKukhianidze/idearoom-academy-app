@@ -1,4 +1,4 @@
-// File: C:\Users\Lenovo\Desktop\idearoom-academy-app-main\idearoom-academy-app-main\app\courses\[courseId]\page.jsx
+// File: C:\Users\Lenovo\Documents\academy-idearoom\idearoom-academy-app\app\courses\[courseId]\page.jsx
 import * as entry from '../../../../../app/courses/[courseId]/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
