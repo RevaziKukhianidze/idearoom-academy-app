@@ -16,8 +16,7 @@
     "pm2:restart": "pm2 restart idearoom-academy-app",
     "pm2:stop": "pm2 stop idearoom-academy-app",
     "pm2:logs": "pm2 logs idearoom-academy-app",
-    "deploy": "node scripts/deploy.js",
-    "deploy:ubuntu": "chmod +x deploy-ubuntu.sh && ./deploy-ubuntu.sh"
+    "deploy": "node scripts/deploy.js"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.3",
