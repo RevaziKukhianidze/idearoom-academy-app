@@ -43,8 +43,33 @@ jobs:
           npm run build
           echo "Build completed successfully"
 
-      - name: Build completed
+      - name: Generate deployment script
         run: |
-          echo "Build completed successfully!"
-          echo "Note: Deployment should be handled separately on the production server"
-          echo "To deploy: ssh to server and run 'git pull && npm run build && pm2 restart idearoom-academy-app'"
+          echo "#!/bin/bash" > deploy.sh
+          echo "echo 'Starting deployment...'" >> deploy.sh
+          echo "cd /path/to/idearoom-academy-app" >> deploy.sh
+          echo "git pull origin main" >> deploy.sh
+          echo "npm install" >> deploy.sh
+          echo "npm run build" >> deploy.sh
+          echo "pm2 restart idearoom-academy-app" >> deploy.sh
+          echo "echo 'Deployment completed!'" >> deploy.sh
+          chmod +x deploy.sh
+
+      - name: Deployment Instructions
+        run: |
+          echo "🚀 BUILD SUCCESSFUL! 🚀"
+          echo ""
+          echo "📋 MANUAL DEPLOYMENT REQUIRED:"
+          echo "1. SSH to production server"
+          echo "2. Run the following commands:"
+          echo ""
+          echo "   cd /path/to/idearoom-academy-app"
+          echo "   git pull origin main"
+          echo "   npm install"
+          echo "   npm run build"
+          echo "   pm2 restart idearoom-academy-app"
+          echo ""
+          echo "🌐 After deployment, check: https://academy.idearoom.ge"
+          echo ""
+          echo "✅ Latest commit: ${{ github.sha }}"
+          echo "✅ Build time: $(date)"
