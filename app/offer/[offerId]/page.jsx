@@ -2,6 +2,25 @@ import React from "react";
 import { getOffers, getOfferById } from "../../services/apiOffers";
 import OfferClient from "./_components/OfferClient";
 
+// Generate static params for all offer pages
+export async function generateStaticParams() {
+  try {
+    const offers = await getOffers();
+
+    if (!offers || !Array.isArray(offers)) {
+      console.warn("No offers found for static generation");
+      return [];
+    }
+
+    return offers.map((offer) => ({
+      offerId: offer.id.toString(),
+    }));
+  } catch (error) {
+    console.error("Error generating static params for offers:", error);
+    return [];
+  }
+}
+
 // Generate metadata for the page
 export async function generateMetadata({ params }) {
   try {
@@ -105,12 +124,11 @@ function validateSyllabusContent(content) {
 }
 
 // Main component for the offer page
-export default async function OfferPage({ params, searchParams }) {
+export default async function OfferPage({ params }) {
   try {
     const offerId = params.offerId;
-    // Safely handle searchParams with fallback
-    const activeTab =
-      searchParams && searchParams.tab ? searchParams.tab : "details";
+    // Default to 'details' tab for static generation
+    const activeTab = "details";
 
     // Fetch offer data
     const offer = await getOfferById(parseInt(offerId));

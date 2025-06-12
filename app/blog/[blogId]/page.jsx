@@ -7,6 +7,25 @@ import calendar from "../../../public/calendar.svg";
 import { getBlogs } from "../../services/apiBlogs";
 import HeadTop from "../_components/HeadTop";
 
+// Generate static params for all blog pages
+export async function generateStaticParams() {
+  try {
+    const blogs = await getBlogs();
+
+    if (!blogs || !Array.isArray(blogs)) {
+      console.warn("No blogs found for static generation");
+      return [];
+    }
+
+    return blogs.map((blog) => ({
+      blogId: blog.id.toString(),
+    }));
+  } catch (error) {
+    console.error("Error generating static params for blogs:", error);
+    return [];
+  }
+}
+
 // Fixed signature and ensuring static generation
 export async function generateMetadata({ params }) {
   try {

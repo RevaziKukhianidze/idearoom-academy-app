@@ -2,6 +2,25 @@ import React from "react";
 import { getCourses, getCourseById } from "../../services/apiCourses";
 import CourseClientWrapper from "./_components/CourseClientWrapper";
 
+// Generate static params for all course pages
+export async function generateStaticParams() {
+  try {
+    const courses = await getCourses();
+
+    if (!courses || !Array.isArray(courses)) {
+      console.warn("No courses found for static generation");
+      return [];
+    }
+
+    return courses.map((course) => ({
+      courseId: course.id.toString(),
+    }));
+  } catch (error) {
+    console.error("Error generating static params for courses:", error);
+    return [];
+  }
+}
+
 // Generate metadata for the page
 export async function generateMetadata({ params }) {
   try {
@@ -71,12 +90,11 @@ export async function generateMetadata({ params }) {
 }
 
 // Main component for the course page
-export default async function CoursePage({ params, searchParams }) {
+export default async function CoursePage({ params }) {
   try {
     const courseId = params.courseId;
-    // Safely handle searchParams with fallback
-    const activeTab =
-      searchParams && searchParams.tab ? searchParams.tab : "details";
+    // Default to 'details' tab for static generation
+    const activeTab = "details";
 
     // Fetch course data
     const courseData = await getCourseById(parseInt(courseId));
