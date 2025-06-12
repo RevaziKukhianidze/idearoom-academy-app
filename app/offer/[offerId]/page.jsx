@@ -38,18 +38,6 @@ export async function generateMetadata({ params }) {
       ? `https://academy.idearoom.ge/${rawImageUrl}`
       : "https://academy.idearoom.ge/coverweb.webp"; // fallback image
 
-    // Debug log to see what we got
-    console.log("Offer metadata debug:", {
-      offerId,
-      title: offer.title,
-      rawImageUrl,
-      finalImageUrl: imageUrl,
-      hasImage: !!offer.image,
-      hasSectionImage: !!offer.section_image,
-      hasCourseImage: !!offer.course_image,
-      hasBannerImage: !!offer.banner_image,
-    });
-
     return {
       title: offer.title,
       description: description,

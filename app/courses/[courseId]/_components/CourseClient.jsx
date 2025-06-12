@@ -329,7 +329,7 @@ function CourseClient({
 
         {/* Right Column: Other Course Details & Related Courses */}
         <div className="lg:col-span-5">
-          <div className="bg-white w-full relative px-4 py-6 lg:px-6 lg:py-8 rounded-[20px] mb-8 max-sm:hidden">
+          <div className="bg-white w-full relative px-4 py-6 lg:px-6 lg:py-8 rounded-[20px] mb-8 max-lg:hidden">
             {/* Only load the icon when it's needed */}
             {courseData.courseIcon && (
               <img
@@ -410,7 +410,7 @@ function CourseClient({
           </div>
 
           <div>
-            <h4 className="caps-text mt-8 lg:mt-[64px] text-secondary-500 text-base font-bold mb-4">
+            <h4 className="caps-text max-lg:mt-3 lg:mt-[64px] text-secondary-500 text-base font-bold mb-4">
               სხვა კურსები
             </h4>
             <div className="bg-white flex flex-col gap-4 p-3 lg:p-4 w-full rounded-[20px]">

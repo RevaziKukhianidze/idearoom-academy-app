@@ -27,7 +27,7 @@ export default async function OffersPage() {
     const sortedCourses = [...courses].sort((a, b) => b.id - a.id);
 
     return (
-      <div className="container mx-auto max-sm:max-w-[90%] mt-[80px] py-8">
+      <div className="container mx-auto max-sm:max-w-[95%] mt-[80px] py-8">
         <div className="mt-2">
           <HeadTopOffer>
             <p className="cursor-pointer">შეთავაზება</p>
@@ -41,7 +41,7 @@ export default async function OffersPage() {
             >
               <div className="relative">
                 <img
-                  className="mb-5 h-[284px] rounded-[12px] w-full relative"
+                  className="mb-5 object-cover h-[284px] rounded-[12px] w-full relative"
                   src={course.image || course.section_image}
                   alt={course.title}
                   loading="lazy"
@@ -62,10 +62,10 @@ export default async function OffersPage() {
                     );
                   })}
               </div>
-              <h2 className="text-lg mt-6 text-secondary-800 font-[600] mb-2 caps-text">
+              <h2 className="text-lg max-md:text-base mt-6 text-secondary-800 font-[600] mb-2 caps-text">
                 {course.title}
               </h2>
-              <p className="text-[#434a53] text-sm caps-text mb-6 line-clamp-2">
+              <p className="text-[#434a53] max-md:text-[13px] text-sm caps-text mb-6 line-clamp-2">
                 {course.text}
               </p>
               <div className="w-full h-[1px] bg-[#EFF2F5] mb-6"></div>

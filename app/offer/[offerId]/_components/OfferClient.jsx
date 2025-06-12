@@ -177,6 +177,78 @@ export default function OfferClient({
               : ""}
           </p>
 
+          {/* კურსის დეტალები max-lg-ზე */}
+          <div className="lg:hidden mt-6 mb-8">
+            <div className="bg-white w-full relative px-4 py-6 rounded-[20px]">
+              <h3 className="text-base lg:text-lg font-bold caps-text text-secondary-500 mb-4">
+                კურსის დეტალები
+              </h3>
+              <div>
+                <div className="flex my-1 items-center gap-3 caps-text">
+                  <Image src={lightCalendar} alt="calendar icon" />
+                  <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-[15px]">
+                    დაწყების თარიღი:{" "}
+                    <span className="text-[#88919C] regular-text font-[400] ml-1">
+                      {offer.start_course || "მალე დაიწყება"}
+                    </span>
+                  </p>
+                </div>
+                <div className="flex my-1 items-center gap-3 caps-text">
+                  <Image src={tv} alt="tv icon" />
+                  <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
+                    კურსის ხანგრძლივობა:{" "}
+                    <span className="text-[#88919C] regular-text font-[400] ml-1">
+                      {offer.qunatity_of_lessons || offer.quantity_of_lessons}{" "}
+                      შეხვედრა
+                    </span>
+                  </p>
+                </div>
+                <div className="flex my-1 items-center gap-3 caps-text">
+                  <Image src={timer} alt="timer icon" />
+                  <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
+                    შეხვედრის ხანგრძლივობა:{" "}
+                    <span className="text-[#88919C] regular-text font-[400] ml-1">
+                      {offer.lesson_time} საათი
+                    </span>
+                  </p>
+                </div>
+                <div className="flex my-1 items-center gap-3 caps-text">
+                  <Image src={user} alt="user icon" />
+                  <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
+                    სტუდენტები ჯგუფში:{" "}
+                    <span className="text-[#88919C] regular-text font-[400] ml-1">
+                      {offer.qunatity_of_students || offer.quantity_of_students}
+                    </span>
+                  </p>
+                </div>
+                <div className="flex my-1 items-center gap-3 caps-text">
+                  <Image src={badge} alt="badge icon" />
+                  <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
+                    სერთიფიკატი და სტაჟირება
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <p className="text-base lg:text-lg text-secondary-500 caps-text mt-6 lg:mt-8">
+                  ფასი: <span className="font-bold">₾ {offer.price}</span>
+                </p>
+                <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6 lg:mt-8">
+                  <span className="font-bold leading-[24px]">
+                    ₾ {offer.old_price}
+                  </span>
+                </p>
+              </div>
+              <div className="space-y-4 mt-4 lg:mt-6">
+                <Button
+                  className="w-full bg-primary-500 hover:bg-primary-600 text-white text-[15px] lg:text-[16px] pt-3 lg:pt-4 h-[48px] lg:h-[56px] caps-text font-bold"
+                  onClick={handleShowRegistrationForm}
+                >
+                  დარეგისტრირდი
+                </Button>
+              </div>
+            </div>
+          </div>
+
           {/* ტაბების მენიუ */}
           <div className="flex my-5 lg:my-7 mb-8 lg:mb-12 text-sm items-center gap-3 caps-text overflow-x-auto whitespace-nowrap">
             <div
@@ -227,7 +299,7 @@ export default function OfferClient({
         </div>
 
         {/* მარჯვენა კოლონა: Course Info and Related Offers */}
-        <div className="lg:col-span-5">
+        <div className="lg:col-span-5 max-lg:hidden block max-lg:mt-[-30px]">
           <div className="bg-white w-full relative px-4 py-6 lg:px-6 lg:py-8 rounded-[20px] mb-8">
             {offer.courseIcon && (
               <img

@@ -24,7 +24,7 @@ export default function HeadTopCourse({ children, isCoursesPage = true }) {
         <>
           <Link href="/courses">
             <p className="caps-text text-xs hover:underline sm:text-sm font-regular text-[#6A737D] mt-[5px]">
-              კურსები
+              შეთავაზება
             </p>
           </Link>
 

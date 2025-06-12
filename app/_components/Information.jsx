@@ -24,9 +24,9 @@ export default function Information() {
 
   return (
     <section className="bg-white mt-8 sm:mt-12 md:mt-16 lg:mt-[64px] py-8 sm:py-12 md:py-16 lg:py-[64px] mb-12 sm:mb-16 md:mb-24">
-      <div className="container px-4 sm:px-6 md:px-8 lg:px-0 gap-6 sm:gap-8 md:gap-12 grid grid-cols-1 lg:grid-cols-2">
+      <div className="container max-lg:max-w-[95%] mx-auto lg:px-0 gap-6 sm:gap-8 md:gap-12 grid grid-cols-1 lg:grid-cols-2">
         <div className="flex justify-center lg:block">
-          <div className="w-full relative sm:max-w-md md:max-w-xl lg:max-w-none">
+          <div className="w-full relative">
             <Image
               src={information}
               alt="information-image"
@@ -96,13 +96,13 @@ export default function Information() {
 
       {/* Video Popup Modal - ზუსტად იგივე ვიზუალი როგორც ლექტორების popup */}
       <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
-        <DialogContent className="text-secondary-500 max-h-[90vh] overflow-hidden mt-[-10px] max-sm:mt-[-20px] max-md:max-w-[95%] max-w-[500px] max-md:min-w-[300px] outline-none border-none bg-transparent shadow-none rounded-[30px] mx-auto max-md:mr-2 [&>button]:hidden">
+        <DialogContent className="text-secondary-500 max-h-[90vh] overflow-hidden max-lg:mt-[-30px] mt-[-10px] max-sm:mt-[-20px] max-md:max-w-[95%] max-w-[500px] max-md:min-w-[300px] outline-none border-none bg-transparent shadow-none rounded-[30px] mx-auto max-md:mr-2 [&>button]:hidden">
           <DialogHeader className="max-sm:items-start">
             <DialogTitle className="flex max-sm:text-left mb-5 sm:mb-7 items-center gap-2 max-sm:justify-start w-full"></DialogTitle>
             <div className="relative flex justify-center items-center w-full">
               <Image
                 onClick={() => setIsVideoOpen(false)}
-                className="absolute cursor-pointer w-[36px] h-[36px] max-sm:right-[5%] max-md:w-[28px] max-md:h-[28px] max-md:right-[3%] z-50 right-[6%] top-[2%]"
+                className="absolute cursor-pointer w-[36px] h-[36px] max-sm:right-[5%] max-xl:top-[-1%] max-md:w-[28px]  max-md:h-[28px] max-md:right-[17%] z-50 right-[6%] top-[2%]"
                 src={cancel}
                 alt="cancel-svg"
               />
@@ -111,7 +111,7 @@ export default function Information() {
                 muted={false}
                 autoPlay={true}
                 playsInline
-                className="w-full max-md:h-[700px] max-sm:h-[550px] max-md:w-auto max-w-[420px] border-none outline-none rounded-[20px] relative aspect-[9/16] object-contain fullscreen:h-screen fullscreen:max-w-none fullscreen:w-auto fullscreen:object-contain fullscreen:bg-black"
+                className="w-full h-[90%] max-xl:mt-[-20px] max-md:h-[700px] max-sm:h-[550px] max-xl:h-[650px] object-cover max-md:w-auto max-w-[420px] border-none outline-none rounded-[20px] relative aspect-[9/16]  fullscreen:h-screen fullscreen:max-w-none fullscreen:w-auto fullscreen:object-contain fullscreen:bg-black"
                 onError={(e) => {
                   console.error("Video failed to load", e);
                   setIsVideoOpen(false);
