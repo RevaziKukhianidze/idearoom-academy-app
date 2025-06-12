@@ -17,6 +17,7 @@ jobs:
       NEXT_PUBLIC_SUPABASE_URL: ${{secrets.NEXT_PUBLIC_SUPABASE_URL}}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY}}
       NEXT_PUBLIC_BASE_URL: ${{secrets.NEXT_PUBLIC_BASE_URL}}
+      NODE_ENV: production
       NODE_OPTIONS: "--max-old-space-size=4096"
 
     steps:
@@ -30,11 +31,19 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      - name: Clear npm cache
-        run: npm cache clean --force
+      - name: Clear npm cache and node_modules
+        run: |
+          npm cache clean --force
+          rm -rf node_modules
+          rm -rf .next
 
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit
+
+      - name: Check environment variables
+        run: |
+          echo "Checking environment variables..."
+          node scripts/check-env.js
 
       - name: Build application
         run: |
@@ -42,8 +51,17 @@ jobs:
           npm run build
           echo "Build completed successfully"
 
-      - name: Deploy to production
+      - name: Verify build output
+        run: |
+          echo "Checking build output..."
+          ls -la .next/
+          echo "Checking static files..."
+          ls -la .next/static/ || echo "No static directory found"
+
+            - name: Deploy to production
         run: |
           echo "Deploying to production..."
-          pm2 restart idearoom-academy-app || pm2 start ecosystem.config.js
-          echo "Deployment completed successfully!"
+          echo "Current working directory: $(pwd)"
+          
+          # Use the comprehensive deployment script
+          npm run deploy

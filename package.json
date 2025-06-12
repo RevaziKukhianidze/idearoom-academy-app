@@ -9,7 +9,14 @@
     "start": "next start",
     "lint": "next lint",
     "export": "next export",
-    "deploy": "npm run build && npm run export"
+    "deploy": "npm run build && npm run export",
+    "setup-logs": "node scripts/setup-logs.js",
+    "check-env": "node scripts/check-env.js",
+    "pm2:start": "npm run setup-logs && pm2 start ecosystem.config.js",
+    "pm2:restart": "pm2 restart idearoom-academy-app",
+    "pm2:stop": "pm2 stop idearoom-academy-app",
+    "pm2:logs": "pm2 logs idearoom-academy-app",
+    "deploy": "node scripts/deploy.js"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.3",
