@@ -35,5 +35,5 @@ jobs:
 
       - name: Deploy
         run: |
-          cd rezo
+          cd idearoom
           pm2 restart idearoom-academy-app
