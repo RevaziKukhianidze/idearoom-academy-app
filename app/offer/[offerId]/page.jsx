@@ -2,9 +2,6 @@ import React from "react";
 import { getOffers, getOfferById } from "../../services/apiOffers";
 import OfferClient from "./_components/OfferClient";
 
-// Force dynamic rendering to handle searchParams
-export const dynamic = "force-dynamic";
-
 // Generate metadata for the page
 export async function generateMetadata({ params }) {
   try {
@@ -210,22 +207,5 @@ export default async function OfferPage({ params, searchParams }) {
         </div>
       </div>
     );
-  }
-}
-
-// Generate static paths for the generation
-export async function generateStaticParams() {
-  try {
-    const offers = await getOffers();
-    if (!offers || !Array.isArray(offers)) {
-      console.error("No offers found or offers is not an array");
-      return [];
-    }
-    return offers.map((offer) => ({
-      offerId: offer.id.toString(),
-    }));
-  } catch (error) {
-    console.error("Error generating static params:", error);
-    return [];
   }
 }

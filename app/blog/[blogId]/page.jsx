@@ -97,10 +97,6 @@ function formatDateGeorgian(dateString) {
   return `${month} ${day}, ${year}`;
 }
 
-// Allow dynamic rendering for API calls
-export const dynamic = "force-dynamic";
-export const revalidate = 3600; // Revalidate every hour
-
 export default async function BlogPage({ params }) {
   try {
     const blogs = await getBlogs();
@@ -203,23 +199,5 @@ export default async function BlogPage({ params }) {
         </div>
       </div>
     );
-  }
-}
-
-export async function generateStaticParams() {
-  try {
-    const blogs = await getBlogs();
-
-    if (!blogs || !Array.isArray(blogs)) {
-      console.warn("No blogs found for static generation");
-      return [];
-    }
-
-    return blogs.map((blog) => ({
-      blogId: blog.id.toString(),
-    }));
-  } catch (error) {
-    console.error("Error generating static params for blogs:", error);
-    return [];
   }
 }

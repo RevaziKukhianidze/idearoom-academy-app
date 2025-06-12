@@ -2,9 +2,6 @@ import React from "react";
 import { getCourses, getCourseById } from "../../services/apiCourses";
 import CourseClientWrapper from "./_components/CourseClientWrapper";
 
-// Force dynamic rendering to handle searchParams
-export const dynamic = "force-dynamic";
-
 // Generate metadata for the page
 export async function generateMetadata({ params }) {
   try {
@@ -178,22 +175,5 @@ export default async function CoursePage({ params, searchParams }) {
         </div>
       </div>
     );
-  }
-}
-
-// Define static paths for the generation
-export async function generateStaticParams() {
-  try {
-    const courses = await getCourses();
-    if (!courses || !Array.isArray(courses)) {
-      console.error("No courses found or courses is not an array");
-      return [];
-    }
-    return courses.map((course) => ({
-      courseId: course.id.toString(),
-    }));
-  } catch (error) {
-    console.error("Error generating static params:", error);
-    return [];
   }
 }

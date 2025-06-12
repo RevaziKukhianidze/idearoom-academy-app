@@ -169,7 +169,7 @@ function CourseClient({
   // If course data is not loaded, show a minimal loading state
   if (!courseData) {
     return (
-      <div className="container max-w-[95%] mx-auto px-4 py-10">
+      <div className="container max-w-[95%] mx-auto py-10">
         <div className="bg-white mt-5 h-[475px] rounded-[20px] p-8 flex items-center justify-center">
           <h1 className="text-2xl font-bold">კურსი იტვირთება...</h1>
         </div>
@@ -178,7 +178,7 @@ function CourseClient({
   }
 
   return (
-    <section className="container mx-auto max-sm:max-w-[90%] max-sm:mx-auto mt-[128px]">
+    <section className="container mx-auto max-sm:max-w-[95%] max-sm:mx-auto mt-[128px]">
       <HeadTopCourse isCoursesPage={false}>
         <p className="cursor-pointer">{courseData.title}</p>
       </HeadTopCourse>
