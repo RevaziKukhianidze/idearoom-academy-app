@@ -1,6 +1,30 @@
 {
   "version": 4,
   "routes": {
+    "/about": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/about",
+      "dataRoute": "/about.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/favicon.ico": {
       "initialHeaders": {
         "cache-control": "public, max-age=0, must-revalidate",
@@ -78,30 +102,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/offer": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/offer",
-      "dataRoute": "/offer.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/courses": {
       "experimentalBypassFor": [
         {
@@ -117,78 +117,6 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/courses",
       "dataRoute": "/courses.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/error": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/error",
-      "dataRoute": "/error.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/about": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/about",
-      "dataRoute": "/about.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/contact": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/contact",
-      "dataRoute": "/contact.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -222,7 +150,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/blog/1": {
+    "/offer": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -235,8 +163,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/blog/[blogId]",
-      "dataRoute": "/blog/1.rsc",
+      "srcRoute": "/offer",
+      "dataRoute": "/offer.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -246,7 +174,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/blog/2": {
+    "/contact": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -259,8 +187,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/blog/[blogId]",
-      "dataRoute": "/blog/2.rsc",
+      "srcRoute": "/contact",
+      "dataRoute": "/contact.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -270,7 +198,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/blog/3": {
+    "/error": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -283,8 +211,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/blog/[blogId]",
-      "dataRoute": "/blog/3.rsc",
+      "srcRoute": "/error",
+      "dataRoute": "/error.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -295,37 +223,11 @@
       ]
     }
   },
-  "dynamicRoutes": {
-    "/blog/[blogId]": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "routeRegex": "^/blog/([^/]+?)(?:/)?$",
-      "dataRoute": "/blog/[blogId].rsc",
-      "fallback": null,
-      "dataRouteRegex": "^/blog/([^/]+?)\\.rsc$",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    }
-  },
+  "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "799b02abe42e69b665edc4c200dd1b3f",
-    "previewModeSigningKey": "cd55d6fb4e96cc38ffc14d8f28a6f74dee50f686b79898b41b4fc132bf5abf8a",
-    "previewModeEncryptionKey": "2809993ff4d64e20e7e41d872dbf270944222cf15fb09d7463aba8a59df9eefd"
+    "previewModeId": "6c9633d975e9fa191c1b7beebba19096",
+    "previewModeSigningKey": "930030ab367b0d7997abe75c96f9f4945280e2db22c27646f951320be6f3f473",
+    "previewModeEncryptionKey": "133737991d41aec7e041090f18efbc6b59bdc40d60d43d77b32332f65423098c"
   }
 }

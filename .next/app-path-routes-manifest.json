@@ -1,17 +1,17 @@
 {
-  "/api/offer/route": "/api/offer",
   "/api/offers/route": "/api/offers",
+  "/api/offer/route": "/api/offer",
   "/favicon.ico/route": "/favicon.ico",
   "/contact/page": "/contact",
   "/error/page": "/error",
   "/_not-found/page": "/_not-found",
   "/about/page": "/about",
   "/blog/page": "/blog",
-  "/blog/[blogId]/page": "/blog/[blogId]",
-  "/courses/page": "/courses",
   "/courses/[courseId]/page": "/courses/[courseId]",
-  "/offer/[offerId]/page": "/offer/[offerId]",
+  "/courses/page": "/courses",
+  "/blog/[blogId]/page": "/blog/[blogId]",
   "/offer/page": "/offer",
-  "/privacy/page": "/privacy",
-  "/page": "/"
+  "/page": "/",
+  "/offer/[offerId]/page": "/offer/[offerId]",
+  "/privacy/page": "/privacy"
 }
