@@ -73,3 +73,6 @@ jobs:
 
       - name: Restart PM2
         run: npm run pm2:restart
+
+      - name: Deploy to Ubuntu
+        run: npm run deploy:ubuntu
