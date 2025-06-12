@@ -8,9 +8,9 @@ import Brand from "./_components/Brand";
 
 // Add metadata for the homepage
 export const metadata = {
-  title: "იდეარუმის აკადემია - ისწავლე ციფრული მარკეტინგი",
+  title: "idearoom academy",
   description:
-    "ისწავლე ციფრული მარკეტინგი, SEO, SMM, Google Ads და სხვა თანამედროვე უნარები იდეარუმის აკადემიაში. გამოცდილ მენტორებთან ერთად.",
+    "გაიღრმავე ცოდნა ციფრულ სფეროში, ისწავლე პრაქტიკულად და დაიწყე კარიერა გამოცდილ მენტორებთან ერთად — იდეარუმის აკადემიაში.",
   openGraph: {
     title: "იდეარუმის აკადემია - ისწავლე ციფრული მარკეტინგი",
     description:

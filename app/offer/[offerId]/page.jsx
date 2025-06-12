@@ -2,6 +2,9 @@ import React from "react";
 import { getOffers, getOfferById } from "../../services/apiOffers";
 import OfferClient from "./_components/OfferClient";
 
+// Force dynamic rendering to handle searchParams
+export const dynamic = "force-dynamic";
+
 // Generate metadata for the page
 export async function generateMetadata({ params }) {
   try {
@@ -120,7 +123,9 @@ function validateSyllabusContent(content) {
 export default async function OfferPage({ params, searchParams }) {
   try {
     const offerId = params.offerId;
-    const activeTab = searchParams?.tab || "details";
+    // Safely handle searchParams with fallback
+    const activeTab =
+      searchParams && searchParams.tab ? searchParams.tab : "details";
 
     // Fetch offer data
     const offer = await getOfferById(parseInt(offerId));
@@ -212,6 +217,10 @@ export default async function OfferPage({ params, searchParams }) {
 export async function generateStaticParams() {
   try {
     const offers = await getOffers();
+    if (!offers || !Array.isArray(offers)) {
+      console.error("No offers found or offers is not an array");
+      return [];
+    }
     return offers.map((offer) => ({
       offerId: offer.id.toString(),
     }));
