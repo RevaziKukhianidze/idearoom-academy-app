@@ -63,5 +63,13 @@ jobs:
           echo "Deploying to production..."
           echo "Current working directory: $(pwd)"
 
-          # Use the comprehensive deployment script
+          # Set your environment variables first
+          export NEXT_PUBLIC_SUPABASE_URL="your_supabase_url"
+          export NEXT_PUBLIC_SUPABASE_ANON_KEY="your_supabase_key"  
+          export NEXT_PUBLIC_BASE_URL="https://academy.idearoom.ge"
+
+          # Then deploy
           npm run deploy
+
+      - name: Restart PM2
+        run: npm run pm2:restart
