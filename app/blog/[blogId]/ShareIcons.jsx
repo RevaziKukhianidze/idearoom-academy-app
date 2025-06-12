@@ -2,10 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import facebook from "../../../public/facebook.svg";
-import youtube from "../../../public/youtube.svg";
-import instagram from "../../../public/instagram.svg";
 import linkedin from "../../../public/linkedin.svg";
-import Link from "next/link";
 import { FacebookShareButton, LinkedinShareButton } from "next-share";
 
 export default function ShareIcons({ url, quote }) {
