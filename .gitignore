@@ -14,7 +14,7 @@
 /coverage
 
 # next.js
-# /.next/
+/.next/
 /out/
 
 # production
@@ -39,3 +39,25 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# logs
+logs/
+*.log
+
+# cache directories
+.cache/
+.npm/
+.eslintcache
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# PM2 files
+.pm2/
