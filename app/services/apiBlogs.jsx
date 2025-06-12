@@ -158,7 +158,8 @@ export async function getBlogsLimited(id, ttl = 120000) {
     }
   } catch (error) {
     console.error("Error in getBlogsLimited:", error);
-    return null;
+    // Return an empty array instead of null to prevent runtime errors in components
+    return [];
   }
 }
 

@@ -50,7 +50,7 @@ const cache = {
   },
 };
 
-export async function getCourses(id) {
+export async function getCourses() {
   const cacheKey = "all_courses";
 
   // Check cache first
@@ -58,11 +58,20 @@ export async function getCourses(id) {
     return cache.get(cacheKey);
   }
 
-  // If not in cache, fetch from Supabase
-  let { data, error } = await supabase.from("courses").select("*");
+  try {
+    const { data, error } = await supabase.from("courses").select("*");
 
-  // Store in cache and return
-  return cache.set(cacheKey, data);
+    if (error) {
+      console.error("Error in getCourses:", error);
+      return [];
+    }
+
+    // Store in cache and return
+    return cache.set(cacheKey, data || []);
+  } catch (err) {
+    console.error("Unexpected error in getCourses:", err);
+    return [];
+  }
 }
 
 export async function getCourseById(id) {
@@ -92,15 +101,25 @@ export async function getLimitedCourse() {
     return cache.get(cacheKey);
   }
 
-  // If not in cache, fetch from Supabase
-  const { data, error } = await supabase
-    .from("courses")
-    .select("*")
-    .order("id", { ascending: false })
-    .limit(4);
+  try {
+    // Try fetching from Supabase
+    const { data, error } = await supabase
+      .from("courses")
+      .select("*")
+      .order("id", { ascending: false })
+      .limit(4);
 
-  // Store in cache and return
-  return cache.set(cacheKey, data);
+    if (error) {
+      console.error("Error in getLimitedCourse:", error);
+      return [];
+    }
+
+    // Store in cache and return
+    return cache.set(cacheKey, data || []);
+  } catch (err) {
+    console.error("Unexpected error in getLimitedCourse:", err);
+    return [];
+  }
 }
 
 // Function to manually invalidate cache when data changes

@@ -13,7 +13,7 @@ import user from "../../../../public/user.svg";
 import badge from "../../../../public/badge.svg";
 import downArrow from "../../../../public/downArrow.svg";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // Performance optimization: Memoize loader component
 const RelatedCoursesLoader = memo(() => {
@@ -143,11 +143,14 @@ function CourseClient({
   courseData,
   relatedCourses,
   syllabusItems,
-  activeTab,
+  activeTab: initialActiveTab,
   courseId,
 }) {
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  // Determine current tab from URL (?tab=), fallback to the initial value provided by server
+  const currentTab = searchParams.get("tab") || initialActiveTab || "details";
 
   const handleShowRegistrationForm = useCallback(() => {
     setShowRegistrationForm(true);
@@ -283,7 +286,7 @@ function CourseClient({
               scroll={false}
               shallow={true}
               className={`${
-                activeTab === "details"
+                currentTab === "details"
                   ? "bg-primary-500 text-white"
                   : "bg-white text-secondary-500"
               } pt-3 lg:pt-4 p-2 lg:p-3 px-3 lg:px-5 rounded-[8px] cursor-pointer`}
@@ -296,7 +299,7 @@ function CourseClient({
               scroll={false}
               shallow={true}
               className={`${
-                activeTab === "syllabus"
+                currentTab === "syllabus"
                   ? "bg-primary-500 text-white"
                   : "bg-white text-secondary-500"
               } pt-3 lg:pt-4 p-2 lg:p-3 px-3 lg:px-5 rounded-[8px] cursor-pointer`}
@@ -309,7 +312,7 @@ function CourseClient({
               scroll={false}
               shallow={true}
               className={`${
-                activeTab === "lecturer"
+                currentTab === "lecturer"
                   ? "bg-primary-500 text-white"
                   : "bg-white text-secondary-500"
               } pt-3 lg:pt-4 p-2 lg:p-3 px-3 lg:px-5 rounded-[8px] cursor-pointer`}
@@ -320,11 +323,11 @@ function CourseClient({
           </div>
 
           {/* Render Tab Content - Only render the active tab */}
-          {activeTab === "details" && <DetailsTab course={courseData} />}
-          {activeTab === "syllabus" && (
+          {currentTab === "details" && <DetailsTab course={courseData} />}
+          {currentTab === "syllabus" && (
             <SyllabusTab syllabusItems={syllabusItems} />
           )}
-          {activeTab === "lecturer" && <LecturerTab course={courseData} />}
+          {currentTab === "lecturer" && <LecturerTab course={courseData} />}
         </div>
 
         {/* Right Column: Other Course Details & Related Courses */}
