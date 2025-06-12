@@ -2,7 +2,7 @@ const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
-console.log("🚀 Starting deployment process...\n");
+console.log("🚀 Starting deployment processs...\n");
 
 // Check environment variables
 console.log("🔍 Checking environment variables...");
