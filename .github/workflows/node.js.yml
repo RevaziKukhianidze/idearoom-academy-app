@@ -58,10 +58,10 @@ jobs:
           echo "Checking static files..."
           ls -la .next/static/ || echo "No static directory found"
 
-            - name: Deploy to production
+      - name: Deploy to production
         run: |
           echo "Deploying to production..."
           echo "Current working directory: $(pwd)"
-          
+
           # Use the comprehensive deployment script
           npm run deploy
