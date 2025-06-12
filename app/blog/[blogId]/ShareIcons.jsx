@@ -6,6 +6,7 @@ import linkedin from "../../../public/linkedin.svg";
 import { FacebookShareButton, LinkedinShareButton } from "next-share";
 
 export default function ShareIcons({ url, quote }) {
+  console.log("გამარჯობა");
   return (
     <>
       <FacebookShareButton url={url} quote={quote}>
@@ -17,7 +18,6 @@ export default function ShareIcons({ url, quote }) {
           />
         </div>
       </FacebookShareButton>
-
       <LinkedinShareButton url={url}>
         <div className="bg-[#F9FAFB] cursor-pointer hover:bg-secondary-50 duration-300 transition-all w-12 h-12 flex items-center justify-center rounded-full p-3">
           <Image
