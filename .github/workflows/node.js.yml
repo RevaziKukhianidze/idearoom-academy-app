@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest # Use GitHub-hosted runner instead of self-hosted
     timeout-minutes: 15 # Add timeout to prevent infinite builds
 
     strategy:
@@ -43,9 +43,8 @@ jobs:
           npm run build
           echo "Build completed successfully"
 
-      - name: Deploy with PM2
+      - name: Build completed
         run: |
-          cd /home/rezo/actions-runner/_work/idearoom-academy-app/idearoom-academy-app
-          pm2 reload ecosystem.config.js --env production || pm2 start ecosystem.config.js --env production
-          pm2 save
-          echo "Deployment completed"
+          echo "Build completed successfully!"
+          echo "Note: Deployment should be handled separately on the production server"
+          echo "To deploy: ssh to server and run 'git pull && npm run build && pm2 restart idearoom-academy-app'"
