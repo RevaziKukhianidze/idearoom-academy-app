@@ -77,7 +77,7 @@ export default async function CoursePage({ params, searchParams }) {
     .slice(0, 4);
 
   // Process syllabus data
-  function processData(data) {
+  const processData = (data) => {
     if (Array.isArray(data)) return data;
     if (data == null) return [];
     if (typeof data === "string") {
@@ -91,11 +91,12 @@ export default async function CoursePage({ params, searchParams }) {
         }
         return [trimmedData];
       } catch (e) {
+        console.error("Failed to parse JSON:", e);
         return [];
       }
     }
     return [];
-  }
+  };
 
   const validateSyllabusContent = (content) => {
     if (!Array.isArray(content)) return [String(content)];
@@ -146,9 +147,15 @@ export default async function CoursePage({ params, searchParams }) {
   );
 }
 
-// Define static paths for the generation - simplified for faster builds
+// Define static paths for the generation
 export async function generateStaticParams() {
-  // Return empty array to force dynamic rendering during build
-  // This prevents build hanging issues with external API calls
-  return [];
+  try {
+    const courses = await getCourses();
+    return courses.map((course) => ({
+      courseId: course.id.toString(),
+    }));
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
 }

@@ -50,16 +50,6 @@ const cache = {
   },
 };
 
-// Timeout wrapper for API calls
-async function withTimeout(promise, timeoutMs = 10000) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Request timeout")), timeoutMs)
-    ),
-  ]);
-}
-
 export async function getCourses(id) {
   const cacheKey = "all_courses";
 
@@ -68,21 +58,11 @@ export async function getCourses(id) {
     return cache.get(cacheKey);
   }
 
-  try {
-    // If not in cache, fetch from Supabase with timeout
-    let { data, error } = await withTimeout(
-      supabase.from("courses").select("*")
-    );
+  // If not in cache, fetch from Supabase
+  let { data, error } = await supabase.from("courses").select("*");
 
-    if (error) {
-      throw new Error("Failed to fetch courses");
-    }
-
-    // Store in cache and return
-    return cache.set(cacheKey, data);
-  } catch (error) {
-    throw new Error("Failed to fetch courses");
-  }
+  // Store in cache and return
+  return cache.set(cacheKey, data);
 }
 
 export async function getCourseById(id) {
@@ -93,25 +73,15 @@ export async function getCourseById(id) {
     return cache.get(cacheKey);
   }
 
-  try {
-    // If not in cache, fetch from Supabase with timeout
-    let { data, error } = await withTimeout(
-      supabase
-        .from("courses")
-        .select("*, syllabus_title, syllabus_content")
-        .eq("id", id)
-        .single()
-    );
+  // If not in cache, fetch from Supabase
+  let { data, error } = await supabase
+    .from("courses")
+    .select("*, syllabus_title, syllabus_content")
+    .eq("id", id)
+    .single();
 
-    if (error) {
-      throw new Error(`Failed to fetch course with ID ${id}`);
-    }
-
-    // Store in cache and return
-    return cache.set(cacheKey, data);
-  } catch (error) {
-    throw new Error(`Failed to fetch course with ID ${id}`);
-  }
+  // Store in cache and return
+  return cache.set(cacheKey, data);
 }
 
 export async function getLimitedCourse() {
@@ -122,25 +92,15 @@ export async function getLimitedCourse() {
     return cache.get(cacheKey);
   }
 
-  try {
-    // If not in cache, fetch from Supabase with timeout
-    const { data, error } = await withTimeout(
-      supabase
-        .from("courses")
-        .select("*")
-        .order("id", { ascending: false })
-        .limit(4)
-    );
+  // If not in cache, fetch from Supabase
+  const { data, error } = await supabase
+    .from("courses")
+    .select("*")
+    .order("id", { ascending: false })
+    .limit(4);
 
-    if (error) {
-      throw new Error("Failed to fetch limited courses");
-    }
-
-    // Store in cache and return
-    return cache.set(cacheKey, data);
-  } catch (error) {
-    throw new Error("Failed to fetch limited courses");
-  }
+  // Store in cache and return
+  return cache.set(cacheKey, data);
 }
 
 // Function to manually invalidate cache when data changes

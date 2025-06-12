@@ -38,6 +38,18 @@ export async function generateMetadata({ params }) {
       ? `https://academy.idearoom.ge/${rawImageUrl}`
       : "https://academy.idearoom.ge/coverweb.webp"; // fallback image
 
+    // Debug log to see what we got
+    console.log("Offer metadata debug:", {
+      offerId,
+      title: offer.title,
+      rawImageUrl,
+      finalImageUrl: imageUrl,
+      hasImage: !!offer.image,
+      hasSectionImage: !!offer.section_image,
+      hasCourseImage: !!offer.course_image,
+      hasBannerImage: !!offer.banner_image,
+    });
+
     return {
       title: offer.title,
       description: description,
@@ -69,6 +81,7 @@ export async function generateMetadata({ params }) {
       },
     };
   } catch (error) {
+    console.error("Error generating metadata:", error);
     return {
       title: "შეთავაზება",
       description: "იდეარუმის აკადემიის შეთავაზებები",
@@ -91,6 +104,7 @@ function processData(data) {
       }
       return [trimmedData];
     } catch (e) {
+      console.error("Failed to parse JSON:", e);
       return [];
     }
   }
@@ -181,19 +195,28 @@ export default async function OfferPage({ params, searchParams }) {
       />
     );
   } catch (error) {
+    console.error("Error in OfferPage:", error);
     return (
       <div className="container max-w-[95%] mx-auto px-4 py-10 mt-[128px]">
         <div className="bg-white h-[475px] rounded-[20px] p-8">
-          <h1 className="text-2xl font-bold">შეთავაზება ვერ მოიძებნა</h1>
+          <h1 className="text-2xl font-bold">
+            შეცდომა მონაცემების ჩატვირთვაში
+          </h1>
         </div>
       </div>
     );
   }
 }
 
-// Generate static paths for the generation - simplified for faster builds
+// Generate static paths for the generation
 export async function generateStaticParams() {
-  // Return empty array to force dynamic rendering during build
-  // This prevents build hanging issues with external API calls
-  return [];
+  try {
+    const offers = await getOffers();
+    return offers.map((offer) => ({
+      offerId: offer.id.toString(),
+    }));
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
 }

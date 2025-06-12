@@ -1,25 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Optimize for build performance
-  experimental: {
-    forceSwcTransforms: true,
-  },
+  // Remove trailing slash
+  trailingSlash: false,
 
-  // Prevent build hanging by setting timeout
-  staticPageGenerationTimeout: 60,
-
-  // Optimize images
-  images: {
-    formats: ["image/webp", "image/avif"],
-    minimumCacheTTL: 60,
-  },
-
-  // Reduce memory usage during build
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.optimization.splitChunks = false;
-    }
-    return config;
+  // Environment variables for build time
+  env: {
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   },
 };
 

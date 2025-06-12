@@ -2,11 +2,8 @@
   "/api/offer/route": "/api/offer",
   "/api/offers/route": "/api/offers",
   "/favicon.ico/route": "/favicon.ico",
-  "/sitemap.xml/route": "/sitemap.xml",
-  "/robots.txt/route": "/robots.txt",
   "/contact/page": "/contact",
   "/error/page": "/error",
-  "/page": "/",
   "/_not-found/page": "/_not-found",
   "/about/page": "/about",
   "/blog/page": "/blog",
@@ -15,5 +12,6 @@
   "/courses/[courseId]/page": "/courses/[courseId]",
   "/offer/[offerId]/page": "/offer/[offerId]",
   "/offer/page": "/offer",
-  "/privacy/page": "/privacy"
+  "/privacy/page": "/privacy",
+  "/page": "/"
 }

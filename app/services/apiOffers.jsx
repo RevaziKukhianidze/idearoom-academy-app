@@ -50,16 +50,6 @@ const cache = {
   },
 };
 
-// Timeout wrapper for API calls
-async function withTimeout(promise, timeoutMs = 10000) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Request timeout")), timeoutMs)
-    ),
-  ]);
-}
-
 export async function getOffers() {
   const cacheKey = "all_offers";
 
@@ -68,21 +58,16 @@ export async function getOffers() {
     return cache.get(cacheKey);
   }
 
-  try {
-    // If not in cache, fetch from Supabase with timeout
-    let { data, error } = await withTimeout(
-      supabase.from("offered_course").select("*")
-    );
+  // If not in cache, fetch from Supabase
+  let { data, error } = await supabase.from("offered_course").select("*");
 
-    if (error) {
-      throw new Error("Failed to fetch offers");
-    }
-
-    // Store in cache and return
-    return cache.set(cacheKey, data);
-  } catch (error) {
+  if (error) {
+    console.error("Error fetching offers:", error);
     throw new Error("Failed to fetch offers");
   }
+
+  // Store in cache and return
+  return cache.set(cacheKey, data);
 }
 
 export async function getOfferById(id) {
@@ -93,21 +78,20 @@ export async function getOfferById(id) {
     return cache.get(cacheKey);
   }
 
-  try {
-    // If not in cache, fetch from Supabase with timeout
-    let { data, error } = await withTimeout(
-      supabase.from("offered_course").select("*").eq("id", id).single()
-    );
+  // If not in cache, fetch from Supabase
+  let { data, error } = await supabase
+    .from("offered_course")
+    .select("*")
+    .eq("id", id)
+    .single();
 
-    if (error) {
-      throw new Error(`Failed to fetch offer with ID ${id}`);
-    }
-
-    // Store in cache and return
-    return cache.set(cacheKey, data);
-  } catch (error) {
+  if (error) {
+    console.error("Error fetching offer:", error);
     throw new Error(`Failed to fetch offer with ID ${id}`);
   }
+
+  // Store in cache and return
+  return cache.set(cacheKey, data);
 }
 
 // Function to manually invalidate cache when data changes

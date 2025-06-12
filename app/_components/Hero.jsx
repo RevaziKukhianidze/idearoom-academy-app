@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import arrowRight from "../../public/arrowRight.svg";
