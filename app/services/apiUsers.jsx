@@ -1,58 +1,77 @@
-import supabase from "./supabase";
+import supabase, { executeWithTimeout, handleSupabaseError } from "./supabase";
 
 // Check if a user with the given social ID already exists
 export async function checkSocialIdExists(socialId) {
-  const { data, error } = await supabase
-    .from("users_form")
-    .select("socialId")
-    .eq("socialId", socialId)
-    .limit(1);
+  try {
+    const operation = supabase
+      .from("users_form")
+      .select("socialId")
+      .eq("socialId", socialId)
+      .limit(1);
 
-  if (error) {
+    const { data, error } = await executeWithTimeout(
+      operation,
+      10000,
+      "Check social ID exists"
+    );
+
+    if (error) {
+      throw handleSupabaseError(error, "Check social ID exists");
+    }
+
+    return data && data.length > 0;
+  } catch (error) {
     console.error("Error checking social ID:", error);
     throw new Error("დროებითი შეფერხება, გთხოვთ სცადოთ მოგვიანებით");
   }
-
-  return data && data.length > 0;
 }
 
 // Create a new user in the "users_form" table (a regular table, not the auth table)
 export async function createUser(userData) {
-  // Validate that socialId is exactly 11 digits
-  if (!/^\d{11}$/.test(userData.socialId)) {
-    throw new Error("პირადი ნომერი უნდა შეიცავდეს ზუსტად 11 ციფრს");
-  }
+  try {
+    // Validate that socialId is exactly 11 digits
+    if (!/^\d{11}$/.test(userData.socialId)) {
+      throw new Error("პირადი ნომერი უნდა შეიცავდეს ზუსტად 11 ციფრს");
+    }
 
-  // Check if user with this social ID already exists
-  const exists = await checkSocialIdExists(userData.socialId);
-  if (exists) {
-    throw new Error(
-      "მოცემული პირადი ნომრით მომხმარებელი უკვე დარეგისტრირებულია"
+    // Check if user with this social ID already exists
+    const exists = await checkSocialIdExists(userData.socialId);
+    if (exists) {
+      throw new Error(
+        "მოცემული პირადი ნომრით მომხმარებელი უკვე დარეგისტრირებულია"
+      );
+    }
+
+    const operation = supabase.from("users_form").insert(
+      [
+        {
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          email: userData.email,
+          phoneNumber: userData.phoneNumber,
+          birth_date: userData.birth_date,
+          socialId: userData.socialId,
+          choosedCourse: userData.choosedCourse,
+          choosedMedia: userData.choosedMedia,
+          created_at: new Date().toISOString(),
+        },
+      ],
+      { returning: "minimal" }
     );
+
+    const { data, error } = await executeWithTimeout(
+      operation,
+      15000,
+      "Create user"
+    );
+
+    if (error) {
+      throw handleSupabaseError(error, "Create user");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error in createUser:", error);
+    throw error;
   }
-
-
-  const { data, error } = await supabase.from("users_form").insert(
-    [
-      {
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        email: userData.email,
-        phoneNumber: userData.phoneNumber,
-        birth_date: userData.birth_date,
-        socialId: userData.socialId,
-        choosedCourse: userData.choosedCourse,
-        choosedMedia: userData.choosedMedia,
-        created_at: new Date().toISOString(),
-      },
-    ],
-    { returning: "minimal" }
-  );
-
-  if (error && Object.keys(error).length > 0) {
-    console.error("Detailed error:", error);
-    throw new Error(error.message || "Unknown error occurred");
-  }
-
-  return data;
 }

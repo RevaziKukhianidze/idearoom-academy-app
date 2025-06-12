@@ -1,4 +1,4 @@
-import supabase from "./supabase";
+import supabase, { executeWithTimeout, handleSupabaseError } from "./supabase";
 
 // მარტივი კეშის ობიექტი
 const cache = {
@@ -32,40 +32,35 @@ export async function getBlogs(id, ttl = 1800000) {
   }
 
   try {
-    // Add timeout protection
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Request timeout")), 10000)
-    );
-
     let query = supabase.from("blogs").select("*");
 
     if (id) {
-      query = query.eq("id", id);
-      const queryPromise = query.single();
-      const { data, error } = await Promise.race([
-        queryPromise,
-        timeoutPromise,
-      ]);
+      const operation = query.eq("id", id).single();
+      const { data, error } = await executeWithTimeout(
+        operation,
+        15000,
+        "Fetch single blog"
+      );
 
       if (error) {
-        console.error("Supabase error:", error);
-        throw error;
+        throw handleSupabaseError(error, "Fetch single blog");
       }
+
       setCache(cacheKey, data, ttl); // შევინახოთ კეშში
       return data;
     } else {
       // დავალაგოთ შექმნის თარიღის მიხედვით კლებადობით
-      const queryPromise = query.order("created_at", {
+      const operation = query.order("created_at", {
         ascending: false,
       });
-      const { data, error } = await Promise.race([
-        queryPromise,
-        timeoutPromise,
-      ]);
+      const { data, error } = await executeWithTimeout(
+        operation,
+        15000,
+        "Fetch all blogs"
+      );
 
       if (error) {
-        console.error("Supabase error:", error);
-        throw error;
+        throw handleSupabaseError(error, "Fetch all blogs");
       }
 
       // Validate data structure
@@ -78,7 +73,7 @@ export async function getBlogs(id, ttl = 1800000) {
       return data;
     }
   } catch (error) {
-    console.error("Error fetching blogs:", error);
+    console.error("Error in getBlogs:", error);
     // Return empty array for listing, null for single blog
     return id ? null : [];
   }
@@ -95,17 +90,22 @@ export async function getBlog(id, ttl = 300000) {
   }
 
   try {
-    const { data, error } = await supabase
-      .from("blogs")
-      .select("*")
-      .eq("id", id)
-      .single();
+    const operation = supabase.from("blogs").select("*").eq("id", id).single();
 
-    if (error) throw error;
+    const { data, error } = await executeWithTimeout(
+      operation,
+      15000,
+      "Fetch blog detail"
+    );
+
+    if (error) {
+      throw handleSupabaseError(error, "Fetch blog detail");
+    }
+
     setCache(cacheKey, data, ttl); // შევინახოთ კეშში
     return data;
   } catch (error) {
-    console.error("Error fetching blog:", error);
+    console.error("Error in getBlog:", error);
     throw new Error(`Blog with ID ${id} Could Not Be Loaded`);
   }
 }
@@ -124,24 +124,40 @@ export async function getBlogsLimited(id, ttl = 120000) {
     let query = supabase.from("blogs").select("*");
 
     if (id) {
-      query = query.eq("id", id);
-      const { data, error } = await query.single();
+      const operation = query.eq("id", id).single();
+      const { data, error } = await executeWithTimeout(
+        operation,
+        15000,
+        "Fetch limited blog"
+      );
 
-      if (error) throw error;
+      if (error) {
+        throw handleSupabaseError(error, "Fetch limited blog");
+      }
+
       setCache(cacheKey, data, ttl); // შევინახოთ კეშში
       return data;
     } else {
       // დავალაგოთ შექმნის თარიღის მიხედვით კლებადობით და შევზღუდოთ 3 ბლოგით
-      const { data, error } = await query
+      const operation = query
         .order("created_at", { ascending: false })
         .limit(3);
 
-      if (error) throw error;
+      const { data, error } = await executeWithTimeout(
+        operation,
+        15000,
+        "Fetch limited blogs"
+      );
+
+      if (error) {
+        throw handleSupabaseError(error, "Fetch limited blogs");
+      }
+
       setCache(cacheKey, data, ttl); // შევინახოთ კეშში
       return data;
     }
   } catch (error) {
-    console.error("Error fetching blogs:", error);
+    console.error("Error in getBlogsLimited:", error);
     return null;
   }
 }

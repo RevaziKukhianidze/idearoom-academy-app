@@ -1,24 +1,38 @@
 import { NextResponse } from "next/server";
-import supabase from "../../services/supabase";
+import supabase, {
+  executeWithTimeout,
+  handleSupabaseError,
+} from "../../services/supabase";
 
 export async function GET() {
   try {
-    const { data, error } = await supabase.from("offered_course").select("*");
+    const operation = supabase.from("offered_course").select("*");
+    const { data, error } = await executeWithTimeout(
+      operation,
+      10000,
+      "Fetch offers"
+    );
 
     if (error) {
-      console.error("Supabase error:", error);
+      const userError = handleSupabaseError(error, "Fetch offers");
+      return NextResponse.json({ error: userError.message }, { status: 500 });
+    }
+
+    if (!data || !Array.isArray(data)) {
       return NextResponse.json(
-        { error: "Failed to fetch offers" },
-        { status: 500 }
+        { error: "მონაცემები ვერ მოიძებნა" },
+        { status: 404 }
       );
     }
 
     return NextResponse.json(data);
   } catch (error) {
-    console.error("Error:", error);
+    console.error("API Error in /api/offers:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      {
+        error: error.message || "სერვერის შეცდომა - გთხოვთ სცადოთ მოგვიანებით",
+      },
       { status: 500 }
-    ); 
+    );
   }
 }

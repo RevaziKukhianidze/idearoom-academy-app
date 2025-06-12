@@ -5,8 +5,25 @@ import { Button } from "../components/ui/button";
 
 export default function Error({ error, reset }) {
   useEffect(() => {
-    // Log the error to an error reporting service
-    console.error("Global error caught:", error);
+    // Enhanced error logging
+    console.error("Global error caught:", {
+      message: error?.message,
+      stack: error?.stack,
+      name: error?.name,
+      cause: error?.cause,
+      timestamp: new Date().toISOString(),
+      userAgent:
+        typeof window !== "undefined" ? window.navigator.userAgent : "unknown",
+      url: typeof window !== "undefined" ? window.location.href : "unknown",
+    });
+
+    // Send error to monitoring service (if available)
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "exception", {
+        description: error?.message || "Unknown error",
+        fatal: false,
+      });
+    }
   }, [error]);
 
   return (
@@ -18,6 +35,14 @@ export default function Error({ error, reset }) {
         <p className="text-secondary-400 mb-6 max-w-md">
           ვწუხვართ, გვერდის ჩატვირთვაში მოხდა შეცდომა. გთხოვთ სცადოთ ხელახლა.
         </p>
+
+        {/* Show error details in development */}
+        {process.env.NODE_ENV === "development" && error?.message && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 max-w-lg">
+            <p className="text-red-800 text-sm font-mono">{error.message}</p>
+          </div>
+        )}
+
         <div className="flex gap-4">
           <Button onClick={() => reset()} className="px-6 py-2">
             ხელახლა ცდა

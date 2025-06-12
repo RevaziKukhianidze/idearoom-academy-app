@@ -1,4 +1,4 @@
-import supabase from "./supabase";
+import supabase, { executeWithTimeout, handleSupabaseError } from "./supabase";
 
 // Simple in-memory cache
 const cache = {
@@ -58,16 +58,29 @@ export async function getOffers() {
     return cache.get(cacheKey);
   }
 
-  // If not in cache, fetch from Supabase
-  let { data, error } = await supabase.from("offered_course").select("*");
+  try {
+    // If not in cache, fetch from Supabase
+    const operation = supabase.from("offered_course").select("*");
+    const { data, error } = await executeWithTimeout(
+      operation,
+      15000,
+      "Fetch all offers"
+    );
 
-  if (error) {
-    console.error("Error fetching offers:", error);
-    throw new Error("Failed to fetch offers");
+    if (error) {
+      throw handleSupabaseError(error, "Fetch all offers");
+    }
+
+    if (!data || !Array.isArray(data)) {
+      throw new Error("მონაცემები ვერ მოიძებნა");
+    }
+
+    // Store in cache and return
+    return cache.set(cacheKey, data);
+  } catch (error) {
+    console.error("Error in getOffers:", error);
+    throw error;
   }
-
-  // Store in cache and return
-  return cache.set(cacheKey, data);
 }
 
 export async function getOfferById(id) {
@@ -78,20 +91,34 @@ export async function getOfferById(id) {
     return cache.get(cacheKey);
   }
 
-  // If not in cache, fetch from Supabase
-  let { data, error } = await supabase
-    .from("offered_course")
-    .select("*")
-    .eq("id", id)
-    .single();
+  try {
+    // If not in cache, fetch from Supabase
+    const operation = supabase
+      .from("offered_course")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-  if (error) {
-    console.error("Error fetching offer:", error);
-    throw new Error(`Failed to fetch offer with ID ${id}`);
+    const { data, error } = await executeWithTimeout(
+      operation,
+      15000,
+      "Fetch single offer"
+    );
+
+    if (error) {
+      throw handleSupabaseError(error, "Fetch single offer");
+    }
+
+    if (!data) {
+      throw new Error("კურსი ვერ მოიძებნა");
+    }
+
+    // Store in cache and return
+    return cache.set(cacheKey, data);
+  } catch (error) {
+    console.error("Error in getOfferById:", error);
+    throw error;
   }
-
-  // Store in cache and return
-  return cache.set(cacheKey, data);
 }
 
 // Function to manually invalidate cache when data changes
