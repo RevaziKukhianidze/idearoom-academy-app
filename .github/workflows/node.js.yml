@@ -7,8 +7,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # Use GitHub-hosted runner instead of self-hosted
-    timeout-minutes: 15 # Add timeout to prevent infinite builds
+    runs-on: self-hosted
+    timeout-minutes: 15
 
     strategy:
       matrix:
@@ -18,12 +18,12 @@ jobs:
       NEXT_PUBLIC_SUPABASE_URL: ${{secrets.NEXT_PUBLIC_SUPABASE_URL}}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY}}
       NEXT_PUBLIC_BASE_URL: ${{secrets.NEXT_PUBLIC_BASE_URL}}
-      NODE_OPTIONS: "--max-old-space-size=4096" # Increase memory for build
+      NODE_OPTIONS: "--max-old-space-size=4096"
 
     steps:
       - uses: actions/checkout@v4
         with:
-          clean: true # Clean workspace before checkout
+          clean: true
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -43,33 +43,8 @@ jobs:
           npm run build
           echo "Build completed successfully"
 
-      - name: Generate deployment script
+      - name: Deploy to production
         run: |
-          echo "#!/bin/bash" > deploy.sh
-          echo "echo 'Starting deployment...'" >> deploy.sh
-          echo "cd /path/to/idearoom-academy-app" >> deploy.sh
-          echo "git pull origin main" >> deploy.sh
-          echo "npm install" >> deploy.sh
-          echo "npm run build" >> deploy.sh
-          echo "pm2 restart idearoom-academy-app" >> deploy.sh
-          echo "echo 'Deployment completed!'" >> deploy.sh
-          chmod +x deploy.sh
-
-      - name: Deployment Instructions
-        run: |
-          echo "🚀 BUILD SUCCESSFUL! 🚀"
-          echo ""
-          echo "📋 MANUAL DEPLOYMENT REQUIRED:"
-          echo "1. SSH to production server"
-          echo "2. Run the following commands:"
-          echo ""
-          echo "   cd /path/to/idearoom-academy-app"
-          echo "   git pull origin main"
-          echo "   npm install"
-          echo "   npm run build"
-          echo "   pm2 restart idearoom-academy-app"
-          echo ""
-          echo "🌐 After deployment, check: https://academy.idearoom.ge"
-          echo ""
-          echo "✅ Latest commit: ${{ github.sha }}"
-          echo "✅ Build time: $(date)"
+          echo "Deploying to production..."
+          pm2 restart idearoom-academy-app || pm2 start ecosystem.config.js
+          echo "Deployment completed successfully!"
