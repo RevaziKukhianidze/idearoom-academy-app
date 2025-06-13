@@ -39,5 +39,5 @@ jobs:
       - name: Deploy
         run: |
           cd /home/idearoom/actions-runner/_work/idearoom-academy-app/idearoom-academy-app
-          pm2 delete 0 || true
+          pm2 delete academy-app || true
           pm2 start npm --name "academy-app" -- start
