@@ -21,7 +21,6 @@ function BlogLoader() {
 export default function Blog() {
   const [blog, setBlog] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log("h");
 
   const params = useParams();
 
