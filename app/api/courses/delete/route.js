@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { revalidatePath, revalidateTag } from "next/cache";
-import { deleteCourse } from "../../../services/apiCourses";
+import { deleteCourse, getCourses } from "../../../services/apiCourses";
 
 export async function DELETE(request) {
   try {
@@ -37,6 +37,24 @@ export async function DELETE(request) {
     // Also revalidate ALL course pages since they all show "other courses"
     revalidatePath("/courses");
     revalidatePath("/courses/[...slug]");
+
+    // NEW: Revalidate each individual course detail page so that the
+    // "other courses" section is regenerated without the deleted course.
+    try {
+      const remainingCourses = await getCourses();
+      if (Array.isArray(remainingCourses)) {
+        await Promise.all(
+          remainingCourses.map((course) =>
+            course?.id ? revalidatePath(`/courses/${course.id}`) : null
+          )
+        );
+      }
+    } catch (revalidateErr) {
+      console.error(
+        "Failed to revalidate individual course pages after deletion:",
+        revalidateErr
+      );
+    }
 
     // Revalidate paths that might cache course lists
     revalidateTag("related-courses");

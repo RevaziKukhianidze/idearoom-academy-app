@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../../../../components/ui/button";
@@ -13,7 +13,7 @@ import user from "../../../../public/user.svg";
 import badge from "../../../../public/badge.svg";
 import downArrow from "../../../../public/downArrow.svg";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { addCourseWithCache } from "../../../../utils/cacheUtils";
+import { getOffers } from "../../../services/apiOffers";
 
 function AccordionItem({ title, content }) {
   return (
@@ -129,6 +129,27 @@ export default function OfferClient({
 }) {
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
+
+  // Keep up-to-date list of related offers
+  const [otherOffers, setOtherOffers] = useState(relatedOffers || []);
+
+  // Refresh "other offers" whenever the viewed offer changes
+  useEffect(() => {
+    async function refreshRelated() {
+      try {
+        const all = await getOffers();
+        const updated = (all || [])
+          .filter((o) => o.id !== offer.id)
+          .sort((a, b) => b.id - a.id)
+          .slice(0, 5);
+        setOtherOffers(updated);
+      } catch (err) {
+        console.error("Failed to refresh related offers", err);
+      }
+    }
+
+    refreshRelated();
+  }, [offer.id]);
 
   const handleShowRegistrationForm = useCallback(() => {
     setShowRegistrationForm(true);
@@ -383,8 +404,8 @@ export default function OfferClient({
               სხვა შეთავაზებები
             </h4>
             <div className="bg-white flex flex-col gap-5 p-3 lg:p-4 w-full rounded-[20px]">
-              {relatedOffers && relatedOffers.length > 0 ? (
-                relatedOffers.map((relatedOffer, index) => (
+              {otherOffers && otherOffers.length > 0 ? (
+                otherOffers.map((relatedOffer, index) => (
                   <div
                     key={index}
                     className="flex flex-col sm:flex-row items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB]"
@@ -441,7 +462,7 @@ export default function OfferClient({
           </AlertDialog.Title>
           <RegistrationForm
             onCancel={handleCancelRegistration}
-            courses={relatedOffers ? [offer, ...relatedOffers] : [offer]}
+            courses={otherOffers ? [offer, ...otherOffers] : [offer]}
             preselectedCourse={offer}
           />
           <AlertDialog.Cancel asChild></AlertDialog.Cancel>

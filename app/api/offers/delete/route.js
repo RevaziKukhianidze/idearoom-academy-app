@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { revalidatePath, revalidateTag } from "next/cache";
-import { deleteOffer } from "../../../services/apiOffers";
+import { deleteOffer, getOffers } from "../../../services/apiOffers";
 
 export async function DELETE(request) {
   try {
@@ -41,6 +41,24 @@ export async function DELETE(request) {
     // Revalidate paths that might cache offer lists
     revalidateTag("related-offers");
     revalidateTag("latest-offers");
+
+    // NEW: Revalidate every remaining individual offer page so their
+    // "other offers" სექცია აღარ აჩვენებს წაშლილ შეთავაზებას.
+    try {
+      const remainingOffers = await getOffers();
+      if (Array.isArray(remainingOffers)) {
+        await Promise.all(
+          remainingOffers.map((o) =>
+            o?.id ? revalidatePath(`/offer/${o.id}`) : null
+          )
+        );
+      }
+    } catch (err) {
+      console.error(
+        "Failed to revalidate individual offer pages after deletion:",
+        err
+      );
+    }
 
     const response = NextResponse.json({
       success: true,

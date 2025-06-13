@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useCallback, memo } from "react";
+import React, { useState, useCallback, memo, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../../../../components/ui/button";
@@ -14,6 +14,7 @@ import badge from "../../../../public/badge.svg";
 import downArrow from "../../../../public/downArrow.svg";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { useRouter, useSearchParams } from "next/navigation";
+import { getCourses } from "../../../services/apiCourses";
 
 // Performance optimization: Memoize loader component
 const RelatedCoursesLoader = memo(() => {
@@ -141,7 +142,7 @@ LecturerTab.displayName = "LecturerTab";
 // Performance optimization: Memoize the entire CourseClient component
 function CourseClient({
   courseData,
-  relatedCourses,
+  relatedCourses: initialRelatedCourses,
   syllabusItems,
   activeTab: initialActiveTab,
   courseId,
@@ -151,6 +152,29 @@ function CourseClient({
   const searchParams = useSearchParams();
   // Determine current tab from URL (?tab=), fallback to the initial value provided by server
   const currentTab = searchParams.get("tab") || initialActiveTab || "details";
+
+  // Local state to keep always-fresh "other courses" list
+  const [relatedCourses, setRelatedCourses] = useState(
+    initialRelatedCourses || []
+  );
+
+  // Fetch latest courses on mount & whenever courseId changes
+  useEffect(() => {
+    async function refreshRelated() {
+      try {
+        const all = await getCourses();
+        const updated = (all || [])
+          .filter((c) => c.id !== Number(courseId))
+          .sort((a, b) => b.id - a.id)
+          .slice(0, 5);
+        setRelatedCourses(updated);
+      } catch (err) {
+        console.error("Failed to refresh related courses", err);
+      }
+    }
+
+    refreshRelated();
+  }, [courseId]);
 
   const handleShowRegistrationForm = useCallback(() => {
     setShowRegistrationForm(true);
