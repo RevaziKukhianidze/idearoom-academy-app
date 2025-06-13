@@ -143,11 +143,12 @@ export default async function OfferPage({ params }) {
       );
     }
 
-    // Get related offers
+    // Get related offers - show latest 5 offers maximum
     const allOffers = await getOffers();
     const relatedOffers = allOffers
       .filter((o) => o.id !== parseInt(offerId))
-      .slice(0, 4);
+      .sort((a, b) => b.id - a.id) // Sort by ID descending to get latest offers
+      .slice(0, 5); // Limit to maximum 5 offers
 
     // Process syllabus data
     let syllabusItems = [];

@@ -54,8 +54,11 @@ export const InfiniteMovingCards = ({
       try {
         setLoading(true);
         const data = await getAllLecturers();
-        // Use all lecturers from Supabase without limiting to 5
-        setLecturers(data);
+        // Sort lecturers by creation date (newest first) so new lecturers appear at the beginning
+        const sortedData = data.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+        setLecturers(sortedData);
         setLoading(false);
       } catch (err) {
         console.error("Failed to fetch lecturers:", err);

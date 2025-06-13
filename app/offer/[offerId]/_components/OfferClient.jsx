@@ -13,6 +13,7 @@ import user from "../../../../public/user.svg";
 import badge from "../../../../public/badge.svg";
 import downArrow from "../../../../public/downArrow.svg";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
+import { addCourseWithCache } from "../../../../utils/cacheUtils";
 
 function AccordionItem({ title, content }) {
   return (
@@ -381,12 +382,12 @@ export default function OfferClient({
             <h4 className="caps-text mt-8 lg:mt-[64px] text-secondary-500 text-base font-bold mb-4">
               სხვა შეთავაზებები
             </h4>
-            <div className="bg-white p-3 lg:p-4 w-full rounded-[20px]">
+            <div className="bg-white flex flex-col gap-5 p-3 lg:p-4 w-full rounded-[20px]">
               {relatedOffers && relatedOffers.length > 0 ? (
                 relatedOffers.map((relatedOffer, index) => (
                   <div
                     key={index}
-                    className="flex flex-col sm:flex-row mb-4 items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB]"
+                    className="flex flex-col sm:flex-row items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB]"
                   >
                     <img
                       src={relatedOffer.section_image}

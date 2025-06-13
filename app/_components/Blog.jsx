@@ -3,9 +3,11 @@ import Image from "next/image";
 import Headline from "./Headline";
 import { Button } from "../../components/ui/button";
 import SeeAllButton from "./SeeAllButton";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getBlogsLimited } from "../services/apiBlogs";
 import Link from "next/link";
+import BlogCard from "./shared/BlogCard";
+import { useParams } from "next/navigation";
 
 // BlogLoader კომპონენტი, რომელიც ხელახლა ავრცელებს spinner-ს მხოლოდ ბლოგის კონტეინერში
 function BlogLoader() {
@@ -19,6 +21,8 @@ function BlogLoader() {
 export default function Blog() {
   const [blog, setBlog] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const params = useParams();
 
   useEffect(() => {
     async function fetchBlog() {
@@ -36,31 +40,7 @@ export default function Blog() {
         {isLoading && <BlogLoader />}
         {!isLoading &&
           blog.map((singleBlog, blogIndex) => (
-            <div
-              key={blogIndex}
-              className="bg-white blog-shadow py-4 h-[556px] max-sm:h-[510px] px-4 relative cursor-pointer  rounded-[20px]"
-            >
-              <img
-                className="w-full rounded-[12px] h-[250px] xl:h-[284px] object-cover"
-                src={singleBlog.image}
-                alt="blog-1"
-              />
-              <div className="py-4 sm:py-6">
-                <h4 className="caps-text text-[#282525] font-bold text-base">
-                  {singleBlog.title}
-                </h4>
-                <p className="text-sm max-lg:line-clamp-3 leading-[1.65] font-regular mt-3 sm:mt-4  text-secondary-500">
-                  {singleBlog.text.split(" ").slice(0, 15).join(" ") + "..."}
-                </p>
-                <div className="flex relative max-lg:mt-[64px] mt-[36px] max-xl:mt-[24px] max-md:mt-[36px] mb-[72px]  justify-end">
-                  <Link href={`blog/${singleBlog.id}`}>
-                    <Button className="w-full pt-3 sm:w-[152px] text-sm rounded-[12px] h-[48px]">
-                      გაიგე მეტი
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <BlogCard key={blogIndex} blog={singleBlog} blogIndex={blogIndex} />
           ))}
       </div>
       <div className="flex items-center justify-center mt-4">

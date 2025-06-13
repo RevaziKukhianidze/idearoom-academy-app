@@ -5,8 +5,8 @@ const cache = {
   data: {},
   timeouts: {},
 
-  // Cache duration in milliseconds (30 minutes default)
-  DEFAULT_TTL: 1800000,
+  // Cache duration in milliseconds (2 minutes default)
+  DEFAULT_TTL: 120000,
 
   set(key, value, ttl = this.DEFAULT_TTL) {
     this.data[key] = value;
@@ -128,6 +128,138 @@ export function invalidateCache(id = null) {
     cache.invalidate(`offer_${id}`);
   }
 
-  // Always invalidate the collection caches
+  // Always invalidate ALL collection caches to ensure complete refresh
   cache.invalidate("all_offers");
+
+  // Force invalidate all offer-related cache entries
+  Object.keys(cache.data).forEach((key) => {
+    if (key.startsWith("offer_") || key.includes("offers")) {
+      cache.invalidate(key);
+    }
+  });
+}
+
+// Function to force clear all cache
+export function clearAllCache() {
+  console.log("Clearing all offers cache...");
+  cache.invalidateAll();
+}
+
+// Function to delete an offer and invalidate cache
+export async function deleteOffer(id) {
+  try {
+    const operation = supabase.from("offered_course").delete().eq("id", id);
+
+    const { error } = await executeWithTimeout(
+      operation,
+      15000,
+      "Delete offer"
+    );
+
+    if (error) {
+      throw handleSupabaseError(error, "Delete offer");
+    }
+
+    // Aggressively invalidate cache for deleted offer to ensure it disappears from "other offers" sections
+    console.log(`Deleting offer ${id} and clearing relevant cache...`);
+
+    // First invalidate normally
+    invalidateCache(id);
+
+    // Then force clear the main collections cache to ensure deleted offer disappears
+    cache.invalidate("all_offers");
+    cache.invalidate("limited_offers");
+
+    // Force clear any cached offer data
+    Object.keys(cache.data).forEach((key) => {
+      if (
+        key.includes("offer") ||
+        key.includes("all_") ||
+        key.includes("limited_")
+      ) {
+        cache.invalidate(key);
+      }
+    });
+
+    // Force aggressive cache clear and page refresh
+    if (typeof window !== "undefined") {
+      // Try to clear service worker cache
+      if ("caches" in window) {
+        caches.keys().then((names) => {
+          names.forEach((name) => caches.delete(name));
+        });
+      }
+
+      // Force refresh after delay
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 300);
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error in deleteOffer:", error);
+    throw error;
+  }
+}
+
+// Function to add a new offer and invalidate cache
+export async function addOffer(offerData) {
+  try {
+    const operation = supabase
+      .from("offered_course")
+      .insert([offerData])
+      .select()
+      .single();
+
+    const { data, error } = await executeWithTimeout(
+      operation,
+      15000,
+      "Add offer"
+    );
+
+    if (error) {
+      throw handleSupabaseError(error, "Add offer");
+    }
+
+    // Invalidate relevant cache entries for new offer
+    console.log(`Adding new offer and invalidating relevant cache...`);
+    invalidateCache();
+
+    return { success: true, data };
+  } catch (error) {
+    console.error("Error in addOffer:", error);
+    throw error;
+  }
+}
+
+// Function to update an offer and invalidate cache
+export async function updateOffer(id, offerData) {
+  try {
+    const operation = supabase
+      .from("offered_course")
+      .update(offerData)
+      .eq("id", id)
+      .select()
+      .single();
+
+    const { data, error } = await executeWithTimeout(
+      operation,
+      15000,
+      "Update offer"
+    );
+
+    if (error) {
+      throw handleSupabaseError(error, "Update offer");
+    }
+
+    // Invalidate relevant cache entries for updated offer
+    console.log(`Updating offer ${id} and invalidating relevant cache...`);
+    invalidateCache(id);
+
+    return { success: true, data };
+  } catch (error) {
+    console.error("Error in updateOffer:", error);
+    throw error;
+  }
 }

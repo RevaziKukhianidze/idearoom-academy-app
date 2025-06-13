@@ -391,13 +391,13 @@ const RegistrationForm = ({
                   <option value="" disabled>
                     საიდან გაიგეთ ჩვენი კურსის შესახებ?
                   </option>
-                  <option className="relative h-[30px]" value="facebook">
+                  <option className="relative h-[30px]" value="friend">
                     მეგობარი
                   </option>
-                  <option value="instagram">Google</option>
-                  <option value="friend">Instagram</option>
-                  <option value="other">Linkedin</option>
-                  <option value="other">Facebook</option>
+                  <option value="google">Google</option>
+                  <option value="instagram">Instagram</option>
+                  <option value="linkedin">Linkedin</option>
+                  <option value="facebook">Facebook</option>
                   <option value="other">სხვა.</option>
                 </select>
                 <ChevronDown

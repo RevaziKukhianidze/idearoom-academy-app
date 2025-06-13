@@ -109,11 +109,12 @@ export default async function CoursePage({ params }) {
       );
     }
 
-    // Get related courses
+    // Get related courses - show latest 5 courses maximum
     const allCourses = await getCourses();
     const relatedCourses = allCourses
       .filter((c) => c.id !== parseInt(courseId))
-      .slice(0, 4);
+      .sort((a, b) => b.id - a.id) // Sort by ID descending to get latest courses
+      .slice(0, 5); // Limit to maximum 5 courses
 
     // Process syllabus data
     const processData = (data) => {

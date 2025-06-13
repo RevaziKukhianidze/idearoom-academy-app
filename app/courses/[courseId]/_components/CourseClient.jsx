@@ -182,7 +182,7 @@ function CourseClient({
 
   return (
     <section className="container mx-auto max-sm:max-w-[95%] max-sm:mx-auto mt-[128px]">
-      <HeadTopCourse isCoursesPage={false}>
+      <HeadTopCourse isCoursesPage={true}>
         <p className="cursor-pointer">{courseData.title}</p>
       </HeadTopCourse>
       <div className="grid  grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12">
@@ -218,7 +218,7 @@ function CourseClient({
                     width={24}
                     height={24}
                   />
-                  <p className="mt-2 text-secondary-500 font-[500] text-sm">
+                  <p className="mt-2 text-secondary-500 font-[400] text-sm">
                     დაწყების თარიღი:{" "}
                     <span className="text-[#88919C] ml-1">
                       {courseData.start_course}
@@ -236,7 +236,7 @@ function CourseClient({
                 </div>
                 <div className="flex my-1 items-center gap-3 caps-text">
                   <Image src={timer} alt="timer icon" width={24} height={24} />
-                  <p className="mt-2 text-secondary-500 font-[100] text-sm">
+                  <p className="mt-2 text-secondary-500 font-[400] text-sm">
                     შეხვედრის ხანგრძლივობა:{" "}
                     <span className="text-[#88919C] font-[100] regular-text ml-1">
                       {courseData.lesson_time} საათი
@@ -245,7 +245,7 @@ function CourseClient({
                 </div>
                 <div className="flex my-1 items-center gap-3 caps-text">
                   <Image src={user} alt="user icon" width={24} height={24} />
-                  <p className="mt-2 text-secondary-500 font-[500] text-sm">
+                  <p className="mt-2 text-secondary-500 font-[400] text-sm">
                     სტუდენტი ჯგუფში:{" "}
                     <span className="text-[#88919C] regular-text ml-1">
                       {courseData.quantity_of_students}
@@ -254,7 +254,7 @@ function CourseClient({
                 </div>
                 <div className="flex my-1 items-center gap-3 caps-text">
                   <Image src={badge} alt="badge icon" width={24} height={24} />
-                  <p className="mt-2 text-secondary-500 font-[500] text-sm">
+                  <p className="mt-2 text-secondary-500 font-[400] text-sm">
                     სერთიფიკატი და სტაჟირება
                   </p>
                 </div>

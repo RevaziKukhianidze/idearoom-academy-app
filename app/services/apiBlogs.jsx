@@ -22,7 +22,7 @@ function getCache(key) {
   return null; // კეშის ვადა ამოწურულია ან არ არსებობს
 }
 
-export async function getBlogs(id, ttl = 1800000) {
+export async function getBlogs(id, ttl = 120000) {
   const cacheKey = id ? `blog_${id}` : "all_blogs";
 
   // შემოწმება გვაქვს თუ არა ვალიდური კეში
@@ -79,8 +79,8 @@ export async function getBlogs(id, ttl = 1800000) {
   }
 }
 
-export async function getBlog(id, ttl = 300000) {
-  // 5 წუთის კეში ნაგულისხმევად
+export async function getBlog(id, ttl = 120000) {
+  // 2 წუთის კეში ნაგულისხმევად
   const cacheKey = `blog_detail_${id}`;
 
   // შემოწმება გვაქვს თუ არა ვალიდური კეში
@@ -171,4 +171,10 @@ export function clearBlogsCache() {
       delete cache.expiryTimes[key];
     }
   });
+}
+
+// Real-time სინქრონიზაციისთვის (ადმინიდან წაშლის შემდეგ)
+export function invalidateBlogCache() {
+  clearBlogsCache();
+  console.log("Blog cache cleared - changes will be reflected immediately");
 }
