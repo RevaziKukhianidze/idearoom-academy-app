@@ -272,7 +272,7 @@ export const InfiniteMovingCards = ({
               {group.map((lecturer, idx) => (
                 <div
                   key={lecturer.fullName + idx}
-                  className="relative justify-center text-center items-center flex h-[400px] rounded-[16px] shrink-0 bg-white duration-300 transition-all"
+                  className="relative justify-center text-center items-center flex h-[400px] rounded-[12px] shrink-0 bg-white duration-300 transition-all"
                   onClick={(e) => handleCardClick(lecturer, e)}
                 >
                   <div className="flex group relative justify-center items-center w-full h-full">
@@ -281,7 +281,7 @@ export const InfiniteMovingCards = ({
                       src={lecturer.lecturer_image || "/coverweb.webp"}
                       alt="lecturer_image"
                     />
-                    <div className="bg-[#fff] group-hover:bg-[#8471D9E5] w-full h-[98px] rounded-bl-[12px] rounded-br-[12px] flex flex-col items-center text-center absolute bottom-0 group-hover:text-white">
+                    <div className="bg-[#fff] group-hover:bg-[#8471D9E5] w-full h-[98px] rounded-b-[10px] flex flex-col items-center text-center absolute bottom-0 group-hover:text-white">
                       <h4 className="text-base text-[#282525] mt-[30px] text-center group-hover:text-white justify-center items-center caps-text font-bold">
                         {lecturer.fullName}
                       </h4>

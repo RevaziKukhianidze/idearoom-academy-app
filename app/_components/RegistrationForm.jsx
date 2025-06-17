@@ -293,7 +293,14 @@ const RegistrationForm = ({
 
                 {/* Custom text display - shows selected date or placeholder */}
                 <div className="absolute left-3 lg:left-4 top-1/2 transform -translate-y-1/2 text-[#707378] text-[13px] pt-2 lg:text-sm font-[500] pointer-events-none z-20 whitespace-nowrap">
-                  {dateValue ? `${day}/${month}/${year}` : "დაბადების თარიღი"}
+                  {dateValue ? (
+                    `${day}/${month}/${year}`
+                  ) : (
+                    <span>
+                      <span className="lg:hidden">დაბ. თარიღი</span>
+                      <span className="hidden lg:inline">დაბადების თარიღი</span>
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
