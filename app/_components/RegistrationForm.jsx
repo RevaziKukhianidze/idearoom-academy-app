@@ -286,7 +286,7 @@ const RegistrationForm = ({
 
                 {/* Custom calendar icon */}
                 <Image
-                  className="absolute overflow-hidden right-[20px] top-1/2 transform -translate-y-1/2 pointer-events-none z-30 max-sm:bg-white max-sm:w-[30px] max-sm:px-1 max-sm:right-[1px]"
+                  className="absolute overflow-hidden right-[20px] top-1/2 transform -translate-y-1/2 pointer-events-none z-30 max-sm:bg-white max-sm:w-[30px] max-sm:px-1 max-sm:right-[5px] max-lg:top-[26px]"
                   src={calendar}
                   alt="calendar icon"
                 />
