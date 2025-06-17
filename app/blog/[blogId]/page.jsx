@@ -1,9 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "../../../components/ui/button";
-import Image from "next/image";
-import ShareIcons from "./ShareIcons";
-import calendar from "../../../public/calendar.svg";
 import { getBlog, getBlogs } from "../../services/apiBlogs";
 import HeadTop from "../_components/HeadTop";
 import BlogClient from "./_components/BlogClient";

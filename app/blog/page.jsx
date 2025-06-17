@@ -1,8 +1,4 @@
-import Link from "next/link";
-import { Button } from "../../components/ui/button";
-import HeadTop from "./_components/HeadTop";
 import { getBlogs } from "../services/apiBlogs";
-import BlogCard from "../_components/shared/BlogCard";
 import BlogPageClient from "./_components/BlogPageClient";
 
 // Add metadata for the blog page
