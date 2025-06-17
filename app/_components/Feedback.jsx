@@ -14,6 +14,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export default function Feedback() {
   const [testimonials, setTestimonials] = useState([]);
   const [groupedTestimonials, setGroupedTestimonials] = useState([]);
+  const [groupedTestimonialsTablet, setGroupedTestimonialsTablet] = useState(
+    []
+  );
   const sliderRef = useRef(null);
   const [activeSlide, setActiveSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -21,6 +24,7 @@ export default function Feedback() {
   const [startX, setStartX] = useState(0);
   const [currentX, setCurrentX] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -36,12 +40,19 @@ export default function Feedback() {
       if (data && data.length > 0) {
         setTestimonials(data);
 
-        // Group testimonials into arrays of 3 for desktop view
-        const grouped = [];
+        // Group for lg+ screens (3 cards per slide)
+        const groupedDesktop = [];
         for (let i = 0; i < data.length; i += 3) {
-          grouped.push(data.slice(i, i + 3));
+          groupedDesktop.push(data.slice(i, i + 3));
         }
-        setGroupedTestimonials(grouped);
+        setGroupedTestimonials(groupedDesktop);
+
+        // Group for tablet screens md-xl (4 cards per slide)
+        const groupedTablet = [];
+        for (let i = 0; i < data.length; i += 4) {
+          groupedTablet.push(data.slice(i, i + 4));
+        }
+        setGroupedTestimonialsTablet(groupedTablet);
       }
 
       setIsLoading(false);
@@ -50,8 +61,29 @@ export default function Feedback() {
     fetchReviews();
   }, []);
 
+  // Screen size detection
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const newIsLargeScreen = window.innerWidth >= 1024; // lg breakpoint
+      if (newIsLargeScreen !== isLargeScreen) {
+        setIsLargeScreen(newIsLargeScreen);
+        setActiveSlide(0); // Reset to first slide when screen size changes
+      }
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, [isLargeScreen]);
+
   const handleSlideChange = (index) => {
-    if (isAnimating || index === activeSlide) return;
+    // Use desktop grouping (3 cards) only for lg+ screens, tablet grouping (4 cards) for everything else
+    const currentGrouped = isLargeScreen
+      ? groupedTestimonials
+      : groupedTestimonialsTablet;
+    if (isAnimating || index === activeSlide || index >= currentGrouped.length)
+      return;
     setIsAnimating(true);
     setActiveSlide(index);
     setTimeout(() => {
@@ -87,7 +119,10 @@ export default function Feedback() {
     }
     const diff = startX - currentX;
     const threshold = 50;
-    if (diff > threshold && activeSlide < groupedTestimonials.length - 1) {
+    const currentGrouped = isLargeScreen
+      ? groupedTestimonials
+      : groupedTestimonialsTablet;
+    if (diff > threshold && activeSlide < currentGrouped.length - 1) {
       handleSlideChange(activeSlide + 1);
     } else if (diff < -threshold && activeSlide > 0) {
       handleSlideChange(activeSlide - 1);
@@ -126,7 +161,7 @@ export default function Feedback() {
             <div className="w-[24px] h-[24px]"></div>
           )}
         </div>
-        <p className="text-[#7B7D7E] font-normal text-sm leading-relaxed">
+        <p className="text-[#7B7D7E] line-clamp-6 font-normal text-sm leading-relaxed">
           {testimonial.text}
         </p>
       </div>
@@ -161,7 +196,7 @@ export default function Feedback() {
           <div className="flex items-center justify-center mr-3">
             {arrowRight && arrowRight.src ? (
               <img
-                className="bg-primary-500 transition-colors duration-300 hover:bg-primary-600 rounded-full max-md:w-[30px] max-sm:w-[45px] w-[32px] p-1"
+                className="bg-primary-500 transition-colors duration-300 hover:bg-primary-600 rounded-full max-md:w-[30px] max-sm:w-[35px] w-[32px] p-1"
                 src={arrowRight.src}
                 alt="arrow right"
                 width={30}
@@ -204,7 +239,7 @@ export default function Feedback() {
   return (
     // Outer section prevents overall horizontal scroll on the screen
     <section className="py-16 px-4 mt-9 shadow-review bg-gray-50 overflow-x-hidden">
-      <div className="container mx-auto">
+      <div className="container w-full mx-auto">
         {/* Desktop Slider */}
         <div
           className="hidden md:block select-none"
@@ -219,10 +254,17 @@ export default function Feedback() {
           style={{ cursor: "grab" }}
         >
           <div className="relative overflow-x-visible">
-            {groupedTestimonials.map((slideGroup, slideIndex) => (
+            {(isLargeScreen
+              ? groupedTestimonials
+              : groupedTestimonialsTablet
+            ).map((slideGroup, slideIndex) => (
               <div
                 key={slideIndex}
-                className={`absolute w-full transition-all duration-500 ease-in-out grid md:grid-cols-2 lg:grid-cols-3 gap-8 ${
+                className={`absolute w-full transition-all duration-500 ease-in-out grid ${
+                  isLargeScreen
+                    ? "md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7"
+                    : "md:grid-cols-2 lg:grid-cols-4 gap-5"
+                } ${
                   activeSlide === slideIndex
                     ? "opacity-100 translate-x-0"
                     : activeSlide > slideIndex
@@ -239,9 +281,18 @@ export default function Feedback() {
               </div>
             ))}
             {/* Static reference div to maintain height */}
-            {groupedTestimonials.length > 0 && (
-              <div className="invisible md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {groupedTestimonials[0].map((testimonial) =>
+            {(isLargeScreen ? groupedTestimonials : groupedTestimonialsTablet)
+              .length > 0 && (
+              <div
+                className={`invisible grid ${
+                  isLargeScreen
+                    ? "md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7"
+                    : "md:grid-cols-2 lg:grid-cols-4 gap-5"
+                }`}
+              >
+                {(isLargeScreen
+                  ? groupedTestimonials
+                  : groupedTestimonialsTablet)[0].map((testimonial) =>
                   renderTestimonialCard(testimonial)
                 )}
               </div>
@@ -259,7 +310,7 @@ export default function Feedback() {
           style={{ cursor: "grab" }}
         >
           <div className="overflow-x-visible">
-            {groupedTestimonials.map((slideGroup, slideIndex) => (
+            {groupedTestimonialsTablet.map((slideGroup, slideIndex) => (
               <div
                 key={slideIndex}
                 className={`transition-all duration-500 ease-in-out ${
@@ -278,9 +329,27 @@ export default function Feedback() {
           </div>
         </div>
 
-        {/* Slider Dots */}
-        <div className="flex justify-center items-center mt-[40px] space-x-4">
-          {groupedTestimonials.map((_, index) => (
+        {/* Slider Dots - Desktop */}
+        <div className="hidden md:flex justify-center items-center mt-[40px] space-x-4">
+          {(isLargeScreen
+            ? groupedTestimonials
+            : groupedTestimonialsTablet
+          ).map((_, index) => (
+            <div
+              key={index}
+              onClick={() => handleSlideChange(index)}
+              className={`w-3 h-3 rounded-full cursor-pointer transition-all duration-300 ${
+                activeSlide === index
+                  ? "bg-primary-orange"
+                  : "border-2 border-primary-orange"
+              }`}
+            ></div>
+          ))}
+        </div>
+
+        {/* Slider Dots - Mobile */}
+        <div className="flex md:hidden justify-center items-center mt-[40px] space-x-4">
+          {groupedTestimonialsTablet.map((_, index) => (
             <div
               key={index}
               onClick={() => handleSlideChange(index)}

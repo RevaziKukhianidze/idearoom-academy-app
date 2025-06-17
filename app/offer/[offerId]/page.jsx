@@ -8,7 +8,7 @@ export async function generateStaticParams() {
     const offers = await getOffers();
 
     if (!offers || !Array.isArray(offers)) {
-      console.warn("No offers found for static generation");
+      console.warn("შეთავაზებები ვერ მოიძებნა");
       return [];
     }
 

@@ -22,7 +22,7 @@ export default function Page() {
 
   // Reset map loaded state when component mounts
   useEffect(() => {
-    document.title = "idearoom | კონტაქტი";
+    document.title = "კონტაქტი - იდეარუმის აკადემია";
     setMapLoaded(false);
   }, []);
 
@@ -39,7 +39,7 @@ export default function Page() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://formspree.io/f/xldnbapn", {
+      const response = await fetch("https://formspree.io/f/xblgeolw", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -20,7 +20,7 @@ export default function Footer() {
             </p>
           </div>
           <p className="text-secondary-500 text-sm mb-5">
-            © 2024. საქართველო, ქუთაისი | ყველა უფლება დაცულია
+            © 2025. საქართველო, ქუთაისი | ყველა უფლება დაცულია
           </p>
           <div className="flex items-center justify-center space-x-4 mb-8">
             <Icons />

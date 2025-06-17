@@ -6,8 +6,8 @@ import Script from "next/script";
 
 export const metadata = {
   title: {
-    template: "idearoom academy | %s",
-    default: "idearoom academy",
+    template: "%s - იდეარუმის აკადემია",
+    default: "იდეარუმის აკადემია | Academy of IDEAROOM ",
   },
   description:
     "გაიღრმავე ცოდნა ციფრულ სფეროში, ისწავლე პრაქტიკულად და დაიწყე კარიერა გამოცდილ მენტორებთან ერთად — იდეარუმის აკადემიაში.",
@@ -16,8 +16,8 @@ export const metadata = {
     type: "website",
     locale: "ka_GE",
     url: "https://academy.idearoom.ge",
-    siteName: "idearoom academy",
-    title: "idearoom academy",
+    siteName: "იდეარუმის აკადემია | Academy of IDEAROOM",
+    title: "იდეარუმის აკადემია | Academy of IDEAROOM",
     description:
       "გაიღრმავე ცოდნა ციფრულ სფეროში, ისწავლე პრაქტიკულად და დაიწყე კარიერა გამოცდილ მენტორებთან ერთად — იდეარუმის აკადემიაში.",
     images: [

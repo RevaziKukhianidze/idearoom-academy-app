@@ -320,7 +320,7 @@ export default function Hero() {
                 <div className="order-1 lg:order-2">
                   <div className="w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-none mx-auto lg:mx-0 overflow-hidden rounded-md">
                     <img
-                      src={slide.imageRight}
+                      src={slide.imageRight || "/placeholder-image.jpg"}
                       alt="slider-image"
                       width={582}
                       height={425}

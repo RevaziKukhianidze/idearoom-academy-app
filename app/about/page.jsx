@@ -6,7 +6,7 @@ import aboutUsPicture from "../../public/coverweb.webp";
 import Head from "next/head";
 
 export const metadata = {
-  title: "ჩვენს შესახებ",
+  title: "ჩვენს შესახებ - იდეარუმის აკადემია",
 };
 
 export default function page() {

@@ -186,7 +186,7 @@ export default function OfferClient({
           <img
             className="w-[100%] max-sm:h-auto rounded-[18px] h-[300px] md:h-[400px] lg:h-[500px] object-cover"
             quality={100}
-            src={offer.image || offer.section_image}
+            src={offer.image || offer.section_image || "/coverweb.webp"}
             alt={offer.title}
           />
           <h4 className="text-xl caps-text font-bold mt-6 lg:mt-8 text-secondary-500">
@@ -254,11 +254,13 @@ export default function OfferClient({
                 <p className="text-base lg:text-lg text-secondary-500 caps-text mt-6 lg:mt-8">
                   ფასი: <span className="font-bold">₾ {offer.price}</span>
                 </p>
-                <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6 lg:mt-8">
-                  <span className="font-bold leading-[24px]">
-                    ₾ {offer.old_price}
-                  </span>
-                </p>
+                {!offer.old_price !== "" && Number(offer.old_price) > 0 && (
+                  <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6 lg:mt-8">
+                    <span className="font-bold leading-[24px]">
+                      ₾ {offer.old_price}
+                    </span>
+                  </p>
+                )}
               </div>
               <div className="space-y-4 mt-4 lg:mt-6">
                 <Button
@@ -326,7 +328,7 @@ export default function OfferClient({
             {offer.courseIcon && (
               <img
                 className="hidden xl:block absolute max-w-[95%] bottom-[85px] right-[10px]"
-                src={offer.courseIcon}
+                src={offer.courseIcon || "/coverweb.webp"}
                 alt="illustration svg"
               />
             )}
@@ -382,11 +384,13 @@ export default function OfferClient({
               <p className="text-base lg:text-lg text-secondary-500 caps-text mt-6 lg:mt-8">
                 ფასი: <span className="font-bold">₾ {offer.price}</span>
               </p>
-              <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6 lg:mt-8">
-                <span className="font-bold leading-[24px]">
-                  ₾ {offer.old_price}
-                </span>
-              </p>
+              {!offer.old_price !== "" && Number(offer.old_price) > 0 && (
+                <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6 lg:mt-8">
+                  <span className="font-bold leading-[24px]">
+                    ₾ {offer.old_price}
+                  </span>
+                </p>
+              )}
             </div>
             <div className="space-y-4 mt-4 lg:mt-6">
               <Button
@@ -411,7 +415,7 @@ export default function OfferClient({
                     className="flex flex-col sm:flex-row items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB]"
                   >
                     <img
-                      src={relatedOffer.section_image}
+                      src={relatedOffer.section_image || "/coverweb.webp"}
                       alt={`offer-image-${relatedOffer.id}`}
                       className="object-cover w-[200px] h-[190px] max-sm:w-full max-sm:max-w-[100%] max-sm:h-[350px] mx-auto rounded-lg md:rounded-none"
                     />
