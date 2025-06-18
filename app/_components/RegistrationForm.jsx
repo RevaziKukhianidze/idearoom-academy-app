@@ -286,14 +286,21 @@ const RegistrationForm = ({
 
                 {/* Custom calendar icon */}
                 <Image
-                  className="absolute overflow-hidden right-[20px] top-1/2 transform -translate-y-1/2 pointer-events-none z-30 max-sm:bg-white max-sm:w-[30px] max-sm:px-1 max-sm:right-[1px]"
+                  className="absolute overflow-hidden right-[20px] top-1/2 transform -translate-y-1/2 pointer-events-none z-30 max-sm:bg-white max-sm:w-[30px] max-sm:px-1 max-sm:right-[5px] max-lg:top-[26px]"
                   src={calendar}
                   alt="calendar icon"
                 />
 
                 {/* Custom text display - shows selected date or placeholder */}
                 <div className="absolute left-3 lg:left-4 top-1/2 transform -translate-y-1/2 text-[#707378] text-[13px] pt-2 lg:text-sm font-[500] pointer-events-none z-20 whitespace-nowrap">
-                  {dateValue ? `${day}/${month}/${year}` : "დაბადების თარიღი"}
+                  {dateValue ? (
+                    `${day}/${month}/${year}`
+                  ) : (
+                    <span>
+                      <span className="lg:hidden">დაბ. თარიღი</span>
+                      <span className="hidden lg:inline">დაბადების თარიღი</span>
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

@@ -1,7 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Button } from "../../components/ui/button";
-import Link from "next/link";
 import { getCourses } from "../services/apiCourses";
 import HeadTopCourse from "./_components/HeadTopCourse";
 import CoursesPageCard from "../_components/shared/CoursesPageCard";
@@ -21,6 +19,9 @@ export default function CoursesPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Set document title
+    document.title = "კურსები - იდეარუმის აკადემია";
+
     async function fetchCourses() {
       try {
         const data = await getCourses();
@@ -39,9 +40,7 @@ export default function CoursesPage() {
   if (isLoading) {
     return (
       <section className="container max-sm:max-w-[95%] mt-[128px] mx-auto">
-        <HeadTopCourse>
-          <p className="cursor-pointer">კურსები</p>
-        </HeadTopCourse>
+        <HeadTopCourse />
         <CoursesLoader />
       </section>
     );
@@ -50,9 +49,7 @@ export default function CoursesPage() {
   if (error) {
     return (
       <section className="container max-sm:max-w-[95%] mt-[128px] mx-auto">
-        <HeadTopCourse>
-          <p className="cursor-pointer">კურსები</p>
-        </HeadTopCourse>
+        <HeadTopCourse />
         <div className="bg-white h-[300px] rounded-[20px] p-8 flex items-center justify-center">
           <h1 className="text-xl font-bold">
             კურსების ჩატვირთვაში მოხდა შეცდომა
@@ -64,9 +61,7 @@ export default function CoursesPage() {
 
   return (
     <section className="container max-sm:max-w-[95%] mt-[128px] mx-auto">
-      <HeadTopCourse>
-        <p className="cursor-pointer">კურსები</p>
-      </HeadTopCourse>
+      <HeadTopCourse />
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-8 mb-5">
         {courses
           .slice()

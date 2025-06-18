@@ -87,87 +87,88 @@ export const InfiniteMovingCards = ({
     }
   };
 
-  // Mouse and touch event handlers for manual sliding
+  // Mouse event handlers for manual sliding (desktop only)
   const handleMouseDown = (e) => {
+    if (isMobile) return; // Prevent on mobile
     setIsDragging(true);
-    setStartX(e.pageX - containerRef.current.offsetLeft);
+    setStartX(e.pageX);
     setScrollLeft(containerRef.current.scrollLeft);
-    document.body.style.cursor = "grabbing";
-    if (containerRef.current) {
-      containerRef.current.style.cursor = "grabbing";
-      containerRef.current.style.userSelect = "none";
-    }
+    e.preventDefault(); // Prevent text selection
   };
 
   const handleMouseMove = (e) => {
-    if (!isDragging) return;
+    if (!isDragging || isMobile) return;
     e.preventDefault();
-    const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Scroll speed multiplier
-    containerRef.current.scrollLeft = scrollLeft - walk;
+    const x = e.pageX;
+    const walk = (x - startX) * 2; // Increased sensitivity
+    if (containerRef.current) {
+      containerRef.current.scrollLeft = scrollLeft - walk; // Natural drag direction
+    }
   };
 
-  const handleMouseUp = () => {
-    if (!isDragging) return;
-    document.body.style.cursor = "";
-    if (containerRef.current) {
-      containerRef.current.style.cursor = "grab";
-      containerRef.current.style.userSelect = "";
-    }
+  const handleMouseUp = (e) => {
+    if (!isDragging || isMobile) return;
     setIsDragging(false);
     if (!containerRef.current) return;
 
-    // Determine which slide is most visible
-    const slideWidth = containerRef.current.offsetWidth;
-    const scrollPosition = containerRef.current.scrollLeft;
-    const newIndex = Math.round(scrollPosition / slideWidth);
+    // Calculate drag distance to determine if it was a significant drag
+    const dragDistance = Math.abs(e.pageX - startX);
 
-    const pageCount = getPageCount();
-    if (pageCount === 0) return;
+    if (dragDistance > 50) {
+      // Significant drag - snap to nearest slide
+      const slideWidth = containerRef.current.offsetWidth;
+      const scrollPosition = containerRef.current.scrollLeft;
+      const newIndex = Math.round(scrollPosition / slideWidth);
 
-    // Snap to the nearest slide
-    setCurrentIndex(Math.max(0, Math.min(newIndex, pageCount - 1)));
-    goToSlide(Math.max(0, Math.min(newIndex, pageCount - 1)));
+      const pageCount = getPageCount();
+      if (pageCount === 0) return;
+
+      const targetIndex = Math.max(0, Math.min(newIndex, pageCount - 1));
+      setCurrentIndex(targetIndex);
+      goToSlide(targetIndex);
+    } else {
+      // Small drag - return to current slide
+      goToSlide(currentIndex);
+    }
   };
 
   const handleMouseLeave = () => {
-    if (isDragging) {
+    if (isDragging && !isMobile) {
       setIsDragging(false);
-      document.body.style.cursor = "";
-      if (containerRef.current) {
-        containerRef.current.style.cursor = "grab";
-        containerRef.current.style.userSelect = "";
-      }
+      // Return to current slide when mouse leaves during drag
+      goToSlide(currentIndex);
     }
   };
 
+  // Touch event handlers for mobile devices
   const handleTouchStart = (e) => {
+    if (!isMobile) return;
     setTouchStart(e.targetTouches[0].clientX);
+    setTouchEnd(e.targetTouches[0].clientX);
   };
 
   const handleTouchMove = (e) => {
+    if (!isMobile) return;
     setTouchEnd(e.targetTouches[0].clientX);
-
-    if (containerRef.current) {
-      const walk = (touchStart - e.targetTouches[0].clientX) * 2;
-      containerRef.current.scrollLeft += walk / 10;
-    }
   };
 
   const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 75) {
-      // Swipe left
+    if (!isMobile) return;
+    const minSwipeDistance = 50;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      // Swipe left - go to next slide
       const pageCount = getPageCount();
       if (pageCount === 0) return;
       const newIndex = Math.min(currentIndex + 1, pageCount - 1);
-      goToSlide(newIndex);
-    } else if (touchStart - touchEnd < -75) {
-      // Swipe right
+      setCurrentIndex(newIndex);
+    } else if (isRightSwipe) {
+      // Swipe right - go to previous slide
       const newIndex = Math.max(currentIndex - 1, 0);
-      goToSlide(newIndex);
-    } else {
-      // Small movement, snap to current slide
-      goToSlide(currentIndex);
+      setCurrentIndex(newIndex);
     }
   };
 
@@ -225,13 +226,12 @@ export const InfiniteMovingCards = ({
       <div className="mb-[35px] mt-[-50px]">
         <Headline text="ლექტორები" />
       </div>
-      <div className="relative container max-sm:max-w-[95%] mx-auto">
+      <div className="relative container max-sm:max-w-[95%] mx-auto px-4">
         <div
           ref={containerRef}
           className={cn(
             "relative z-20 overflow-hidden rounded-[10px]",
-            !isMobile &&
-              "scroll-smooth no-scrollbar flex snap-x snap-mandatory",
+            !isMobile && "no-scrollbar flex snap-x snap-mandatory gap-8",
             className
           )}
           style={{
@@ -239,17 +239,16 @@ export const InfiniteMovingCards = ({
               scrollbarWidth: "none",
               msOverflowStyle: "none",
               scrollSnapType: "x mandatory",
-              cursor: "grab",
-              overflowX: "hidden",
+              overflowX: "auto",
             }),
           }}
           onMouseDown={!isMobile ? handleMouseDown : undefined}
           onMouseMove={!isMobile ? handleMouseMove : undefined}
           onMouseUp={!isMobile ? handleMouseUp : undefined}
           onMouseLeave={!isMobile ? handleMouseLeave : undefined}
-          onTouchStart={!isMobile ? handleTouchStart : undefined}
-          onTouchMove={!isMobile ? handleTouchMove : undefined}
-          onTouchEnd={!isMobile ? handleTouchEnd : undefined}
+          onTouchStart={isMobile ? handleTouchStart : undefined}
+          onTouchMove={isMobile ? handleTouchMove : undefined}
+          onTouchEnd={isMobile ? handleTouchEnd : undefined}
         >
           {cardGroups.map((group, groupIdx) => (
             <div
@@ -262,27 +261,27 @@ export const InfiniteMovingCards = ({
                   : "min-w-full flex-shrink-0 grid snap-center"
               } grid-cols-1 md:grid-cols-2 lg:grid-cols-4`}
               style={{
-                gap: "16px",
+                gap: "24px",
                 width: "100%",
                 ...(!isMobile && {
                   flex: "0 0 100%",
-                  marginRight: groupIdx === 0 ? "32px" : "0",
+                  marginRight: groupIdx < cardGroups.length - 1 ? "0px" : "0",
                 }),
               }}
             >
               {group.map((lecturer, idx) => (
                 <div
                   key={lecturer.fullName + idx}
-                  className="relative justify-center text-center items-center flex h-[400px] rounded-[16px] shrink-0 bg-white duration-300 transition-all cursor-pointer"
+                  className="relative justify-center text-center items-center flex h-[400px] rounded-[12px] shrink-0 bg-white duration-300 transition-all"
                   onClick={(e) => handleCardClick(lecturer, e)}
                 >
                   <div className="flex group relative justify-center items-center w-full h-full">
                     <img
                       className="w-full h-full rounded-[12px] object-cover"
-                      src={lecturer.lecturer_image}
+                      src={lecturer.lecturer_image || "/coverweb.webp"}
                       alt="lecturer_image"
                     />
-                    <div className="bg-[#fff] group-hover:bg-[#8471D9E5] w-full h-[98px] rounded-bl-[12px] rounded-br-[12px] flex flex-col items-center text-center absolute bottom-0 group-hover:text-white">
+                    <div className="bg-[#fff] group-hover:bg-[#8471D9E5] w-full h-[98px] rounded-b-[10px] flex flex-col items-center text-center absolute bottom-0 group-hover:text-white">
                       <h4 className="text-base text-[#282525] mt-[30px] text-center group-hover:text-white justify-center items-center caps-text font-bold">
                         {lecturer.fullName}
                       </h4>

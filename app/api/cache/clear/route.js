@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
 import { clearAllCache as clearCoursesCache } from "../../../services/apiCourses";
 import { clearAllCache as clearOffersCache } from "../../../services/apiOffers";
+import { clearBlogsCache } from "../../../services/apiBlogs";
 
 export async function POST(request) {
   try {
     // Clear all caches
     clearCoursesCache();
     clearOffersCache();
+    clearBlogsCache();
 
     console.log("All caches cleared manually via API");
 

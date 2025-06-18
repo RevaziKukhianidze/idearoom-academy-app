@@ -17,31 +17,25 @@ export default function HeadTopCourse({ children, isCoursesPage = true }) {
       <Image className="mt-[2px]" src={rightArrow} alt="rightArrow-svg" />
 
       {isCoursesPage ? (
-        <>
-          <p className="caps-text text-xs sm:text-sm font-regular text-[#6A737D] mt-[5px]">
+        <Link href="/courses">
+          <p className="caps-text text-xs hover:underline sm:text-sm font-regular text-[#6A737D] mt-[5px]">
             კურსები
           </p>
-        </>
+        </Link>
       ) : (
-        <>
-          <Link href="/offer">
-            <p className="caps-text text-xs hover:underline sm:text-sm font-regular text-[#6A737D] mt-[5px]">
-              შეთავაზება
-            </p>
-          </Link>
+        <Link href="/offer">
+          <p className="caps-text text-xs hover:underline sm:text-sm font-regular text-[#6A737D] mt-[5px]">
+            შეთავაზება
+          </p>
+        </Link>
+      )}
 
-          {children && (
-            <>
-              <Image
-                className="mt-[2px]"
-                src={rightArrow}
-                alt="rightArrow-svg"
-              />
-              <div className="caps-text text-xs sm:text-sm font-regular text-[#6A737D] mt-[5px]">
-                {children}
-              </div>
-            </>
-          )}
+      {children && (
+        <>
+          <Image className="mt-[2px]" src={rightArrow} alt="rightArrow-svg" />
+          <div className="caps-text text-xs sm:text-sm font-regular text-[#6A737D] mt-[5px]">
+            {children}
+          </div>
         </>
       )}
     </div>

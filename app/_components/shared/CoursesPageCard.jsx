@@ -9,7 +9,7 @@ export default function CoursesPageCard({ course }) {
       <div className="relative">
         <img
           className="w-full object-cover"
-          src={course.image}
+          src={course.image || "/coverweb.webp"}
           alt={`course-image-${course.id}`}
         />
       </div>
@@ -26,11 +26,11 @@ export default function CoursesPageCard({ course }) {
         <div className="flex relative mt-6 items-center justify-between">
           <div className="flex items-center">
             <span className="text-[18px] font-bold text-[#434a53] bg-primary-100 mr-4 rounded-full px-3 py-1">
-              ₾{course.price}
+              {course.price} ₾
             </span>
-            {course.oldprice && (
+            {!course.oldprice !== "" && Number(course.oldprice) > 0 && (
               <span className="text-lg text-[#d95a5a] font-[500] line-through">
-                ₾{course.oldprice}
+                {course.oldprice} ₾
               </span>
             )}
           </div>

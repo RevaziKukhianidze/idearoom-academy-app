@@ -218,7 +218,7 @@ function CourseClient({
             fetchPriority="high"
             width={804}
             height={500}
-            src={courseData.image}
+            src={courseData.image || "/coverweb.webp"}
             alt="courseImage"
           />
           <h4 className="text-xl caps-text font-bold mt-6 lg:mt-8 text-secondary-500">
@@ -288,11 +288,14 @@ function CourseClient({
                   ფასი:{" "}
                   <span className="font-bold">{courseData.price} ლარი</span>
                 </p>
-                <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6">
-                  <span className="font-bold leading-[24px]">
-                    {courseData.oldprice} ლარი
-                  </span>
-                </p>
+                {!courseData.oldprice !== "" &&
+                  Number(courseData.oldprice) > 0 && (
+                    <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6">
+                      <span className="font-bold leading-[24px]">
+                        {courseData.oldprice} ლარი
+                      </span>
+                    </p>
+                  )}
               </div>
               <Button
                 className="w-full mt-4 text-[15px] pt-3 h-[48px] caps-text font-bold"
@@ -361,7 +364,7 @@ function CourseClient({
             {courseData.courseIcon && (
               <img
                 className="hidden xl:block absolute max-w-[95%] bottom-[85px] right-[10px]"
-                src={courseData.courseIcon}
+                src={courseData.courseIcon || "/coverweb.webp"}
                 alt="illustration svg"
                 loading="lazy"
               />
@@ -422,11 +425,14 @@ function CourseClient({
               <p className="text-base lg:text-lg text-secondary-500 caps-text mt-6 lg:mt-8">
                 ფასი: <span className="font-bold">{courseData.price} ლარი</span>
               </p>
-              <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6 lg:mt-8">
-                <span className="font-bold leading-[24px]">
-                  {courseData.oldprice} ლარი
-                </span>
-              </p>
+              {!courseData.oldprice !== "" &&
+                Number(courseData.oldprice) > 0 && (
+                  <p className="text-[16px] line-through font-[300] ml-4 caps-text text-[#d95a5a] mt-6 lg:mt-8">
+                    <span className="font-bold leading-[24px]">
+                      {courseData.oldprice} ლარი
+                    </span>
+                  </p>
+                )}
             </div>
             <Button
               className="w-full mt-4 lg:mt-6 text-[15px] lg:text-[16px] pt-3 lg:pt-4 h-[48px] lg:h-[56px] caps-text font-bold"
@@ -449,7 +455,9 @@ function CourseClient({
                     onClick={() => handleRelatedCourseClick(relatedCourse.id)}
                   >
                     <img
-                      src={relatedCourse.section_image}
+                      src={
+                        relatedCourse.section_image || "/placeholder-image.jpg"
+                      }
                       alt="similar-course"
                       className="object-cover w-[190px] h-[190px] max-sm:w-full max-sm:max-w-[100%] max-sm:h-[350px] mx-auto rounded-lg md:rounded-none"
                       loading="lazy"

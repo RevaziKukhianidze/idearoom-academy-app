@@ -5,7 +5,7 @@ import rightArrow from "../../public/rightArrow.svg";
 import React from "react";
 
 export const metadata = {
-  title: "წესები და პირობები",
+  title: "წესები და პირობები - იდეარუმის აკადემია",
 };
 
 export default function page() {

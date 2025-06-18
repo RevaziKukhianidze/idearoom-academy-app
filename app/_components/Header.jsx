@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Button } from "../../components/ui/button";
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, ChevronDown, Calendar } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Logo from "../_components/Logo";
 import { usePathname } from "next/navigation";
 import {
