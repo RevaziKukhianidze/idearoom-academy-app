@@ -205,7 +205,7 @@ function CourseClient({
   }
 
   return (
-    <section className="container mx-auto max-sm:max-w-[95%] max-sm:mx-auto mt-[128px]">
+    <section className="container  mx-auto max-lg:max-w-[95%] max-sm:mx-auto mt-[128px]">
       <HeadTopCourse isCoursesPage={true}>
         <p className="cursor-pointer">{courseData.title}</p>
       </HeadTopCourse>
@@ -213,11 +213,9 @@ function CourseClient({
         {/* Left Column: Course Details and Syllabus */}
         <div className="lg:col-span-7">
           <img
-            className="w-[100%] max-sm:h-auto rounded-[18px] h-[300px] md:h-[400px] lg:h-[500px] object-cover"
+            className="w-[100%] max-xl:w-full max-lg:h-auto  max-xl:h-[380px] max-sm:h-auto max-xl:rounded-[16px] rounded-[18px] xl:h-[500px] object-cover"
             loading="eager" // Load this image immediately
             fetchPriority="high"
-            width={804}
-            height={500}
             src={courseData.image || "/coverweb.webp"}
             alt="courseImage"
           />
@@ -464,11 +462,11 @@ function CourseClient({
                     />
 
                     <div className="caps-text max-md:p-4 sm:max-md:p-8 mt-3 md:mt-0 max-lg:mb-5 md:ml-8 lg:ml-8 text-[#282525] w-full">
-                      <p className="font-[500] text-base lg:text-base">
+                      <p className="font-[500] pr-[20px] lg:text-base">
                         {relatedCourse.title}
                       </p>
                       <p className="text-xs lg:text-sm mt-3 xl:mt-1 mb-3 lg:mb-4 font-[400] text-[#50565e]">
-                        ტრენერი:{" "}
+                        ლექტორი:{" "}
                         <span>
                           {relatedCourse.lecturer || "ლაზარე კალმხალიძე"}
                         </span>

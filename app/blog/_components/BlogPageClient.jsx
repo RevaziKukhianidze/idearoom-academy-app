@@ -90,7 +90,7 @@ export default function BlogPageClient({
   }
 
   return (
-    <section className="container max-sm:max-w-[95%] mt-[128px] mx-auto">
+    <section className="container max-lg:max-w-[95%] mt-[128px] mx-auto">
       <HeadTop headText="ბლოგი" />
       <div
         className={`grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-8 sm:mt-10 md:mt-[36px] transition-opacity duration-300 ${

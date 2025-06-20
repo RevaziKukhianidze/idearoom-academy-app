@@ -201,11 +201,11 @@ export default function BlogClient({ blog, blogId }) {
   const displayTags = parseLinkTags(currentBlog.linkTag);
 
   return (
-    <section className="container max-sm:max-w-[90%] mt-[128px] mx-auto">
+    <section className="container max-lg:max-w-[95%] mt-[128px] mx-auto">
       <div className="max-sm:mb-12">
         <HeadTop headText="ბლოგი" blogTitle={currentBlog.title} />
       </div>
-      <div className="bg-white relative rounded-[20px] p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between min-h-[475px]">
+      <div className="bg-white relative rounded-[20px] p-6 sm:p-8 md:p-10 flex flex-col gap-4 md:flex-row items-start md:items-center justify-between min-h-[475px]">
         <div className="w-full  md:w-auto md:mt-[-40px] mb-6 md:mb-0">
           <h1 className="text-lg sm:text-xl text-secondary-500 font-bold caps-text max-w-[500px] mb-3 sm:mb-5">
             {currentBlog.title}
@@ -223,7 +223,7 @@ export default function BlogClient({ blog, blogId }) {
         </div>
         <div className="w-full md:w-auto mt-4 md:mt-0">
           <img
-            className="w-full h-auto md:h-[403px] object-cover rounded-[12px]"
+            className="w-full h-auto max-lg:h-auto max-md:w-full max-lg:w-[750px] lg:h-[403px] object-cover rounded-[12px]"
             src={currentBlog.image || "/coverweb.webp"}
             width={539}
             quality={100}

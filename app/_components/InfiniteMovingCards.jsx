@@ -227,7 +227,7 @@ export const InfiniteMovingCards = ({
       <div className="mb-[35px] mt-[-50px]">
         <Headline text="ლექტორები" />
       </div>
-      <div className="relative container max-sm:max-w-[95%] mx-auto px-4">
+      <div className="relative container  max-lg:max-w-[95%] mx-auto ">
         <div
           ref={containerRef}
           className={cn(
@@ -284,8 +284,8 @@ export const InfiniteMovingCards = ({
                       src={lecturer.lecturer_image || "/coverweb.webp"}
                       alt="lecturer_image"
                     />
-                    <div className="bg-[#fff] group-hover:bg-[#8471D9E5] w-full h-[98px] rounded-b-[10px] flex flex-col items-center text-center absolute bottom-0 group-hover:text-white">
-                      <h4 className="text-base text-[#282525] mt-[30px] text-center group-hover:text-white justify-center items-center caps-text font-bold">
+                    <div className="bg-[#fff] group-hover:bg-[#8471D9E5] w-full h-[98px] px-3 max-xl:h-[105px] rounded-b-[10px] flex flex-col items-center text-center absolute bottom-0 group-hover:text-white">
+                      <h4 className="text-base text-[#282525] mt-[30px] text-center max-xl:mt-[23px] group-hover:text-white justify-center items-center caps-text font-bold">
                         {lecturer.fullName}
                       </h4>
                       <p className="regular-text text-sm group-hover:text-white text-[#434A53]">

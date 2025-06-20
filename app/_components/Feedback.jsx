@@ -161,7 +161,7 @@ export default function Feedback() {
             <div className="w-[24px] h-[24px]"></div>
           )}
         </div>
-        <p className="text-[#7B7D7E] h-[140px] line-clamp-6 font-normal text-sm leading-relaxed">
+        <p className="text-[#7B7D7E] max-md:h-[140px] max-lg:h-auto lg:h-[140px] line-clamp-6 font-normal text-sm leading-relaxed">
           {testimonial.text}
         </p>
       </div>

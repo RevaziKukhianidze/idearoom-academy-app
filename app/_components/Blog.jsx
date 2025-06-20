@@ -90,7 +90,7 @@ export default function Blog() {
   });
 
   return (
-    <section className="relative mt-12 sm:mt-16 md:mt-20 lg:mt-[72px]">
+    <section className="relative max-lg:px-4 max-md:px-0 mt-12 sm:mt-16 md:mt-20 lg:mt-[72px]">
       <Headline text="ბლოგი" />
       <div
         className={`relative container mx-auto max-sm:max-w-[95%] mt-8 sm:mt-10 md:mt-[36px] grid gap-4 grid-cols-3 max-sm:grid-cols-1 max-lg:grid-cols-2 transition-opacity duration-300 ${
