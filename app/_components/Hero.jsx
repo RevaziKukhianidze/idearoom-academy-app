@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
-import arrowRight from "../../public/arrowRight.svg";
 import sliderBg from "../../public/sliderBg.webp";
+import mobileBg from "../../public/mobile-bg.webp";
 import rightSlider from "../../public/rightSlider.svg";
 import leftSlider from "../../public/leftSlider.svg";
 import { Button } from "../../components/ui/button";
@@ -243,7 +243,7 @@ export default function Hero() {
   }
 
   return (
-    <main className="relative max-lg:bg-secondary-50 max-lg:rounded-[20px] max-lg:px-5 max-lg:py-10 max-sm:py-5 max-lg:max-w-[95%] container mt-[128px]">
+    <main className="relative max-lg:rounded-[20px] max-lg:px-5 max-lg:max-w-[95%] max-sm:pb-[5px] max-lg:pb-[60px] container mt-[128px]">
       {/* Background image - desktop only */}
       {!isMobile && (
         <div className="absolute inset-0 -z-10">
@@ -252,6 +252,20 @@ export default function Hero() {
             alt="Background"
             sizes="100vw"
             style={{ objectFit: "cover" }}
+          />
+        </div>
+      )}
+
+      {/* Background image - mobile/tablet only */}
+      {isMobile && (
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src={mobileBg}
+            alt="Mobile Background"
+            fill
+            sizes="100vw"
+            style={{ objectFit: "cover" }}
+            className="rounded-[20px]"
           />
         </div>
       )}
@@ -297,17 +311,17 @@ export default function Hero() {
         >
           {slides.map((slide, index) => (
             <div key={index} className="w-full flex-shrink-0">
-              <div className="grid max-xl:pt-[50px] pt-[85px] max-sm:pt-[50px] md:px-[70px] xl:px-[100px] grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-[32px] xl:gap-[64px] justify-between items-center">
+              <div className="grid max-xl:pt-[50px] pt-[80px] max-sm:pt-[26px] md:px-[70px] xl:px-[100px] grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-[32px] xl:gap-[64px] justify-between items-center">
                 {/* Text and button */}
-                <div className="left order-2 text-secondary-800 lg:text-white max-sm:ml-2 lg:order-1">
-                  <p className="text-2xl sm:text-[30px] md:text-[32px] lg:text-[30px] xl:text-[39px] max-sm:mt-6 max-lg:mt-9 max-sm:mb-[10px] max-sm:text-[22px] mb-[24px] caps-text font-bold">
+                <div className="left order-2  text-white max-sm:ml-2  lg:order-1">
+                  <p className="text-2xl max-lg:leading-[33px] lg:leading-[48px] sm:text-[30px] md:text-[32px] lg:text-[30px] xl:text-[39px] max-lg:mt-[16px] max-sm:mb-[8px] max-sm:text-[22px] mb-[20px] caps-text font-bold">
                     {slide.title}
                   </p>
-                  <p className="text-sm sm:text-base md:text-lg lg:text-[15px] xl:text-[18px] font-regular leading-[1.5] sm:leading-[1.6] md:leading-[1.7] max-w-full sm:max-w-[95%] md:max-w-[90%] mt-2">
+                  <p className="text-sm sm:text-base max-lg:text-[16px] lg:text-[15px] xl:text-[18px] font-regular leading-[1.5] sm:leading-[1.6] md:leading-[1.7] max-w-full sm:max-w-[95%] md:max-w-[90%] mt-2">
                     {slide.description}
                   </p>
                   <Button
-                    className="caps-text max-sm:mb-5 md:h-[48px] max-xl:h-[45px] px-7 max-sm:mt-8 flex items-center gap-3 sm:gap-2 pt-3 h-[48px] mt-4 sm:mt-6 md:mt-8 lg:mt-9 text-sm sm:text-[15px]"
+                    className="caps-text max-sm:mb-5 md:h-[48px] max-xl:h-[45px] px-7 max-sm:mt-7 flex items-center gap-3 sm:gap-2 pt-3 h-[48px] mt-4 sm:mt-6 md:mt-8 lg:mt-9 text-sm sm:text-[15px]"
                     onClick={() =>
                       (window.location.href = slide.buttonLink || "#")
                     }

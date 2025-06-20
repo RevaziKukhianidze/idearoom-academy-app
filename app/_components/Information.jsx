@@ -49,10 +49,10 @@ export default function Information() {
               <Image src={certificate} alt="certificate-svg" />
               <div>
                 <h4 className="font-bold text-[#434A53] caps-text mt-[6px] sm:mt-[10px] md:mt-[11px]">
-                  სერთიფიკატი
+                  სერტიფიკატი
                 </h4>
                 <p className="text-[15px] text-[#434A53] sm:text-sm leading-[1.6] mt-2 sm:mt-2">
-                  ყველა კურსდამთავრებულს გადაეცემა ორენოვანი სერთიფიკატი
+                  ყველა კურსდამთავრებულს გადაეცემა ორენოვანი სერტიფიკატი
                 </p>
               </div>
             </div>

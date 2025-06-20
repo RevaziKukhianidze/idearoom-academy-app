@@ -253,7 +253,7 @@ function CourseClient({
                   <Image src={tv} alt="tv icon" width={24} height={24} />
                   <p className="mt-2  text-secondary-500 font-[400] text-sm">
                     კურსის ხანგრძლივობა:{" "}
-                    <span className="text-[#88919C] regular-text ml-1">
+                    <span className="text-[#88919C] regular-text font-[300] ml-1">
                       {courseData.quantity_lessons} შეხვედრა
                     </span>
                   </p>

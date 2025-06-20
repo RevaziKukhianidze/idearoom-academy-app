@@ -11,7 +11,7 @@ export const metadata = {
 export default function page() {
   return (
     <div className="container text-secondary-500 max-sm:max-w-[90%] mx-auto max-sm:text-sm mt-[138px]">
-      <div className="flex max-sm:flex-col max-sm:items-center max-sm:text-center items-center gap-3 my-5 sm:my-7">
+      <div className="flex max-sm:items-center  items-center gap-3 my-5 sm:my-7">
         <Link href="/">
           <Image
             className="w-[14px] h-[12px] sm:w-[16px] sm:h-[14px]"
@@ -19,11 +19,7 @@ export default function page() {
             alt="homeIcon-svg"
           />
         </Link>
-        <Image
-          className="mt-[2px]  max-sm:rotate-90"
-          src={rightArrow}
-          alt="rightArrow-svg"
-        />
+        <Image className="mt-[2px]" src={rightArrow} alt="rightArrow-svg" />
         <Link href="/privacy">
           <p className="caps-text text-xs sm:text-sm font-regular text-[#6A737D] mt-[5px]">
             წესები და პირობები
@@ -72,8 +68,8 @@ export default function page() {
 
       <p className="mb-4">
         **6. კონტაქტი** თუ გაქვთ შეკითხვები კონფიდენციალურობის პოლიტიკის
-        შესახებ, შეგიძლიათ დაგვიკავშირდეთ: idearoom.ge@gmail.com (+995) 598 95
-        57 95
+        შესახებ, შეგიძლიათ დაგვიკავშირდეთ: idearoomacademy@gmail.com (+995) 598
+        95 57 95
       </p>
 
       <p>გმადლობთ, რომ ენდობით ჩვენს აკადემიას!</p>
