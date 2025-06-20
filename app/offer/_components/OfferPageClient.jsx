@@ -97,19 +97,8 @@ export default function OfferPageClient({
                 -{course.discount_percentage}%
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-2 mb-6">
-              {course.course_category &&
-                course.course_category.map((category, id) => {
-                  return (
-                    <div key={id}>
-                      <p className="text-sm max-lg:text-xs caps-text font-[500] text-[#383838] bg-[#f4f6f7] py-[6px] px-4 rounded-full">
-                        {category}
-                      </p>
-                    </div>
-                  );
-                })}
-            </div>
-            <h2 className="text-lg max-md:text-base mt-6 text-secondary-800 font-[600] mb-2 caps-text">
+
+            <h2 className="text-lg h-[56px] max-md:text-base mt-6 text-secondary-800 font-[600] mb-2 caps-text">
               {course.title}
             </h2>
             <p className="text-[#434a53] max-md:text-[13px] text-sm caps-text mb-6 line-clamp-2">

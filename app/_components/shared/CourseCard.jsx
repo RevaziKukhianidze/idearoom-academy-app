@@ -20,7 +20,7 @@ export default function CourseCard({ course }) {
             {course.title}
           </h3>
           <p className="mt-4 md:mt-3 text-secondary-500 font-regular text-xs md:text-sm mb-3 md:mb-4">
-            ტრენერი: {course.lecturer}
+            ლექტორი: {course.lecturer}
           </p>
           <div className="flex items-center justify-between mt-auto">
             <div className="flex items-center justify-between flex-wrap">

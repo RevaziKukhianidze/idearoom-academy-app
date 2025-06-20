@@ -1,10 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { getOffers } from "../services/apiOffers";
-import HeadTopOffer from "../_components/HeadTopOffer";
 import OfferPageClient from "./_components/OfferPageClient";
 
-// Add metadata for the offers page
 export const metadata = {
   title: "შეთავაზება",
   description:

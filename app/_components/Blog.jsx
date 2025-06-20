@@ -93,7 +93,7 @@ export default function Blog() {
     <section className="relative mt-12 sm:mt-16 md:mt-20 lg:mt-[72px]">
       <Headline text="ბლოგი" />
       <div
-        className={`relative container mx-auto max-sm:max-w-[95%] mt-8 sm:mt-10 md:mt-[36px] grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 transition-opacity duration-300 ${
+        className={`relative container mx-auto max-sm:max-w-[95%] mt-8 sm:mt-10 md:mt-[36px] grid gap-4 grid-cols-3 max-sm:grid-cols-1 max-lg:grid-cols-2 transition-opacity duration-300 ${
           pendingChanges ? "opacity-90" : "opacity-100"
         }`}
       >
@@ -106,6 +106,9 @@ export default function Blog() {
               key={singleBlog.id || blogIndex}
               blog={singleBlog}
               blogIndex={blogIndex}
+              className={`${
+                blogIndex >= 2 ? "hidden max-sm:block lg:block" : ""
+              }`}
             />
           ))}
         {!initialLoading && (!displayBlogs || displayBlogs.length === 0) && (

@@ -87,18 +87,87 @@ function parseTextWithLinks(text) {
 export default function BlogClient({ blog, blogId }) {
   // State to track real-time updates
   const [currentBlog, setCurrentBlog] = useState(blog);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Create the absolute URL for sharing
   const blogUrl = `${
     process.env.NEXT_PUBLIC_SITE_URL || "https://academy.idearoom.ge"
   }/blog/${blogId}`;
 
-  // Real-time subscription for blog updates
+  // Helper function to parse linkTags correctly
+  const parseLinkTags = (linkTagData) => {
+    if (!linkTagData || !Array.isArray(linkTagData)) {
+      return [];
+    }
+
+    return linkTagData.map((tag) => {
+      if (typeof tag === "string") {
+        try {
+          // Parse JSON string from linkTag text[] column
+          const parsed = JSON.parse(tag);
+          if (parsed && typeof parsed === "object" && parsed.name) {
+            return {
+              name: parsed.name.trim(),
+              url: parsed.url ? parsed.url.trim() : "#",
+            };
+          }
+        } catch (e) {
+          // If JSON parsing fails, treat as plain text tag
+          return {
+            name: tag.trim(),
+            url: "#",
+          };
+        }
+      }
+
+      if (typeof tag === "object" && tag !== null) {
+        // Already in correct format
+        return {
+          name: tag.name || "",
+          url: tag.url || "#",
+        };
+      }
+
+      // Fallback
+      return {
+        name: String(tag),
+        url: "#",
+      };
+    });
+  };
+
+  // Function to refresh blog data from database
+  const refreshBlogData = async () => {
+    if (isRefreshing) return;
+
+    setIsRefreshing(true);
+    try {
+      const { data: freshBlog, error } = await supabase
+        .from("blogs")
+        .select("*")
+        .eq("id", blogId)
+        .single();
+
+      if (!error && freshBlog) {
+        console.log("🔄 Refreshed blog data:", freshBlog);
+        console.log("🏷️ Fresh linkTags:", freshBlog.linkTag);
+        setCurrentBlog(freshBlog);
+      }
+    } catch (error) {
+      console.error("Error refreshing blog data:", error);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  // Real-time subscription for blog updates with immediate cache refresh
   useEffect(() => {
     if (!blogId) return;
 
+    console.log(`🔌 Setting up realtime subscription for blog ${blogId}`);
+
     const subscription = supabase
-      .channel(`blog-${blogId}`)
+      .channel(`blog-${blogId}-updates`)
       .on(
         "postgres_changes",
         {
@@ -107,24 +176,29 @@ export default function BlogClient({ blog, blogId }) {
           table: "blogs",
           filter: `id=eq.${blogId}`,
         },
-        (payload) => {
+        async (payload) => {
+          console.log("🔥 Realtime update received:", payload);
+          console.log("🏷️ New linkTag data:", payload.new?.linkTag);
+
           if (payload.eventType === "UPDATE" && payload.new) {
-            setCurrentBlog((prevBlog) => ({
-              ...prevBlog,
-              ...payload.new,
-              linkTag: Array.isArray(payload.new.linkTag)
-                ? payload.new.linkTag
-                : [],
-            }));
+            // Always refresh from database to ensure we get the latest data
+            await refreshBlogData();
           }
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log("📡 Subscription status:", status);
+      });
 
+    // Clean up subscription
     return () => {
+      console.log(`🔌 Cleaning up realtime subscription for blog ${blogId}`);
       supabase.removeChannel(subscription);
     };
   }, [blogId]);
+
+  // Parse linkTags for display
+  const displayTags = parseLinkTags(currentBlog.linkTag);
 
   return (
     <section className="container max-sm:max-w-[90%] mt-[128px] mx-auto">
@@ -135,6 +209,9 @@ export default function BlogClient({ blog, blogId }) {
         <div className="w-full  md:w-auto md:mt-[-40px] mb-6 md:mb-0">
           <h1 className="text-lg sm:text-xl text-secondary-500 font-bold caps-text max-w-[500px] mb-3 sm:mb-5">
             {currentBlog.title}
+            {isRefreshing && (
+              <span className="ml-2 text-xs text-blue-500">🔄</span>
+            )}
           </h1>
           <div className="text-secondary-500 flex items-center gap-2 mb-4 text-[14px] max-sm:mb-8">
             <Image src={calendar} alt="calendar-icon" />{" "}
@@ -169,87 +246,32 @@ export default function BlogClient({ blog, blogId }) {
       <div>
         <div className="border-t border-[#EBF0F6] my-6 sm:my-10"></div>
         <div className="caps-text flex gap-2 flex-wrap items-center font-medium text-secondary-500">
-          <p className="mr-1 mt-[3px]">ტეგები: </p>
+          <p className="mr-1 mt-[3px]">
+            ტეგები:
+            {isRefreshing && (
+              <span className="ml-1 text-xs text-blue-500">🔄</span>
+            )}
+          </p>
 
-          {(() => {
-            const rawTags = currentBlog.linkTag || [];
-
-            // Helper to transform raw tag (string or object) into a uniform { name, url } shape
-            const normalizeTag = (tag) => {
-              if (typeof tag === "string") {
-                // Try to parse as JSON first (for format like '{"name":"სახელი","url":"https://example.com"}')
-                try {
-                  const parsed = JSON.parse(tag);
-                  if (
-                    parsed &&
-                    typeof parsed === "object" &&
-                    parsed.name &&
-                    parsed.url
-                  ) {
-                    return {
-                      name: parsed.name.trim(),
-                      url: parsed.url.trim(),
-                    };
-                  }
-                } catch (e) {
-                  // If JSON parsing fails, try the old "Name:::URL" pattern
-                  const [namePart, urlPart] = tag.split(":::");
-                  if (urlPart) {
-                    return {
-                      name: (namePart || "").trim(),
-                      url: (urlPart || "#").trim(),
-                    };
-                  }
-                }
-
-                // Fallback for plain string
-                return {
-                  name: tag.trim(),
-                  url: "#",
-                };
-              }
-
-              if (typeof tag === "object" && tag !== null) {
-                // Already in correct format
-                return {
-                  name: tag.name || "",
-                  url: tag.url || "#",
-                };
-              }
-
-              // Fallback – treat entire value as name with no URL
-              return {
-                name: String(tag),
-                url: "#",
-              };
-            };
-
-            const tags = Array.isArray(rawTags)
-              ? rawTags.map(normalizeTag)
-              : [];
-
-            if (tags.length > 0) {
-              return tags.map((tag, i) => (
-                <div
-                  className="mb-1"
-                  key={`linktag-${blogId}-${i}-${tag.name || i}`}
+          {displayTags.length > 0 ? (
+            displayTags.map((tag, i) => (
+              <div
+                className="mb-1"
+                key={`linktag-${blogId}-${i}-${tag.name || i}`}
+              >
+                <Link
+                  target="_blank"
+                  href={tag.url}
+                  rel="nofollow noopener noreferrer"
+                  className="text-[12px] text-[#434a53] bg-[#eaeff4] hover:bg-primary-400 hover:text-white p-1 px-3 pt-2 rounded-[4px] transition-all duration-300 inline-block"
                 >
-                  <Link
-                    target="_blank"
-                    href={tag.url}
-                    rel="nofollow noopener noreferrer"
-                    className="text-[12px] text-[#434a53] bg-[#eaeff4] hover:bg-primary-400 hover:text-white p-1 px-3 pt-2 rounded-[4px] transition-all duration-300"
-                  >
-                    {tag.name}
-                  </Link>
-                </div>
-              ));
-            }
-
-            return (
-              <span className="text-gray-400 text-xs">ტეგები არ არის</span>
-            );
-          })()}
+                  {tag.name}
+                </Link>
+              </div>
+            ))
+          ) : (
+            <span className="text-gray-400 text-xs">ტეგები არ არის</span>
+          )}
         </div>
       </div>
     </section>

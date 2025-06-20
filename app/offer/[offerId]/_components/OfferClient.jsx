@@ -426,8 +426,8 @@ export default function OfferClient({
                       <p className="text-[13px] my-2 pr-4 font-[500] leading-[24px]">
                         {Array.isArray(relatedOffer.lecturers) &&
                         relatedOffer.lecturers.length > 1
-                          ? "ტრენერები: "
-                          : "ტრენერი: "}
+                          ? "ლექტორები: "
+                          : "ლექტორი: "}
                         {Array.isArray(relatedOffer.lecturers)
                           ? relatedOffer.lecturers.join(", ")
                           : relatedOffer.lecturers}

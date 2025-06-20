@@ -99,11 +99,7 @@ export const InfiniteMovingCards = ({
   const handleMouseMove = (e) => {
     if (!isDragging || isMobile) return;
     e.preventDefault();
-    const x = e.pageX;
-    const walk = (x - startX) * 2; // Increased sensitivity
-    if (containerRef.current) {
-      containerRef.current.scrollLeft = scrollLeft - walk; // Natural drag direction
-    }
+    // Just track the movement, don't scroll yet
   };
 
   const handleMouseUp = (e) => {
@@ -111,23 +107,28 @@ export const InfiniteMovingCards = ({
     setIsDragging(false);
     if (!containerRef.current) return;
 
-    // Calculate drag distance to determine if it was a significant drag
-    const dragDistance = Math.abs(e.pageX - startX);
+    // Calculate drag distance and direction
+    const dragDistance = e.pageX - startX;
+    const threshold = 100; // Minimum drag distance to trigger slide change
 
-    if (dragDistance > 50) {
-      // Significant drag - snap to nearest slide
-      const slideWidth = containerRef.current.offsetWidth;
-      const scrollPosition = containerRef.current.scrollLeft;
-      const newIndex = Math.round(scrollPosition / slideWidth);
-
+    if (Math.abs(dragDistance) > threshold) {
       const pageCount = getPageCount();
       if (pageCount === 0) return;
 
-      const targetIndex = Math.max(0, Math.min(newIndex, pageCount - 1));
-      setCurrentIndex(targetIndex);
-      goToSlide(targetIndex);
+      let newIndex = currentIndex;
+
+      if (dragDistance > 0) {
+        // Dragged right - go to previous slide
+        newIndex = Math.max(currentIndex - 1, 0);
+      } else {
+        // Dragged left - go to next slide
+        newIndex = Math.min(currentIndex + 1, pageCount - 1);
+      }
+
+      setCurrentIndex(newIndex);
+      goToSlide(newIndex);
     } else {
-      // Small drag - return to current slide
+      // Small drag - stay on current slide
       goToSlide(currentIndex);
     }
   };
@@ -239,7 +240,9 @@ export const InfiniteMovingCards = ({
               scrollbarWidth: "none",
               msOverflowStyle: "none",
               scrollSnapType: "x mandatory",
-              overflowX: "auto",
+              overflowX: "hidden", // Changed from auto to hidden to prevent manual scrolling
+              scrollBehavior: "smooth",
+              cursor: isDragging ? "grabbing" : "grab",
             }),
           }}
           onMouseDown={!isMobile ? handleMouseDown : undefined}
@@ -253,11 +256,11 @@ export const InfiniteMovingCards = ({
           {cardGroups.map((group, groupIdx) => (
             <div
               key={`group-${groupIdx}`}
-              className={`grid transition-opacity duration-300 ${
+              className={`grid transition-all duration-300 ease-out ${
                 isMobile
                   ? currentIndex === groupIdx
-                    ? "opacity-100"
-                    : "opacity-0 hidden"
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 hidden translate-x-2"
                   : "min-w-full flex-shrink-0 grid snap-center"
               } grid-cols-1 md:grid-cols-2 lg:grid-cols-4`}
               style={{
