@@ -176,7 +176,7 @@ export default function OfferClient({
   }
 
   return (
-    <section className="container mx-auto max-sm:max-w-[90%] max-sm:mx-auto mt-[128px]">
+    <section className="container mx-auto max-lg:max-w-[95%] max-sm:max-w-[90%] max-sm:mx-auto mt-[128px]">
       <HeadTopCourse isCoursesPage={false}>
         <p className="cursor-pointer">{offer.title}</p>
       </HeadTopCourse>
@@ -184,7 +184,7 @@ export default function OfferClient({
         {/* მარცხენა კოლონა: Offer Details and Syllabus */}
         <div className="lg:col-span-7">
           <img
-            className="w-[100%] max-sm:h-auto rounded-[18px] h-[300px] md:h-[400px] lg:h-[500px] object-cover"
+            className="w-[100%] max-xl:w-full max-lg:h-auto  max-xl:h-[380px] max-sm:h-auto max-xl:rounded-[16px] rounded-[18px] xl:h-[500px] object-cover"
             quality={100}
             src={offer.image || offer.section_image || "/coverweb.webp"}
             alt={offer.title}
@@ -246,7 +246,7 @@ export default function OfferClient({
                 <div className="flex my-1 items-center gap-3 caps-text">
                   <Image src={badge} alt="badge icon" />
                   <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
-                    სერთიფიკატი და სტაჟირება
+                    სერტიფიკატი და სტაჟირება
                   </p>
                 </div>
               </div>
@@ -376,7 +376,7 @@ export default function OfferClient({
               <div className="flex my-1 items-center gap-3 caps-text">
                 <Image src={badge} alt="badge icon" />
                 <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
-                  სერთიფიკატი და სტაჟირება
+                  სერტიფიკატი და სტაჟირება
                 </p>
               </div>
             </div>

@@ -74,7 +74,7 @@ export default function OfferPageClient({
   const sortedCourses = [...courses].sort((a, b) => b.id - a.id);
 
   return (
-    <div className="container mx-auto max-sm:max-w-[95%] mt-[80px] py-8">
+    <div className="container mx-auto max-lg:max-w-[95.5%] mt-[80px] py-8">
       <div className="mt-2">
         <HeadTopOffer>
           <p className="cursor-pointer">შეთავაზება</p>

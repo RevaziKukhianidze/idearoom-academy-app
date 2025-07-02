@@ -105,7 +105,7 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed w-full top-0 left-0 z-50">
+    <header className="fixed max-lg:px-4 max-md:px-0 w-full top-0 left-0 z-50">
       <nav className="container max-sm:max-w-[95%] mx-auto flex items-center justify-between py-4 pl-7 pr-5 nav-shadow rounded-[16px] bg-white mt-6">
         <Logo />
 
@@ -173,7 +173,7 @@ export default function Header() {
               <AlertDialogContent
                 className={`p-0 overflow-hidden ${
                   isFullscreen
-                    ? "rounded-none w-screen h-screen max-w-none max-h-none"
+                    ? "rounded-none w-screen  h-screen max-w-none max-h-none"
                     : "rounded-[20px] w-[95vw] max-w-[1220px]"
                 } bg-white shadow-none animate-in fade-in-0 zoom-in-95 duration-300`}
                 style={getDialogContentStyle()}

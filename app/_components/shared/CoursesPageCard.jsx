@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function CoursesPageCard({ course }) {
   return (
-    <div className="bg-white relative h-[510px] xl:h-[480px] max-md:h-auto pb-0 blog-shadow transition-all duration-300 rounded-[18px] overflow-hidden border border-gray-100">
+    <div className="bg-white max-lg:h-[420px] relative h-[510px] xl:h-[480px] max-md:h-auto pb-0 blog-shadow transition-all duration-300 rounded-[18px] overflow-hidden border border-gray-100">
       <div className="relative">
         <img
           className="w-full object-cover"
@@ -35,7 +35,7 @@ export default function CoursesPageCard({ course }) {
             )}
           </div>
           <Link href={`/courses/${course.id}`}>
-            <Button className="bg-primary-500 absolute right-[45px] bottom-0 max-md:right-[0px] hover:bg-primary-600 text-white py-[18px] px-6 rounded-[10px] font-[500] pt-[22px]   transition-colors duration-200">
+            <Button className="bg-primary-500 absolute right-[45px] bottom-0 max-md:right-[0px] max-lg:px-4 max-md:px-6 hover:bg-primary-600 text-white py-[18px] px-6 rounded-[10px] font-[500] pt-[22px]   transition-colors duration-200">
               დეტალურად
             </Button>
           </Link>

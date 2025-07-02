@@ -243,7 +243,7 @@ export default function Hero() {
   }
 
   return (
-    <main className="relative max-lg:rounded-[20px] max-lg:px-5 max-lg:max-w-[95%] max-sm:pb-[5px] max-lg:pb-[60px] container mt-[128px]">
+    <main className="relative max-lg:rounded-[20px] max-lg:px-5 max-lg:max-w-[95%] max-sm:pb-[5px] max-lg:pb-[60px] container mt-[128px] max-lg:mt-[115px] max-md:mt-[128px]">
       {/* Background image - desktop only */}
       {!isMobile && (
         <div className="absolute inset-0 -z-10">
@@ -258,7 +258,7 @@ export default function Hero() {
 
       {/* Background image - mobile/tablet only */}
       {isMobile && (
-        <div className="absolute inset-0 -z-10">
+        <div className="absolute max-lg:mb-[10px] max-md:mb-0 inset-0 -z-10">
           <Image
             src={mobileBg}
             alt="Mobile Background"

@@ -26,20 +26,27 @@ export const InfiniteMovingCards = ({
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
-  // Add mobile detection
+  // Add mobile and tablet detection
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const checkMobileOrTablet = () => {
+      // Detect touch capability and screen size for mobile/tablet devices
+      const hasTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      const isTabletSize =
+        window.innerWidth >= 768 && window.innerWidth <= 1024;
+      const isMobileSize = window.innerWidth < 768;
+
+      // Enable touch functionality for mobile devices and tablets (including iPads)
+      setIsMobile(hasTouch && (isMobileSize || isTabletSize));
     };
 
     // Initial check
-    checkMobile();
+    checkMobileOrTablet();
 
     // Add event listener for window resize
-    window.addEventListener("resize", checkMobile);
+    window.addEventListener("resize", checkMobileOrTablet);
 
     // Cleanup
-    return () => window.removeEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobileOrTablet);
   }, []);
 
   // Calculate total number of pages based on 4 cards per view
@@ -227,7 +234,7 @@ export const InfiniteMovingCards = ({
       <div className="mb-[35px] mt-[-50px]">
         <Headline text="ლექტორები" />
       </div>
-      <div className="relative container max-sm:max-w-[95%] mx-auto px-4">
+      <div className="relative container  max-lg:max-w-[95%] mx-auto ">
         <div
           ref={containerRef}
           className={cn(
@@ -275,7 +282,7 @@ export const InfiniteMovingCards = ({
               {group.map((lecturer, idx) => (
                 <div
                   key={lecturer.fullName + idx}
-                  className="relative justify-center text-center items-center flex h-[400px] rounded-[12px] shrink-0 bg-white duration-300 transition-all"
+                  className="relative justify-center text-center items-center flex max-md:h-[550px] max-sm:h-[400px] h-[400px] rounded-[12px] shrink-0 bg-white duration-300 transition-all"
                   onClick={(e) => handleCardClick(lecturer, e)}
                 >
                   <div className="flex group relative justify-center items-center w-full h-full">
@@ -284,8 +291,8 @@ export const InfiniteMovingCards = ({
                       src={lecturer.lecturer_image || "/coverweb.webp"}
                       alt="lecturer_image"
                     />
-                    <div className="bg-[#fff] group-hover:bg-[#8471D9E5] w-full h-[98px] rounded-b-[10px] flex flex-col items-center text-center absolute bottom-0 group-hover:text-white">
-                      <h4 className="text-base text-[#282525] mt-[30px] text-center group-hover:text-white justify-center items-center caps-text font-bold">
+                    <div className="bg-[#fff] group-hover:bg-[#8471D9E5] w-full h-[98px] px-3 max-xl:h-[105px] rounded-b-[10px] flex flex-col items-center text-center absolute bottom-0 group-hover:text-white">
+                      <h4 className="text-base text-[#282525] mt-[30px] text-center max-xl:mt-[23px] group-hover:text-white justify-center items-center caps-text font-bold">
                         {lecturer.fullName}
                       </h4>
                       <p className="regular-text text-sm group-hover:text-white text-[#434A53]">
