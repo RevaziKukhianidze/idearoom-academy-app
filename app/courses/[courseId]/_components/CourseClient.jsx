@@ -277,7 +277,7 @@ function CourseClient({
                 <div className="flex my-1 items-center gap-3 caps-text">
                   <Image src={badge} alt="badge icon" width={24} height={24} />
                   <p className="mt-2 text-secondary-500 font-[400] text-sm">
-                    სერთიფიკატი და სტაჟირება
+                    სერტიფიკატი და სტაჟირება
                   </p>
                 </div>
               </div>
@@ -415,7 +415,7 @@ function CourseClient({
               <div className="flex my-1 items-center gap-3 caps-text">
                 <Image src={badge} alt="badge icon" width={24} height={24} />
                 <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
-                  სერთიფიკატი და სტაჟირება
+                  სერტიფიკატი და სტაჟირება
                 </p>
               </div>
             </div>

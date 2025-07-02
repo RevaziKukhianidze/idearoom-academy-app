@@ -246,7 +246,7 @@ export default function OfferClient({
                 <div className="flex my-1 items-center gap-3 caps-text">
                   <Image src={badge} alt="badge icon" />
                   <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
-                    სერთიფიკატი და სტაჟირება
+                    სერტიფიკატი და სტაჟირება
                   </p>
                 </div>
               </div>
@@ -376,7 +376,7 @@ export default function OfferClient({
               <div className="flex my-1 items-center gap-3 caps-text">
                 <Image src={badge} alt="badge icon" />
                 <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
-                  სერთიფიკატი და სტაჟირება
+                  სერტიფიკატი და სტაჟირება
                 </p>
               </div>
             </div>
