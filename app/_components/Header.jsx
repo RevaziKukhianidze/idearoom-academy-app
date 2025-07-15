@@ -4,7 +4,7 @@ import { Button } from "../../components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import Logo from "../_components/Logo";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -24,6 +24,20 @@ export default function Header() {
   const [isCoursesLoading, setIsCoursesLoading] = useState(false);
   const fullscreenChecked = useRef(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Check URL parameters on mount to auto-open registration dialog
+  useEffect(() => {
+    const registrationParam = searchParams.get("registration");
+    // Don't open header registration on course pages since CourseClient handles it
+    const isCourseOrOfferPage =
+      pathname.startsWith("/courses/") || pathname.startsWith("/offer/");
+
+    if (registrationParam === "true" && !isCourseOrOfferPage) {
+      setIsRegistrationOpen(true);
+    }
+  }, [searchParams, pathname]);
 
   // Handle fullscreen check on initial render and window resize
   useEffect(() => {
@@ -81,8 +95,28 @@ export default function Header() {
 
   // ბეზოპასნი ფუნქცია რეგისტრაციის დიალოგის გასახსნელად
   const safelySetRegistrationOpen = (open) => {
+    // Don't allow header registration on course/offer pages
+    const isCourseOrOfferPage =
+      pathname.startsWith("/courses/") || pathname.startsWith("/offer/");
+    if (isCourseOrOfferPage && open) {
+      return; // Block opening header registration on course/offer pages
+    }
+
     setTimeout(() => {
       setIsRegistrationOpen(open);
+
+      // Update URL based on dialog state (only on non-course/offer pages)
+      if (!isCourseOrOfferPage) {
+        const currentUrl = new URL(window.location);
+        if (open) {
+          currentUrl.searchParams.set("registration", "true");
+        } else {
+          currentUrl.searchParams.delete("registration");
+        }
+
+        // Update URL without page reload
+        window.history.pushState({}, "", currentUrl.toString());
+      }
     }, 0);
   };
 
