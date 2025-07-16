@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
 import location from "../../public/location.svg";
 import phone from "../../public/phone.svg";
@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Input } from "../../components/ui/input";
 import Head from "next/head";
 
-export default function Page() {
+function ContactPageContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -219,5 +219,13 @@ export default function Page() {
         </div>
       </section>
     </>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading contact page...</div>}>
+      <ContactPageContent />
+    </Suspense>
   );
 }
