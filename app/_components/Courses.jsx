@@ -29,7 +29,7 @@ export default function Courses() {
   }, []);
 
   return (
-    <section className="container max-lg:px-4 max-md:px-0 pt-[72px] relative max-sm:max-w-[95%] mx-auto pb-8 max-md:pt-3 max-lg:pt-1 max-md:pb-9 md:pb-6">
+    <section className="container  max-md:px-0 pt-[72px] relative max-sm:max-w-[95%] mx-auto pb-8 max-md:pt-3 max-lg:pt-1 max-md:pb-9 md:pb-6">
       <h1 className="text-[20px] max-sm:text-[19px] text-center leading-[24px] mt-[72px] caps-text font-bold text-secondary-500">
         აირჩიე სასურველი კურსი და დარეგისტრირდი
       </h1>

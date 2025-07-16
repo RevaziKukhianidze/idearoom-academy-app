@@ -4,47 +4,31 @@ import { getCourses } from "../services/apiCourses";
 import HeadTopCourse from "./_components/HeadTopCourse";
 import CoursesPageCard from "../_components/shared/CoursesPageCard";
 
-// CoursesLoader კომპონენტი
-function CoursesLoader() {
-  return (
-    <div className="bg-white h-[300px] rounded-[20px] p-8 flex items-center justify-center">
-      <div className="spinner animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-    </div>
-  );
-}
-
 export default function CoursesPage() {
   const [courses, setCourses] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     // Set document title
     document.title = "კურსები - იდეარუმის აკადემია";
+  }, []);
 
-    async function fetchCourses() {
+  // Load courses data
+  useEffect(() => {
+    async function loadCourses() {
       try {
-        const data = await getCourses();
-        setCourses(data || []);
+        const coursesData = await getCourses();
+        if (coursesData && Array.isArray(coursesData)) {
+          setCourses(coursesData);
+        }
       } catch (err) {
+        console.error("Failed to load courses:", err);
         setError(err);
-        console.error("Error loading courses:", err);
-      } finally {
-        setIsLoading(false);
       }
     }
 
-    fetchCourses();
+    loadCourses();
   }, []);
-
-  if (isLoading) {
-    return (
-      <section className="container max-sm:max-w-[95%] mt-[128px] mx-auto">
-        <HeadTopCourse />
-        <CoursesLoader />
-      </section>
-    );
-  }
 
   if (error) {
     return (

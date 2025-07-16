@@ -16,22 +16,44 @@ export async function POST(request) {
     // Add the offer and invalidate cache
     const result = await addOffer(offerData);
 
-    // Revalidate ALL Next.js cache and paths that might show offers
-    revalidatePath("/offer", "layout");
-    revalidatePath("/offer", "page");
+    // COMPREHENSIVE revalidation - be more aggressive
     revalidatePath("/", "layout");
     revalidatePath("/", "page");
-    revalidateTag("offers");
+    revalidatePath("/offer", "layout");
+    revalidatePath("/offer", "page");
+    revalidatePath("/courses", "layout");
+    revalidatePath("/courses", "page");
+    revalidatePath("/blog", "layout");
+    revalidatePath("/blog", "page");
 
-    // Revalidate all individual offer pages that might show related offers
+    // Revalidate all dynamic routes
     revalidatePath("/offer/[offerId]", "layout");
     revalidatePath("/offer/[offerId]", "page");
+    revalidatePath("/courses/[courseId]", "layout");
+    revalidatePath("/courses/[courseId]", "page");
 
-    return NextResponse.json({
+    // Revalidate all tags
+    revalidateTag("offers");
+    revalidateTag("courses");
+    revalidateTag("blogs");
+
+    const response = NextResponse.json({
       success: true,
       message: "შეთავაზება წარმატებით დაემატა და cache განახლდა",
       data: result.data,
+      shouldRefresh: true, // Signal client to refresh
     });
+
+    // Force browser to not cache this response
+    response.headers.set(
+      "Cache-Control",
+      "no-store, no-cache, must-revalidate, proxy-revalidate"
+    );
+    response.headers.set("Pragma", "no-cache");
+    response.headers.set("Expires", "0");
+    response.headers.set("Surrogate-Control", "no-store");
+
+    return response;
   } catch (error) {
     console.error("API Error in /api/offers/add:", error);
     return NextResponse.json(

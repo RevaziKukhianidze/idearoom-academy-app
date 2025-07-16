@@ -24,7 +24,7 @@ export default function Information() {
 
   return (
     <section className="bg-white mt-8 sm:mt-12 md:mt-16 lg:mt-[64px] py-8 sm:py-12 md:py-16 lg:py-[64px] mb-12 sm:mb-16 md:mb-24">
-      <div className="container max-lg:max-w-[95%] mx-auto lg:px-0 gap-6 sm:gap-8 md:gap-12 grid grid-cols-1 lg:grid-cols-2">
+      <div className="container max-lg:max-w-[81%] mx-auto lg:px-0 gap-6 sm:gap-8 md:gap-12 grid grid-cols-1 lg:grid-cols-2">
         <div className="flex justify-center lg:block">
           <div className="w-full relative">
             <Image

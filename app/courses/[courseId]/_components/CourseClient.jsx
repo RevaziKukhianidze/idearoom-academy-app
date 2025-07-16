@@ -16,16 +16,6 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getCourses } from "../../../services/apiCourses";
 
-// Performance optimization: Memoize loader component
-const RelatedCoursesLoader = memo(() => {
-  return (
-    <section className="relative z-50 w-full">
-      <div className="absolute spinner top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"></div>
-    </section>
-  );
-});
-RelatedCoursesLoader.displayName = "RelatedCoursesLoader";
-
 // Performance optimization: Memoize AccordionItem
 const AccordionItem = memo(({ title, content }) => {
   return (
@@ -153,6 +143,14 @@ function CourseClient({
   // Determine current tab from URL (?tab=), fallback to the initial value provided by server
   const currentTab = searchParams.get("tab") || initialActiveTab || "details";
 
+  // Check URL parameters on mount to auto-open registration dialog
+  useEffect(() => {
+    const registrationParam = searchParams.get("registration");
+    if (registrationParam === "true") {
+      setShowRegistrationForm(true);
+    }
+  }, [searchParams]);
+
   // Local state to keep always-fresh "other courses" list
   const [relatedCourses, setRelatedCourses] = useState(
     initialRelatedCourses || []
@@ -178,10 +176,20 @@ function CourseClient({
 
   const handleShowRegistrationForm = useCallback(() => {
     setShowRegistrationForm(true);
+
+    // Update URL to include registration parameter
+    const currentUrl = new URL(window.location);
+    currentUrl.searchParams.set("registration", "true");
+    window.history.pushState({}, "", currentUrl.toString());
   }, []);
 
   const handleCancelRegistration = useCallback(() => {
     setShowRegistrationForm(false);
+
+    // Remove registration parameter from URL
+    const currentUrl = new URL(window.location);
+    currentUrl.searchParams.delete("registration");
+    window.history.pushState({}, "", currentUrl.toString());
   }, []);
 
   // Performance optimization: Create memoized handler for related courses
@@ -193,15 +201,9 @@ function CourseClient({
     [router]
   );
 
-  // If course data is not loaded, show a minimal loading state
+  // Safeguard for missing course data
   if (!courseData) {
-    return (
-      <div className="container max-w-[95%] mx-auto py-10">
-        <div className="bg-white mt-5 h-[475px] rounded-[20px] p-8 flex items-center justify-center">
-          <h1 className="text-2xl font-bold">კურსი იტვირთება...</h1>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   return (
@@ -407,7 +409,7 @@ function CourseClient({
                 <Image src={user} alt="user icon" width={24} height={24} />
                 <p className="mt-2 text-secondary-500 font-[500] text-sm lg:text-base">
                   სტუდენტი ჯგუფში:{" "}
-                  <span className="text-[#88919C] ml-1">
+                  <span className="text-[#88919C] font-[400] regular-text ml-1">
                     {courseData.quantity_of_students}
                   </span>
                 </p>
@@ -445,47 +447,43 @@ function CourseClient({
               სხვა კურსები
             </h4>
             <div className="bg-white flex flex-col gap-4 p-3 lg:p-4 w-full rounded-[20px]">
-              {relatedCourses.length > 0 ? (
-                relatedCourses.map((relatedCourse, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col sm:flex-row  items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB] cursor-pointer"
-                    onClick={() => handleRelatedCourseClick(relatedCourse.id)}
-                  >
-                    <img
-                      src={
-                        relatedCourse.section_image || "/placeholder-image.jpg"
-                      }
-                      alt="similar-course"
-                      className="object-cover w-[190px] h-[190px] max-sm:w-full max-sm:max-w-[100%] max-sm:h-[350px] mx-auto rounded-lg md:rounded-none"
-                      loading="lazy"
-                    />
+              {relatedCourses.map((relatedCourse, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col sm:flex-row  items-start md:items-center overflow-hidden rounded-[12px] bg-[#F9FAFB] cursor-pointer"
+                  onClick={() => handleRelatedCourseClick(relatedCourse.id)}
+                >
+                  <img
+                    src={
+                      relatedCourse.section_image || "/placeholder-image.jpg"
+                    }
+                    alt="similar-course"
+                    className="object-cover w-[190px] h-[190px] max-sm:w-full max-sm:max-w-[100%] max-sm:h-[350px] mx-auto rounded-lg md:rounded-none"
+                    loading="lazy"
+                  />
 
-                    <div className="caps-text max-md:p-4 sm:max-md:p-8 mt-3 md:mt-0 max-lg:mb-5 md:ml-8 lg:ml-8 text-[#282525] w-full">
-                      <p className="font-[500] pr-[20px] lg:text-base">
-                        {relatedCourse.title}
-                      </p>
-                      <p className="text-xs lg:text-sm mt-3 xl:mt-1 mb-3 lg:mb-4 font-[400] text-[#50565e]">
-                        ლექტორი:{" "}
-                        <span>
-                          {relatedCourse.lecturer || "ლაზარე კალმხალიძე"}
-                        </span>
-                      </p>
-                      <Button
-                        className="w-full max-lg:text-[13px] lg:w-[140px] xl:w-[180px] h-[44px] md:w-[140px] mt-1 lg:mt-2 text-sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleRelatedCourseClick(relatedCourse.id);
-                        }}
-                      >
-                        კურსის ნახვა
-                      </Button>
-                    </div>
+                  <div className="caps-text max-md:p-4 sm:max-md:p-8 mt-3 md:mt-0 max-lg:mb-5 md:ml-8 lg:ml-8 text-[#282525] w-full">
+                    <p className="font-[500] pr-[20px] lg:text-base">
+                      {relatedCourse.title}
+                    </p>
+                    <p className="text-xs lg:text-sm mt-3 xl:mt-1 mb-3 lg:mb-4 font-[400] text-[#50565e]">
+                      ლექტორი:{" "}
+                      <span>
+                        {relatedCourse.lecturer || "ლაზარე კალმხალიძე"}
+                      </span>
+                    </p>
+                    <Button
+                      className="w-full max-lg:text-[13px] lg:w-[140px] xl:w-[180px] h-[44px] md:w-[140px] mt-1 lg:mt-2 text-sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRelatedCourseClick(relatedCourse.id);
+                      }}
+                    >
+                      კურსის ნახვა
+                    </Button>
                   </div>
-                ))
-              ) : (
-                <RelatedCoursesLoader />
-              )}
+                </div>
+              ))}
             </div>
           </div>
         </div>

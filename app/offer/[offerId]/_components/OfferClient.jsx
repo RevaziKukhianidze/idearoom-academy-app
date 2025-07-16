@@ -14,6 +14,36 @@ import badge from "../../../../public/badge.svg";
 import downArrow from "../../../../public/downArrow.svg";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { getOffers } from "../../../services/apiOffers";
+import { useRouter, useSearchParams } from "next/navigation";
+
+// Force refresh cache and reload page to get latest data from Supabase
+const forceRefreshData = async () => {
+  try {
+    // Call force-refresh API to clear all caches
+    await fetch("/api/force-refresh", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Clear browser cache
+    if (typeof window !== "undefined" && "caches" in window) {
+      caches.keys().then((names) => {
+        names.forEach((name) => {
+          caches.delete(name);
+        });
+      });
+    }
+
+    // Reload page to get fresh data (silent reload)
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
+  } catch (error) {
+    console.error("Error refreshing data:", error);
+  }
+};
 
 function AccordionItem({ title, content }) {
   return (
@@ -129,6 +159,16 @@ export default function OfferClient({
 }) {
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Check URL parameters on mount to auto-open registration dialog
+  useEffect(() => {
+    const registrationParam = searchParams.get("registration");
+    if (registrationParam === "true") {
+      setShowRegistrationForm(true);
+    }
+  }, [searchParams]);
 
   // Keep up-to-date list of related offers
   const [otherOffers, setOtherOffers] = useState(relatedOffers || []);
@@ -151,12 +191,32 @@ export default function OfferClient({
     refreshRelated();
   }, [offer.id]);
 
+  // Auto refresh data from Supabase only on first load
+  useEffect(() => {
+    // Only refresh once when component first loads
+    const hasRefreshed = sessionStorage.getItem(`offer-${offer.id}-refreshed`);
+    if (!hasRefreshed) {
+      forceRefreshData();
+      sessionStorage.setItem(`offer-${offer.id}-refreshed`, "true");
+    }
+  }, [offer.id]);
+
   const handleShowRegistrationForm = useCallback(() => {
     setShowRegistrationForm(true);
+
+    // Update URL to include registration parameter
+    const currentUrl = new URL(window.location);
+    currentUrl.searchParams.set("registration", "true");
+    window.history.pushState({}, "", currentUrl.toString());
   }, []);
 
   const handleCancelRegistration = useCallback(() => {
     setShowRegistrationForm(false);
+
+    // Remove registration parameter from URL
+    const currentUrl = new URL(window.location);
+    currentUrl.searchParams.delete("registration");
+    window.history.pushState({}, "", currentUrl.toString());
   }, []);
 
   if (!offer) {
