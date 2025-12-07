@@ -30,7 +30,7 @@ jobs:
       - name: Clean previous build
         run: rm -rf .next node_modules
 
-      - name: Install dependencies
+      - name: Install prod dependencies
         run: npm ci
 
       - name: Build
