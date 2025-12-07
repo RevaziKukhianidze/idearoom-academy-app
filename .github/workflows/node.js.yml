@@ -27,17 +27,31 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      - name: Clean previous build
-        run: rm -rf .next node_modules
+      - name: Stop running app to free memory
+        run: pm2 stop academy-app || pm2 stop idearoom-academy-app || true
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Clean previous build
+        run: rm -rf .next
+
+      - name: Install dependencies (only if package.json changed)
+        run: |
+          if [ ! -d "node_modules" ] || [ "package.json" -nt "node_modules" ]; then
+            npm ci
+          else
+            echo "node_modules is up to date, skipping install"
+          fi
+        env:
+          NODE_OPTIONS: "--max-old-space-size=1536"
 
       - name: Build
         run: npm run build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=1536"
+          NODE_ENV: "production"
 
       - name: Deploy
         run: |
           cd /home/idearoom/actions-runner/_work/idearoom-academy-app/idearoom-academy-app
-          pm2 delete academy-app || true
+          pm2 delete academy-app || pm2 delete idearoom-academy-app || true
           pm2 start npm --name "academy-app" -- start
+          pm2 save || true

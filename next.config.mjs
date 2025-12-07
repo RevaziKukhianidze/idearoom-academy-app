@@ -22,11 +22,20 @@ const nextConfig = {
   // Disable source maps in production to save memory
   productionBrowserSourceMaps: false,
   
-  // Reduce memory usage during build and runtime
-  swcMinify: true, // Use SWC minification (faster and less memory)
-  
   // Compress output
   compress: true,
+  
+  // Optimize build memory usage
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Reduce memory usage during client build
+      config.optimization = {
+        ...config.optimization,
+        minimize: true,
+      };
+    }
+    return config;
+  },
 };
 
 export default nextConfig;
