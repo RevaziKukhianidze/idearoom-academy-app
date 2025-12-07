@@ -1,6 +1,6 @@
 import "./globals.css";
 import { contractica, contractica_caps } from "./fonts";
-import Header from "./_components/Header";
+import HeaderWrapper from "./_components/HeaderWrapper";
 import Footer from "./_components/Footer";
 import Script from "next/script";
 
@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body>
-        <Header />
+        <HeaderWrapper />
         <main>{children}</main>
         <Footer />
       </body>

@@ -18,6 +18,11 @@ const nextConfig = {
   // Ensure proper React rendering
   reactStrictMode: true,
 
+  // Disable ESLint during build to avoid parser serialization issues
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   // Memory optimizations for low-RAM servers
   // Disable source maps in production to save memory
   productionBrowserSourceMaps: false,
