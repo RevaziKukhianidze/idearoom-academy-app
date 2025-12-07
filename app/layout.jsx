@@ -3,7 +3,6 @@ import { contractica, contractica_caps } from "./fonts";
 import Header from "./_components/Header";
 import Footer from "./_components/Footer";
 import Script from "next/script";
-import { Suspense } from "react";
 
 export const metadata = {
   title: {
@@ -67,9 +66,7 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Header />
-        </Suspense>
+        <Header />
         <main>{children}</main>
         <Footer />
       </body>

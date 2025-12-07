@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import location from "../../public/location.svg";
 import phone from "../../public/phone.svg";
@@ -223,9 +223,5 @@ function ContactPageContent() {
 }
 
 export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading contact page...</div>}>
-      <ContactPageContent />
-    </Suspense>
-  );
+  return <ContactPageContent />;
 }

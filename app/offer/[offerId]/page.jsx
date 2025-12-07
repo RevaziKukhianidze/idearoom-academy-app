@@ -1,7 +1,6 @@
 import React from "react";
 import { getOffers, getOfferById } from "../../services/apiOffers";
 import OfferClient from "./_components/OfferClient";
-import { Suspense } from "react";
 
 // Generate static params for all offer pages
 export async function generateStaticParams() {
@@ -194,17 +193,15 @@ export default async function OfferPage({ params }) {
     }
 
     return (
-      <Suspense fallback={<div>Loading offer...</div>}>
-        <OfferClient
-          offer={offer}
-          relatedOffers={relatedOffers}
-          syllabusItems={syllabusItems}
-          course_details={course_details}
-          lecturers={lecturers}
-          lecturers_details={lecturers_details}
-          activeTab={activeTab}
-        />
-      </Suspense>
+      <OfferClient
+        offer={offer}
+        relatedOffers={relatedOffers}
+        syllabusItems={syllabusItems}
+        course_details={course_details}
+        lecturers={lecturers}
+        lecturers_details={lecturers_details}
+        activeTab={activeTab}
+      />
     );
   } catch (error) {
     console.error("Error in OfferPage:", error);

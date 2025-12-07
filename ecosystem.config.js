@@ -8,7 +8,10 @@ module.exports = {
       instances: 1,
       autorestart: true,
       watch: false,
-      max_memory_restart: "1G",
+      max_memory_restart: "800M", // Reduced to leave room for admin panel and system
+      min_uptime: "10s", // Minimum uptime before considering it stable
+      max_restarts: 10, // Limit restarts to prevent restart loops
+      restart_delay: 4000,
       env: {
         NODE_ENV: "production",
         PORT: 3000,
