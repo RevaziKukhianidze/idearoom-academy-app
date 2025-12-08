@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  idearoom-academy-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: idearoom-academy-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+    networks:
+      - idearoom-network
+
+networks:
+  idearoom-network:
+    driver: bridge
+

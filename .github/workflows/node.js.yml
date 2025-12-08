@@ -27,43 +27,31 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      - name: Stop running app to free memory
-        run: pm2 stop academy-app || pm2 stop idearoom-academy-app || true
-
-      - name: Clean previous build
-        run: rm -rf .next
-
-      - name: Install dependencies
+      - name: Stop and remove existing container
         run: |
-          # Try npm ci first, if it fails due to lock file mismatch, regenerate it
-          if ! npm ci 2>&1 | tee /tmp/npm-ci.log; then
-            if grep -q "Invalid\|Missing" /tmp/npm-ci.log; then
-              echo "⚠️ package-lock.json is out of sync with package.json"
-              echo "Regenerating package-lock.json..."
-              rm -f package-lock.json
-              npm install --legacy-peer-deps
-              echo "✅ package-lock.json regenerated"
-            else
-              echo "❌ npm ci failed for other reasons"
-              cat /tmp/npm-ci.log
-              exit 1
-            fi
-          else
-            echo "✅ Dependencies installed successfully"
-          fi
-        env:
-          NODE_OPTIONS: "--max-old-space-size=1536"
+          docker stop idearoom-academy-app || true
+          docker rm idearoom-academy-app || true
 
-      - name: Build
-        run: npm run build
-        env:
-          NODE_OPTIONS: "--max-old-space-size=1536"
-          NODE_ENV: "production"
-          ESLINT_NO_DEV_ERRORS: "true"
-
-      - name: Deploy
+      - name: Build Docker image
         run: |
-          cd /home/idearoom/actions-runner/_work/idearoom-academy-app/idearoom-academy-app
-          pm2 delete academy-app || pm2 delete idearoom-academy-app || true
-          pm2 start npm --name "academy-app" -- start
-          pm2 save || true
+          docker build -t idearoom-academy-app:latest .
+        env:
+          DOCKER_BUILDKIT: 1
+
+      - name: Run Docker container
+        run: |
+          docker run -d \
+            --name idearoom-academy-app \
+            --restart unless-stopped \
+            -p 3000:3000 \
+            -e NODE_ENV=production \
+            -e NEXT_PUBLIC_SUPABASE_URL="${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" \
+            -e NEXT_PUBLIC_SUPABASE_ANON_KEY="${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" \
+            -e NEXT_PUBLIC_BASE_URL="${{ secrets.NEXT_PUBLIC_BASE_URL }}" \
+            idearoom-academy-app:latest
+
+      - name: Verify container is running
+        run: |
+          sleep 5
+          docker ps | grep idearoom-academy-app
+          docker logs idearoom-academy-app --tail 20
