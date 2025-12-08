@@ -33,12 +33,23 @@ jobs:
       - name: Clean previous build
         run: rm -rf .next
 
-      - name: Install dependencies (only if package.json changed)
+      - name: Install dependencies
         run: |
-          if [ ! -d "node_modules" ] || [ "package.json" -nt "node_modules" ]; then
-            npm ci
+          # Try npm ci first, if it fails due to lock file mismatch, regenerate it
+          if ! npm ci 2>&1 | tee /tmp/npm-ci.log; then
+            if grep -q "Invalid\|Missing" /tmp/npm-ci.log; then
+              echo "⚠️ package-lock.json is out of sync with package.json"
+              echo "Regenerating package-lock.json..."
+              rm -f package-lock.json
+              npm install --legacy-peer-deps
+              echo "✅ package-lock.json regenerated"
+            else
+              echo "❌ npm ci failed for other reasons"
+              cat /tmp/npm-ci.log
+              exit 1
+            fi
           else
-            echo "node_modules is up to date, skipping install"
+            echo "✅ Dependencies installed successfully"
           fi
         env:
           NODE_OPTIONS: "--max-old-space-size=1536"
