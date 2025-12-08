@@ -8,7 +8,8 @@ WORKDIR /app
 
 # Copy package files
 COPY package.json package-lock.json* ./
-RUN npm ci --legacy-peer-deps
+# Try npm ci, fallback to npm install if lock file is out of sync
+RUN npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -19,6 +20,14 @@ COPY . .
 # Set environment variables for build
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+
+# Build Next.js app (with build args for public env vars)
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+ARG NEXT_PUBLIC_BASE_URL
+ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
+ENV NEXT_PUBLIC_BASE_URL=$NEXT_PUBLIC_BASE_URL
 
 # Build Next.js app
 RUN npm run build
@@ -34,7 +43,8 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # Copy necessary files from standalone build
-COPY --from=builder /app/public ./public
+# Next.js standalone output includes everything needed in .next/standalone
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 

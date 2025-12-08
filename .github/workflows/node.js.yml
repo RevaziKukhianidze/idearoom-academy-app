@@ -27,14 +27,24 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
+      - name: Check Docker installation
+        run: |
+          docker --version || (echo "❌ Docker is not installed" && exit 1)
+          docker info || (echo "❌ Docker daemon is not running" && exit 1)
+
       - name: Stop and remove existing container
         run: |
           docker stop idearoom-academy-app || true
           docker rm idearoom-academy-app || true
+          docker rmi idearoom-academy-app:latest || true
 
       - name: Build Docker image
         run: |
-          docker build -t idearoom-academy-app:latest .
+          docker build \
+            --build-arg NEXT_PUBLIC_SUPABASE_URL="${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" \
+            --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY="${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" \
+            --build-arg NEXT_PUBLIC_BASE_URL="${{ secrets.NEXT_PUBLIC_BASE_URL }}" \
+            -t idearoom-academy-app:latest .
         env:
           DOCKER_BUILDKIT: 1
 
@@ -53,5 +63,12 @@ jobs:
       - name: Verify container is running
         run: |
           sleep 5
-          docker ps | grep idearoom-academy-app
-          docker logs idearoom-academy-app --tail 20
+          if docker ps | grep -q idearoom-academy-app; then
+            echo "✅ Container is running"
+            docker logs idearoom-academy-app --tail 30
+          else
+            echo "❌ Container failed to start"
+            docker ps -a | grep idearoom-academy-app
+            docker logs idearoom-academy-app --tail 50 || true
+            exit 1
+          fi
